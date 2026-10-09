@@ -1,0 +1,9 @@
+setup,n,reliability,resolution,uncertainty,brier
+single:llama3.1:latest,2,0.25,0.0,0.25,0.5
+single:mistral:latest,7,0.3214,0.0153,0.1224,0.4286
+single:qwen3:8b,9,0.7901,0.0,0.0988,0.8889
+baseline:best_single,7,0.3214,0.0153,0.1224,0.4286
+baseline:extremized(a=2),4,0.5625,0.0,0.1875,0.75
+baseline:logit_pool,4,0.5625,0.0,0.1875,0.75
+baseline:mean,4,0.5625,0.0,0.1875,0.75
+baseline:median,4,0.5625,0.0,0.1875,0.75
