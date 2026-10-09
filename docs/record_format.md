@@ -11,13 +11,16 @@ This is a first draft. Fields will be finalised when the first collector and for
 | `question_id` | str | Stable ID, e.g. `polymarket:<market_id>` or `kalshi:<ticker>` |
 | `source` | str | `polymarket` or `kalshi` |
 | `question_text` | str | The question exactly as asked |
+| `resolution_criteria` | str | The market's own rules for how it resolves (given to models as context) |
 | `answer_type` | str | `binary` or `multi` |
 | `choices` | str | JSON list of answer options (for binary: `["Yes","No"]`) |
 | `set` | str | `settled` or `live` |
 | `topic` | str | Category label, if available |
 | `url` | str | Market page |
 | `collected_at` | datetime (UTC) | When the question was collected |
-| `resolution_date` | date | When the market is scheduled to resolve |
+| `resolution_date` | datetime (UTC) | When the market closes (Polymarket `endDate`, Kalshi `close_time`) |
+| `market_price` | float | Market probability of "Yes" at `collected_at` (Polymarket Yes price; Kalshi bid/ask midpoint, or last trade) |
+| `volume` | float | Traded volume at collection (Polymarket: USD; Kalshi: contracts) |
 | `outcome` | int / null | 1 if the event happened, 0 if not; empty until resolved |
 | `resolved_at` | datetime / null | When the outcome was recorded |
 
