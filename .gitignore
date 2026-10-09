@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Secrets
+.env
+*.pem
+*.key
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Large or temporary files (keep raw downloads and big intermediates out of git)
+data/raw/
+data/tmp/
+*.log
+!cmds*.log
