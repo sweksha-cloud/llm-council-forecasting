@@ -1,0 +1,10 @@
+dataset,model,n_questions,answered,coverage,accuracy_answered,brier_answered,brier_abstain_as_0.5,judge_mean_reported,judge_mean_corrected,judge_unreadable
+old,Llama,839,2,0.002,0.5,0.5,0.251,4.51,4.54,6
+old,Mistral,839,7,0.008,0.571,0.429,0.251,4.76,4.79,5
+old,QWEN,839,9,0.011,0.111,0.889,0.257,4.7,4.76,15
+new,DeepSeek,1611,138,0.086,0.391,0.609,0.281,3.69,4.69,435
+new,Gemma2,1611,41,0.025,0.317,0.683,0.261,3.71,4.85,475
+new,Llama,1611,76,0.047,0.421,0.579,0.266,3.55,4.33,378
+new,Mistral,1611,96,0.06,0.312,0.688,0.276,3.33,4.57,561
+new,Phi3,1611,887,0.551,0.354,0.646,0.468,3.55,4.39,402
+new,QWEN,1611,60,0.037,0.383,0.617,0.264,3.44,4.59,518
