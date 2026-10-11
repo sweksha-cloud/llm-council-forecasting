@@ -14,12 +14,13 @@ This is a first draft. Fields will be finalised when the first collector and for
 | `resolution_criteria` | str | The market's own rules for how it resolves (given to models as context) |
 | `answer_type` | str | `binary` or `multi` |
 | `choices` | str | JSON list of answer options (for binary: `["Yes","No"]`) |
-| `set` | str | `settled` or `live` |
+| `set` | str | `live`, `settled`, or `contamination` (older questions for the Week 8 check) |
 | `topic` | str | Category label, if available |
 | `url` | str | Market page |
 | `collected_at` | datetime (UTC) | When the question was collected |
 | `resolution_date` | datetime (UTC) | When the market closes (Polymarket `endDate`, Kalshi `close_time`) |
-| `market_price` | float | Market probability of "Yes" at `collected_at` (Polymarket Yes price; Kalshi bid/ask midpoint, or last trade) |
+| `market_price` | float | Market probability of "Yes" at `price_time` (Polymarket Yes price; Kalshi bid/ask midpoint, or last trade) |
+| `price_time` | datetime (UTC) | When `market_price` was taken: collection time for live questions, N days before close (default 7) for settled ones |
 | `volume` | float | Traded volume at collection (Polymarket: USD; Kalshi: contracts) |
 | `outcome` | int / null | 1 if the event happened, 0 if not; empty until resolved |
 | `resolved_at` | datetime / null | When the outcome was recorded |

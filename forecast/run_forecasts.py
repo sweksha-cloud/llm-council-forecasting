@@ -247,7 +247,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--models", nargs="+", default=["llama3.1:8b", "mistral:latest", "qwen3:8b"])
     ap.add_argument("--chairmen", nargs="*", default=["llama3.1:8b"])
-    ap.add_argument("--set", choices=["live", "settled", "all"], default="live")
+    ap.add_argument("--set", choices=["live", "settled", "contamination", "all"], default="live")
     ap.add_argument("--lock", action="store_true", help="mark rows as locked (use for the live set)")
     ap.add_argument("--questions", default=str(DEFAULT_QUESTIONS))
     ap.add_argument("--out", default=str(DEFAULT_OUT))
