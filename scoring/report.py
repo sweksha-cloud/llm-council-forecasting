@@ -334,7 +334,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--questions", nargs="+", default=[str(ROOT / "data" / "questions.csv")])
     ap.add_argument("--forecasts", nargs="+", default=[str(ROOT / "data" / "forecasts.csv")])
-    ap.add_argument("--set", choices=["live", "settled", "all"], default="all")
+    ap.add_argument("--set", choices=["live", "settled", "contamination", "all"], default="all")
     ap.add_argument("--prompt-id", default=None, help="only forecasts made with this prompt version")
     ap.add_argument("--id-prefix", default=None, help="only questions whose id starts with this, e.g. aye-new:")
     ap.add_argument("--out", default=str(ROOT / "results" / "latest"))

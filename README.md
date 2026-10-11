@@ -35,6 +35,21 @@ See [`docs/record_format.md`](docs/record_format.md) for the shared record forma
 - Live-set forecasts are locked with a timestamp and never changed afterward.
 - Every run's commands are saved (e.g. `history > cmds.log`) so it can be reproduced.
 
+## Running each step
+
+All commands run from the repo root.
+
+| Step | Command | Where |
+|---|---|---|
+| Collect live questions (open, resolving soon) | `python3 collect/collect_live.py` | anywhere |
+| Collect settled questions (resolved, price 7 days before close) | `python3 -m collect.collect_settled` | anywhere |
+| Collect the older subset for the contamination check | `python3 -m collect.collect_settled --from 2023-01-01 --to 2023-12-31 --skip-kalshi --set-name contamination` | anywhere |
+| Forecast: single models + council | `python3 -m forecast.run_forecasts --set live --lock --models ... --chairmen ...` | GPU server ([docs/spark.md](docs/spark.md)) |
+| Fill in outcomes as markets resolve | `python3 -m collect.update_outcomes` | anywhere |
+| Results tables | `python3 -m scoring.report --set live --out results/live` | anywhere |
+| Import and re-score Aye's results | `python3 -m importers.import_aye` | anywhere |
+| Tests | `python3 -m pytest` | anywhere |
+
 ## Setup
 
 ```bash

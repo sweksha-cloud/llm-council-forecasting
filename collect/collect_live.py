@@ -20,6 +20,7 @@ Only the Python standard library is used, and both APIs are public (no keys).
 import argparse
 import csv
 import json
+import re
 import time
 import urllib.error
 import urllib.parse
@@ -37,7 +38,7 @@ COLUMNS = [
     "question_id", "source", "question_text", "resolution_criteria",
     "answer_type", "choices", "set", "topic", "url",
     "collected_at", "resolution_date",
-    "market_price", "volume",
+    "market_price", "price_time", "volume",
     "outcome", "resolved_at",
 ]
 
@@ -51,8 +52,10 @@ KALSHI_EXCLUDED_CATEGORIES = {"crypto", "financials"}
 EXCLUDED_PHRASES = [
     "up or down", "price of bitcoin", "price of ethereum", "bitcoin above",
     "bitcoin below", "ethereum above", "ethereum below", "s&p 500", "nasdaq",
-    "dow jones",
+    "dow jones", "airdrop", "token launch", "memecoin", "fdv",
 ]
+# Token tickers like "$ARB" or "$PEPE": older markets often lack crypto tags.
+TICKER_RE = re.compile(r"\$[A-Z]{2,6}\b")
 
 
 # ── Small helpers ─────────────────────────────────────────────────────────────
@@ -97,7 +100,7 @@ def parse_json_list(x: Any) -> List[str]:
 
 def has_excluded_phrase(text: str) -> bool:
     t = text.lower()
-    return any(p in t for p in EXCLUDED_PHRASES)
+    return any(p in t for p in EXCLUDED_PHRASES) or bool(TICKER_RE.search(text))
 
 
 def get_json(url: str, params: Dict[str, Any], retries: int = 3) -> Any:
@@ -313,6 +316,8 @@ def write_rows(path: Path, rows: List[Dict[str, Any]]) -> None:
         w = csv.DictWriter(f, fieldnames=COLUMNS, extrasaction="ignore")
         w.writeheader()
         for r in rows:
+            if not r.get("price_time") and r.get("set") == "live":
+                r["price_time"] = r.get("collected_at")  # live prices are taken at collection
             w.writerow({c: ("" if r.get(c) is None else r.get(c)) for c in COLUMNS})
 
 
