@@ -6,7 +6,7 @@ single model's answer and the council's.
 Bump PROMPT_ID whenever a prompt changes; it's saved with every forecast.
 """
 
-PROMPT_ID = "v1"
+PROMPT_ID = "v2"  # v2: reasoning before probability (v1 put the number first; Llama answered 0.55 on almost everything)
 
 FORECAST_SYSTEM = (
     "You are a careful forecaster. You estimate the probability of future events "
@@ -23,7 +23,7 @@ FORECAST_USER = """{question_block}
 
 Estimate the probability that this question resolves YES.
 Respond with JSON only, in exactly this format:
-{{"probability": <number between 0 and 1>, "reasoning": "<2-4 sentences>"}}"""
+{{"reasoning": "<2-4 sentences>", "probability": <number between 0 and 1>}}"""
 
 CHAIRMAN_SYSTEM = (
     "You are the chair of a panel of forecasters. You read each panelist's "
@@ -39,16 +39,17 @@ The panelists answered independently:
 
 Weigh their arguments and give the panel's final probability that this question resolves YES.
 Respond with JSON only, in exactly this format:
-{{"probability": <number between 0 and 1>, "reasoning": "<2-4 sentences>"}}"""
+{{"reasoning": "<2-4 sentences>", "probability": <number between 0 and 1>}}"""
 
 # Structured-output schema passed to Ollama so replies come back as JSON.
+# Reasoning comes first so the model thinks before it commits to a number.
 RESPONSE_SCHEMA = {
     "type": "object",
     "properties": {
-        "probability": {"type": "number"},
         "reasoning": {"type": "string"},
+        "probability": {"type": "number"},
     },
-    "required": ["probability", "reasoning"],
+    "required": ["reasoning", "probability"],
 }
 
 MAX_CRITERIA_CHARS = 1500

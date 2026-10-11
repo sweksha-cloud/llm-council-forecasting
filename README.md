@@ -45,6 +45,7 @@ All commands run from the repo root.
 | Collect settled questions (resolved, price 7 days before close) | `python3 -m collect.collect_settled` | anywhere |
 | Collect the older subset for the contamination check | `python3 -m collect.collect_settled --from 2023-01-01 --to 2023-12-31 --skip-kalshi --set-name contamination` | anywhere |
 | Forecast: single models + council | `python3 -m forecast.run_forecasts --set live --lock --models ... --chairmen ...` | GPU server ([docs/spark.md](docs/spark.md)) |
+| Forecast on a laptop (one model at a time, low disk) | `caffeinate -i bash scripts/run_local.sh` | Mac with Ollama |
 | Fill in outcomes as markets resolve | `python3 -m collect.update_outcomes` | anywhere |
 | Results tables | `python3 -m scoring.report --set live --out results/live` | anywhere |
 | Import and re-score Aye's results | `python3 -m importers.import_aye` | anywhere |
@@ -57,4 +58,4 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Models run through [Ollama](https://ollama.com) on the SJSU GPU server (spark-833c).
+Models run through [Ollama](https://ollama.com) on the SJSU GPU server (spark-833c-1), or locally with `scripts/run_local.sh`.
