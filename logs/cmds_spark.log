@@ -1,0 +1,12 @@
+2026-10-12T21:04:43Z python3 -u -m forecast.run_forecasts --set live --lock --no-think --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b deepseek-r1:8b phi3:medium --chairmen llama3.1:8b qwen3:8b
+NAME                           ID              SIZE      MODIFIED           
+qwen3:8b                       500a1f067a9f    5.2 GB    28 seconds ago        
+mistral:latest                 6577803aa9a0    4.4 GB    About a minute ago    
+llama3.1:8b                    46e0c10c039e    4.9 GB    2 minutes ago         
+qwen3-coder:30b                06c1097efce0    18 GB     2 weeks ago           
+llama3:latest                  365c0bd3c000    4.7 GB    3 weeks ago           
+deepseek-r1:8b                 6995872bfe4c    5.2 GB    3 months ago          
+phi3:medium                    cf611a26b048    7.9 GB    3 months ago          
+gemma2:9b                      ff02c3702f32    5.4 GB    3 months ago          
+llama3.1:8b-instruct-q4_K_M    46e0c10c039e    4.9 GB    3 months ago          
+2026-10-12T21:09:27Z restarted without deepseek-r1:8b (ignores think=false, >800 tokens of reasoning per answer): python3 -u -m forecast.run_forecasts --set live --lock --no-think --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium --chairmen llama3.1:8b qwen3:8b
