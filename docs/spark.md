@@ -13,52 +13,39 @@ The SJSU GPU server runs the models through Ollama. All analysis can run anywher
    ssh <username>@100.110.180.56
    chmod 700 ~
    ```
-2. **Give spark access to this (private) repo** with a deploy key, which only works for this one repo:
+2. **Copy the repo over from your laptop.** Spark gets no GitHub credentials; code goes up with rsync and results come back with scp, then get committed on the laptop:
    ```bash
-   ssh-keygen -t ed25519 -f ~/.ssh/llm_council_deploy -N "" -C "spark deploy key"
-   cat ~/.ssh/llm_council_deploy.pub
+   rsync -az --exclude .venv --exclude logs --exclude data/forecasts.csv --exclude .git ./ <username>@100.110.180.56:llm-council-forecasting/
    ```
-   On GitHub: repo → Settings → Deploy keys → Add deploy key → paste it → tick **Allow write access** (so results can be pushed back). Then:
-   ```bash
-   cat >> ~/.ssh/config <<'EOF'
-   Host github-llm-council
-     HostName github.com
-     User git
-     IdentityFile ~/.ssh/llm_council_deploy
-   EOF
-   git clone git@github-llm-council:sweksha-cloud/llm-council-forecasting.git
-   ```
-3. **Run the setup script** from the repo:
-   ```bash
-   cd llm-council-forecasting
-   bash scripts/setup_spark.sh
-   ```
-   It creates the Python environment, runs the tests and a fake forecast, checks which models Ollama has, records their exact builds, and runs one real question as a smoke test.
+   The forecasting and collection code uses only the Python standard library, so no environment is needed on spark.
+
+**Models are shared with other spark users.** Never run `ollama rm` there, and never use `scripts/run_local.sh` on spark (it deletes each model after use).
 
 ## Long runs
 
 Use `tmux` so a run keeps going after you disconnect:
 ```bash
 tmux new -s forecast            # start a session
-source .venv/bin/activate
-python3 -m forecast.run_forecasts --set live --lock --no-think \
-    --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium deepseek-r1:8b \
+python3 -u -m forecast.run_forecasts --set live --lock --no-think \
+    --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium \
     --chairmen llama3.1:8b qwen3:8b 2>&1 | tee -a logs/forecast_live.log
 # detach: Ctrl+B, then D        reattach: tmux attach -t forecast
 ```
 The run resumes where it stopped if interrupted; just run the same command again.
 
-Save the commands you ran (Prof. Bill asks for this):
-```bash
-history > logs/cmds_$(date +%Y%m%d).log
-```
+Each run's command and the exact model builds are appended to `logs/cmds_spark.log` (Prof. Bill asks for this).
+
+deepseek-r1:8b (the Qwen3-based build on spark) ignores `think=false` and reasons past any reasonable limit at temperature 0, so it isn't in the main runs. See `docs/decisions.md`.
+
+## Outcome updates
+
+A cron job on spark runs `python3 -m collect.update_outcomes` every Monday and Thursday at 9am (log: `logs/outcomes_cron.log`). That makes spark's `data/questions.csv` the up-to-date copy: copy it back before committing outcomes. Remove the job with `crontab -e`.
 
 ## Getting results back
 
-Commit results on a branch, push, and open a pull request. Never push to `main`:
+Copy results to the laptop and commit them there (routine results go straight to `main`):
 ```bash
-git switch -c results/live-run-1
-git add data/forecasts.csv logs/
-git commit -m "Live-set forecasts, locked"
-git push -u origin results/live-run-1
+scp <username>@100.110.180.56:llm-council-forecasting/data/forecasts.csv data/
+scp <username>@100.110.180.56:llm-council-forecasting/logs/cmds_spark.log logs/
+git add data/forecasts.csv logs/cmds_spark.log && git commit -m "..." && git push
 ```

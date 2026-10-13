@@ -86,19 +86,37 @@ def parse_response(text: str) -> Tuple[Optional[float], str]:
 # ── Model backends ────────────────────────────────────────────────────────────
 
 class OllamaBackend:
-    def __init__(self, host: str, temperature: float, seed: int, timeout: int, no_think: bool):
-        self.url = host.rstrip("/") + "/api/chat"
+    def __init__(self, host: str, temperature: float, seed: int, timeout: int, no_think: bool,
+                 think_budget: int = 0):
+        self.host = host.rstrip("/")
+        self.url = self.host + "/api/chat"
         self.options = {"temperature": temperature, "seed": seed}
         self.timeout = timeout
         self.no_think = no_think
+        self.think_budget = think_budget
 
-    def _post(self, payload: Dict[str, Any]) -> str:
-        req = urllib.request.Request(self.url, data=json.dumps(payload).encode(),
+    def _post(self, payload: Dict[str, Any], path: str = "/api/chat") -> Dict[str, Any]:
+        req = urllib.request.Request(self.host + path, data=json.dumps(payload).encode(),
                                      headers={"Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=self.timeout) as r:
-            return json.load(r).get("message", {}).get("content", "")
+            return json.load(r)
+
+    def ask_with_budget(self, model: str, system: str, user: str) -> str:
+        """DeepSeek-R1 ignores think=false and at temperature 0 can reason without ever
+        answering. Let it think for at most `think_budget` tokens, close its thinking
+        for it, and have it write only the JSON answer. Uses DeepSeek's chat template."""
+        head = f"<｜User｜>{system}\n\n{user}<｜Assistant｜><think>\n"
+        opts = {**self.options, "num_predict": self.think_budget, "stop": ["</think>"]}
+        notes = self._post({"model": model, "raw": True, "stream": False, "prompt": head,
+                            "options": opts}, "/api/generate").get("response", "")
+        answer = self._post({"model": model, "raw": True, "stream": False,
+                             "prompt": f"{head}{notes}\n</think>\n\n", "format": prompts.RESPONSE_SCHEMA,
+                             "options": {**self.options, "num_predict": 400}}, "/api/generate").get("response", "")
+        return f"<think>{notes}</think>{answer}"
 
     def ask(self, model: str, system: str, user: str) -> str:
+        if self.think_budget and model.startswith("deepseek-r1"):
+            return self.ask_with_budget(model, system, user)
         payload = {
             "model": model, "stream": False, "format": prompts.RESPONSE_SCHEMA,
             "options": self.options,
@@ -107,11 +125,11 @@ class OllamaBackend:
         if self.no_think:
             payload["think"] = False
         try:
-            return self._post(payload)
+            return self._post(payload).get("message", {}).get("content", "")
         except urllib.error.HTTPError as e:
             if e.code == 400 and "think" in payload:  # model doesn't support the think switch
                 payload.pop("think")
-                return self._post(payload)
+                return self._post(payload).get("message", {}).get("content", "")
             raise
 
 
@@ -183,7 +201,7 @@ def make_row(question_id, setup, model, members, raw, market_price, lock) -> Dic
 
 def run(args) -> None:
     backend = FakeBackend() if args.backend == "fake" else OllamaBackend(
-        args.host, args.temperature, args.seed, args.timeout, args.no_think)
+        args.host, args.temperature, args.seed, args.timeout, args.no_think, args.think_budget)
     questions = load_questions(Path(args.questions), args.set)
     if args.limit:
         questions = questions[:args.limit]
@@ -264,6 +282,8 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--timeout", type=int, default=600, help="seconds per model call")
     ap.add_argument("--no-think", action="store_true", help="ask reasoning models (qwen3, deepseek-r1) not to think")
+    ap.add_argument("--think-budget", type=int, default=0,
+                    help="max thinking tokens for deepseek-r1 before it must answer (0 = off)")
     ap.add_argument("--no-prices", action="store_true", help="don't fetch the market price at forecast time")
     run(ap.parse_args())
 
