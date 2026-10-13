@@ -1,4 +1,7 @@
 setup,n,reliability,resolution,uncertainty,brier
+council:chair=llama3.1:8b-instruct-q4_K_M,936,0.1261,0.0105,0.2273,0.3429
+council:chair=mistral:latest,512,0.1443,0.0182,0.2313,0.3574
+council:chair=qwen3:8b,191,0.1041,0.0069,0.1855,0.2827
 single:deepseek-r1:8b,138,0.4357,0.0126,0.1857,0.6087
 single:gemma2:9b,41,0.4664,0.0,0.2165,0.6829
 single:llama3.1:8b-instruct-q4_K_M,76,0.3538,0.0075,0.2327,0.5789

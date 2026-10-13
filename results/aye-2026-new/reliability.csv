@@ -1,4 +1,10 @@
 setup,bin,count,mean_forecast,observed_rate
+council:chair=llama3.1:8b-instruct-q4_K_M,0.0-0.1,668,0.0,0.2844
+council:chair=llama3.1:8b-instruct-q4_K_M,0.9-1.0,268,1.0,0.5112
+council:chair=mistral:latest,0.0-0.1,271,0.0,0.2362
+council:chair=mistral:latest,0.9-1.0,241,1.0,0.5062
+council:chair=qwen3:8b,0.0-0.1,152,0.0,0.2039
+council:chair=qwen3:8b,0.9-1.0,39,1.0,0.4103
 single:deepseek-r1:8b,0.0-0.1,70,0.0,0.3571
 single:deepseek-r1:8b,0.9-1.0,68,1.0,0.1324
 single:gemma2:9b,0.9-1.0,41,1.0,0.3171

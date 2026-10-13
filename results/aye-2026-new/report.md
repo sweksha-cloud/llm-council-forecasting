@@ -8,6 +8,9 @@ Resolved questions scored: **1611** (set: all). Lower Brier/log score is better.
 
 | setup | questions | answered | coverage | brier | log_score | brier_abstain_0.5 |
 |---|---|---|---|---|---|---|
+| council:chair=llama3.1:8b-instruct-q4_K_M | 1611 | 936 | 0.581 | 0.3429 | 4.738 | 0.304 |
+| council:chair=mistral:latest | 1611 | 512 | 0.318 | 0.3574 | 4.938 | 0.2841 |
+| council:chair=qwen3:8b | 1611 | 191 | 0.119 | 0.2827 | 3.906 | 0.2539 |
 | single:deepseek-r1:8b | 1611 | 138 | 0.086 | 0.6087 | 8.4094 | 0.2807 |
 | single:gemma2:9b | 1611 | 41 | 0.025 | 0.6829 | 9.435 | 0.261 |
 | single:llama3.1:8b-instruct-q4_K_M | 1611 | 76 | 0.047 | 0.5789 | 7.9985 | 0.2655 |
@@ -25,13 +28,23 @@ Resolved questions scored: **1611** (set: all). Lower Brier/log score is better.
 
 ## Council vs baselines (paired Brier difference, negative = council better)
 
-_none_
+| council | versus | n | mean_diff | ci_low | ci_high | verdict |
+|---|---|---|---|---|---|---|
+| council:chair=llama3.1:8b-instruct-q4_K_M | baseline:best_single | 479 | -0.1962 | -0.2568 | -0.1357 | council better |
+| council:chair=llama3.1:8b-instruct-q4_K_M | baseline:mean | 151 | -0.1352 | -0.2494 | -0.0152 | council better |
+| council:chair=mistral:latest | baseline:best_single | 268 | -0.1119 | -0.1903 | -0.0448 | council better |
+| council:chair=mistral:latest | baseline:mean | 96 | -0.123 | -0.243 | 0.0051 | no clear difference |
+| council:chair=qwen3:8b | baseline:best_single | 102 | -0.3137 | -0.4412 | -0.1961 | council better |
+| council:chair=qwen3:8b | baseline:mean | 49 | -0.3112 | -0.4623 | -0.1453 | council better |
 
 
 ## Murphy decomposition (Brier = reliability − resolution + uncertainty)
 
 | setup | n | reliability | resolution | uncertainty | brier |
 |---|---|---|---|---|---|
+| council:chair=llama3.1:8b-instruct-q4_K_M | 936 | 0.1261 | 0.0105 | 0.2273 | 0.3429 |
+| council:chair=mistral:latest | 512 | 0.1443 | 0.0182 | 0.2313 | 0.3574 |
+| council:chair=qwen3:8b | 191 | 0.1041 | 0.0069 | 0.1855 | 0.2827 |
 | single:deepseek-r1:8b | 138 | 0.4357 | 0.0126 | 0.1857 | 0.6087 |
 | single:gemma2:9b | 41 | 0.4664 | 0.0 | 0.2165 | 0.6829 |
 | single:llama3.1:8b-instruct-q4_K_M | 76 | 0.3538 | 0.0075 | 0.2327 | 0.5789 |
@@ -49,4 +62,8 @@ _none_
 
 Positive Spearman = the council does worse when members disagree more.
 
-_none_
+| council | n | spearman_spread_vs_brier | brier_low_spread | brier_mid_spread | brier_high_spread |
+|---|---|---|---|---|---|
+| council:chair=llama3.1:8b-instruct-q4_K_M | 151 | -0.0278 | 0.42 | 0.42 | 0.3922 |
+| council:chair=mistral:latest | 96 | -0.105 | 0.3438 | 0.5312 | 0.375 |
+| council:chair=qwen3:8b | 49 | -0.0019 | 0.25 | 0.1875 | 0.2941 |

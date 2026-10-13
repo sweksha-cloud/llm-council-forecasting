@@ -1,0 +1,7 @@
+council,versus,n,mean_diff,ci_low,ci_high,verdict
+council:chair=llama3.1:8b-instruct-q4_K_M,baseline:best_single,479,-0.1962,-0.2568,-0.1357,council better
+council:chair=llama3.1:8b-instruct-q4_K_M,baseline:mean,151,-0.1352,-0.2494,-0.0152,council better
+council:chair=mistral:latest,baseline:best_single,268,-0.1119,-0.1903,-0.0448,council better
+council:chair=mistral:latest,baseline:mean,96,-0.123,-0.243,0.0051,no clear difference
+council:chair=qwen3:8b,baseline:best_single,102,-0.3137,-0.4412,-0.1961,council better
+council:chair=qwen3:8b,baseline:mean,49,-0.3112,-0.4623,-0.1453,council better

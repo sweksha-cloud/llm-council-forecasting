@@ -14,8 +14,10 @@ This fixes the two bugs in her compare_predictions*.py / single_llm_judge.py:
 substring matching ("not" counted as "No") and failed judge reads scored as 1.
 
 Her files are read from a pinned commit, so the import is reproducible; her
-repo is never modified. Council answers aren't included: the per-question
-council file (new_council_detailed.xlsx) isn't in her repo.
+repo is never modified. Her per-question council file (new_council_detailed.xlsx)
+isn't in her repo; it was copied from spark (/data/swekshashaw/, dated 2026-07-29)
+into data/imported/aye-2026/source/ and is checked against COUNCIL_SHA256.
+Council rows that failed with a connection error are dropped.
 
 Usage (run from the repo root; needs openpyxl):
   python3 -m importers.import_aye
@@ -37,6 +39,8 @@ RAW_URL = f"https://raw.githubusercontent.com/{AYE_REPO}/{AYE_COMMIT}/{{name}}"
 ORIGIN = f"aye-2026@{AYE_COMMIT[:7]}"
 
 ROOT = Path(__file__).resolve().parent.parent
+COUNCIL_FILE = ROOT / "data" / "imported" / "aye-2026" / "source" / "new_council_detailed.xlsx"
+COUNCIL_SHA256 = "9fb4ae9ab2e72b3583f61827ccf84d5ff31d0b4dbc306b9b9396c7828f8a04ea"
 CACHE = ROOT / "data" / "raw" / "aye"          # git-ignored download cache
 OUT = ROOT / "data" / "imported" / "aye-2026"
 
@@ -150,7 +154,39 @@ def import_dataset(name: str):
                 "_label": r["model"], "_reported_score": int(r["score"]) if r["score"].isdigit() else None,
                 "_outcome": q["outcome"],
             })
+    if name == "new" and COUNCIL_FILE.exists():
+        forecasts += import_council(by_text)
     return questions, forecasts
+
+
+def import_council(by_text: Dict[str, Dict]) -> List[Dict]:
+    """Her council answers (new dataset only), one row per question and chairman."""
+    import hashlib
+    digest = hashlib.sha256(COUNCIL_FILE.read_bytes()).hexdigest()
+    if digest != COUNCIL_SHA256:
+        raise SystemExit(f"{COUNCIL_FILE} has changed (sha256 {digest})")
+    forecasts = []
+    for r in read_xlsx(COUNCIL_FILE):
+        chair = r.get("chairman_model")
+        q = by_text.get(norm(r.get("question_text")))
+        if not chair or not q:  # connection-error rows, or not a Yes/No question
+            continue
+        answer = str(r.get("council_answer") or "")
+        p = strict_yes_no(answer)
+        try:
+            judge = int(r.get("judge_overall"))
+        except (TypeError, ValueError):
+            judge = None
+        forecasts.append({
+            "question_id": q["question_id"], "setup": f"council:chair={chair}", "model": "council",
+            "members": json.dumps([m.strip() for m in str(r.get("answer_models") or "").split(",") if m.strip()]),
+            "probability": "" if p is None else p, "abstained": p is None,
+            "raw_response": answer, "prompt_id": "aye-free-text",
+            "forecast_at": q["collected_at"], "locked": False, "origin": ORIGIN,
+            "judge_score": judge, "_label": f"council ({chair})", "_reported_score": judge,
+            "_outcome": q["outcome"],
+        })
+    return forecasts
 
 
 def summarise(name: str, forecasts: List[Dict]) -> List[Dict]:

@@ -1,4 +1,7 @@
 setup,questions,answered,coverage,brier,log_score,brier_abstain_0.5
+council:chair=llama3.1:8b-instruct-q4_K_M,1611,936,0.581,0.3429,4.738,0.304
+council:chair=mistral:latest,1611,512,0.318,0.3574,4.938,0.2841
+council:chair=qwen3:8b,1611,191,0.119,0.2827,3.906,0.2539
 single:deepseek-r1:8b,1611,138,0.086,0.6087,8.4094,0.2807
 single:gemma2:9b,1611,41,0.025,0.6829,9.435,0.261
 single:llama3.1:8b-instruct-q4_K_M,1611,76,0.047,0.5789,7.9985,0.2655
