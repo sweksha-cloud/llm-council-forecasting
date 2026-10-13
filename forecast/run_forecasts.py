@@ -138,7 +138,7 @@ def load_questions(path: Path, which_set: str) -> List[Dict[str, str]]:
     for r in rows:
         if which_set != "all" and r.get("set") != which_set:
             continue
-        if r.get("outcome"):  # already resolved
+        if r.get("set") == "live" and r.get("outcome"):  # resolved before we got to it
             continue
         close = r.get("resolution_date") or ""
         if which_set == "live" and close and datetime.fromisoformat(close.replace("Z", "+00:00")) <= now:
@@ -194,8 +194,12 @@ def run(args) -> None:
 
     for i, q in enumerate(questions, 1):
         qid = q["question_id"]
+        # Settled questions are asked "as of" the day their market price was taken,
+        # so the model isn't told a date after the question closed.
+        backtest = q.get("set") != "live"
+        as_of = (q.get("price_time") or today)[:10] if backtest else today
         block = prompts.question_block(q["question_text"], q["resolution_date"][:10],
-                                       q.get("resolution_criteria", ""), today)
+                                       q.get("resolution_criteria", ""), as_of)
         needed_single = [m for m in args.models if (qid, f"single:{m}", prompts.PROMPT_ID) not in existing]
         needed_council = [c for c in args.chairmen if (qid, f"council:chair={c}", prompts.PROMPT_ID) not in existing]
         if not needed_single and not needed_council:
@@ -203,7 +207,9 @@ def run(args) -> None:
         print(f"[{i}/{len(questions)}] {q['question_text'][:80]}")
 
         market_price = None
-        if args.backend != "fake" and not args.no_prices:
+        if backtest:
+            market_price = q.get("market_price") or None  # price at price_time; today's would be ~0 or 1
+        elif args.backend != "fake" and not args.no_prices:
             from collect.prices import current_price
             market_price = current_price(qid)
 
