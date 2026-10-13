@@ -90,3 +90,17 @@ def test_settled_questions_use_stored_price_and_date(tmp_path):
     rows = list(csv.DictReader(out.open()))
     assert len(rows) == 3  # resolved settled questions are still forecast
     assert all(r["market_price_at_forecast"] == "0.42" for r in rows)
+
+
+def test_merge_forecasts_appends_only_new_keys(tmp_path):
+    from forecast.merge_forecasts import merge
+    from forecast.run_forecasts import append_rows, load_existing
+    into, src = tmp_path / "f.csv", tmp_path / "s.csv"
+    append_rows(into, [{"question_id": "q0", "setup": "single:a", "prompt_id": "v2", "probability": 0.3}])
+    append_rows(src, [{"question_id": "q0", "setup": "single:a", "prompt_id": "v2", "probability": 0.9},
+                      {"question_id": "q1", "setup": "single:a", "prompt_id": "v2", "probability": 0.5}])
+    assert merge([src], into) == 1
+    rows = load_existing(into)
+    assert rows[("q0", "single:a", "v2")]["probability"] == "0.3"
+    assert ("q1", "single:a", "v2") in rows
+    assert merge([src], into) == 0

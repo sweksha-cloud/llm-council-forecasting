@@ -45,7 +45,11 @@ A cron job on spark runs `python3 -m collect.update_outcomes` every Monday and T
 
 Copy results to the laptop and commit them there (routine results go straight to `main`):
 ```bash
-scp <username>@100.110.180.56:llm-council-forecasting/data/forecasts.csv data/
+mkdir -p data/tmp
+scp <username>@100.110.180.56:llm-council-forecasting/data/forecasts.csv data/tmp/spark_forecasts.csv
+scp <username>@100.110.180.56:llm-council-forecasting/data/questions.csv data/
 scp <username>@100.110.180.56:llm-council-forecasting/logs/cmds_spark.log logs/
-git add data/forecasts.csv logs/cmds_spark.log && git commit -m "..." && git push
+python3 -m forecast.merge_forecasts data/tmp/spark_forecasts.csv
+git add data/forecasts.csv data/questions.csv logs/cmds_spark.log && git commit -m "..." && git push
 ```
+Merge instead of overwriting: the laptop's `data/forecasts.csv` may hold rows spark's copy doesn't (e.g. from a run written to a separate file). The merge only appends rows it doesn't already have, so locked forecasts never change.
