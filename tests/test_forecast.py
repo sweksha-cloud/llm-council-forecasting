@@ -71,3 +71,22 @@ def test_fake_run_end_to_end_and_resume(tmp_path):
 
     _run(questions, out)  # second run must not add or change anything
     assert list(csv.DictReader(out.open())) == rows
+
+
+def test_settled_questions_use_stored_price_and_date(tmp_path):
+    questions, out = tmp_path / "q.csv", tmp_path / "f.csv"
+    cols = ["question_id", "source", "question_text", "resolution_criteria", "set",
+            "resolution_date", "outcome", "market_price", "price_time"]
+    with questions.open("w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cols)
+        w.writeheader()
+        w.writerow({"question_id": "test:settled", "source": "test", "question_text": "Did it happen?",
+                    "resolution_criteria": "", "set": "settled", "resolution_date": "2026-03-08T00:00:00Z",
+                    "outcome": "1", "market_price": "0.42", "price_time": "2026-03-01T00:00:00Z"})
+    subprocess.run([sys.executable, "-m", "forecast.run_forecasts", "--backend", "fake", "--set", "settled",
+                    "--questions", str(questions), "--out", str(out),
+                    "--models", "a", "b", "--chairmen", "a"],
+                   cwd=ROOT, check=True, capture_output=True)
+    rows = list(csv.DictReader(out.open()))
+    assert len(rows) == 3  # resolved settled questions are still forecast
+    assert all(r["market_price_at_forecast"] == "0.42" for r in rows)
