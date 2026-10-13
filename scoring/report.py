@@ -322,7 +322,9 @@ def run(args) -> None:
     for k, v in notes.items():
         md.append(f"- `{k}` {v}\n")
     md += ["\n## Council vs baselines (paired Brier difference, negative = council better)\n", md_table(comps),
-           "\n## Murphy decomposition (Brier = reliability − resolution + uncertainty)\n", md_table(decomp),
+           "\n## Murphy decomposition (Brier = reliability − resolution + uncertainty)\n",
+           "Each row uses the questions that setup answered (see `n`), so rows with different `n` "
+           "aren't directly comparable; compare them on `brier_common` above.\n", md_table(decomp),
            "\n## Does member disagreement predict council error?\n",
            "Positive Spearman = the council does worse when members disagree more.\n", md_table(disagree)]
     (out / "report.md").write_text("\n".join(md))
