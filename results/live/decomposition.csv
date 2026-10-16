@@ -1,0 +1,15 @@
+setup,n,reliability,resolution,uncertainty,brier
+council:chair=llama3.1:8b,5,0.3911,0.24,0.24,0.3911
+council:chair=qwen3:8b,5,0.3904,0.24,0.24,0.3904
+single:gemma2:9b,5,0.304,0.14,0.24,0.404
+single:llama3.1:8b,5,0.1545,0.04,0.24,0.3545
+single:mistral:latest,5,0.1987,0.1067,0.24,0.332
+single:phi3:medium,5,0.239,0.1067,0.24,0.386
+single:qwen3:8b,5,0.3745,0.14,0.24,0.4745
+baseline:always_no,62,0.2188,0.0,0.249,0.4677
+baseline:base_rate,62,0.0,0.0,0.249,0.249
+baseline:extremized(a=2),5,0.4932,0.24,0.24,0.4932
+baseline:logit_pool,5,0.2489,0.1067,0.24,0.3941
+baseline:mean,5,0.2408,0.1067,0.24,0.3851
+baseline:median,5,0.239,0.1067,0.24,0.386
+market,62,0.0248,0.1304,0.249,0.1474
