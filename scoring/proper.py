@@ -61,6 +61,17 @@ def brier_skill_score(ps: Sequence[float], ys: Sequence[int], ref_ps: Sequence[f
     return 1 - mean_brier(ps, ys) / ref
 
 
+def accuracy(ps: Sequence[float], ys: Sequence[int]) -> float:
+    """Share of questions where the forecast is on the right side of 0.5. A forecast of exactly 0.5
+    picks neither side and counts as half right, so 'no idea' isn't rewarded or punished."""
+    _same_length(ps, ys)
+    hits = []
+    for p, y in zip(ps, ys):
+        _check(p, y)
+        hits.append(0.5 if p == 0.5 else float((p > 0.5) == (y == 1)))
+    return _mean(hits)
+
+
 def drop_abstentions(ps: Iterable[Optional[float]], ys: Iterable[int]) -> Tuple[List[float], List[int], float]:
     """Keep only answered forecasts. Returns (probabilities, outcomes, coverage)."""
     pairs = list(zip(ps, ys))

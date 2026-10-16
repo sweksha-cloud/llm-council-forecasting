@@ -21,3 +21,6 @@ data/raw/
 data/tmp/
 *.log
 !cmds*.log
+
+# Built from data/ by `make dashboard`
+dashboard/index.html

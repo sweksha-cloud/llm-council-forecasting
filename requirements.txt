@@ -1,7 +1,4 @@
-pandas
-numpy
-requests
-openpyxl
-python-dateutil
-ollama
-pytest
+# Everything in this repo runs on the Python 3.12 standard library plus these.
+# Pinned so `make setup` gives the same environment the committed results were built with.
+openpyxl==3.1.5   # reads Aye's .xlsx files (importers/)
+pytest==9.1.1     # tests/

@@ -1,0 +1,10 @@
+setup,n,right,wrong,judge_mean_right,judge_mean_wrong,judge_auroc_for_right
+council:chair=llama3.1:8b-instruct-q4_K_M,936,615,321,4.777,4.81,0.4836
+council:chair=mistral:latest,512,329,183,4.261,4.372,0.4449
+council:chair=qwen3:8b,191,137,54,4.752,4.667,0.5426
+single:deepseek-r1:8b,106,38,68,4.605,4.412,0.6043
+single:gemma2:9b,36,13,23,4.385,4.304,0.5401
+single:llama3.1:8b-instruct-q4_K_M,43,18,25,3.722,4.12,0.3944
+single:mistral:latest,54,18,36,4.556,4.333,0.6111
+single:phi3:medium,597,205,392,4.234,4.319,0.4631
+single:qwen3:8b,45,21,24,4.952,4.5,0.6647

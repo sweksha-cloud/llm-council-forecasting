@@ -19,6 +19,9 @@ def test_explicit_answers_are_graded(answer, expected):
     "There is no official confirmation from Rockstar Games.",    # "no" mid-sentence is not an answer
     "Nobody knows yet.",                                           # "No" only as part of a word
     "It's not possible to know the outcome.",
+    # real non-answers from her single-model runs
+    "As of now, there is no publicly available information about a specific match or event for Randers FC.",
+    "This means users will no longer be able to create new deployments after this date.",
     "",
 ])
 def test_everything_else_abstains(answer):
