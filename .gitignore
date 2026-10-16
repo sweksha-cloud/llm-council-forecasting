@@ -22,5 +22,6 @@ data/tmp/
 *.log
 !cmds*.log
 
-# Built from data/ by `make dashboard`
+# Built from data/ by `make dashboard` and `make site`
 dashboard/index.html
+site/index.html
