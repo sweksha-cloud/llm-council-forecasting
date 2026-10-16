@@ -1,6 +1,6 @@
 # Results: backtest
 
-Resolved questions scored: **515** (set: settled + contamination). Lower Brier/log score is better.
+Resolved questions scored: **515** (set: settled + settled-ext + contamination). Lower Brier/log score is better.
 
 ## Scores
 

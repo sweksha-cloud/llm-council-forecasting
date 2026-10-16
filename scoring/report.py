@@ -176,9 +176,17 @@ def add_reference_baselines(probs: Probs, outcomes: Dict[str, int]) -> Dict[str,
                                    "so it's slightly optimistic")}
 
 
-def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0, min_n: int = MIN_N) -> Dict[str, str]:
-    """Adds baseline:* setups built from the single models. Returns notes about them."""
-    singles = [s for s in probs if s.startswith("single:")]
+def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0, min_n: int = MIN_N,
+                  members: Optional[Dict[Tuple[str, str], List[str]]] = None) -> Dict[str, str]:
+    """Adds baseline:* setups built from the single models. Returns notes about them.
+
+    If there are councils (`members`), the pools and the best single use only the models that
+    sit on a council, so "council vs pool" compares the same models. A model run only on its
+    own (e.g. deepseek-r1) is scored as a single model but kept out of the pools. Without
+    councils, every single model is used."""
+    council_models = sorted({m for ms in (members or {}).values() for m in ms})
+    singles = ([f"single:{m}" for m in council_models if f"single:{m}" in probs] if council_models
+               else [s for s in probs if s.startswith("single:")])
     notes = {}
     if len(singles) < 2:
         return notes
@@ -206,6 +214,8 @@ def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0, min_n:
                 best, best_score = s, score
     if not best:
         notes["baseline:best_single"] = f"not reported: no single model answered {min_n:g} or more questions"
+    if council_models and len(singles) < len([s for s in probs if s.startswith("single:")]):
+        notes["baseline:mean"] = "and the other pools use only council members: " + ", ".join(council_models)
     if best:
         probs["baseline:best_single"] = dict(probs[best])
         notes["baseline:best_single"] = (f"= {best} (lowest Brier on these same questions, "
@@ -447,7 +457,7 @@ def run(args) -> None:
     if not outcomes:
         print("No resolved questions to score yet.")
         return
-    notes = add_baselines(probs, outcomes, args.extremize_a)
+    notes = add_baselines(probs, outcomes, args.extremize_a, members=members)
     notes.update(add_reference_baselines(probs, outcomes))
     scores = score_table(probs, outcomes, args.bins, args.bootstrap)
     truth = ground_truth_table(probs, outcomes)
@@ -520,7 +530,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--questions", nargs="+", default=[str(ROOT / "data" / "questions.csv")])
     ap.add_argument("--forecasts", nargs="+", default=[str(ROOT / "data" / "forecasts.csv")])
-    ap.add_argument("--set", nargs="+", choices=["live", "settled", "contamination", "all"], default=["all"],
+    ap.add_argument("--set", nargs="+", choices=["live", "settled", "settled-ext", "contamination", "all"], default=["all"],
                     help="one or more question sets, e.g. --set settled contamination")
     ap.add_argument("--prompt-id", default=None, help="only forecasts made with this prompt version")
     ap.add_argument("--id-prefix", default=None, help="only questions whose id starts with this, e.g. aye-new:")

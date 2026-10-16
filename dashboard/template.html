@@ -264,7 +264,9 @@ const SERIES = ["--s1", "--s2", "--s3"];
 // ── Build setups, including baselines and the market, for the current dataset ──
 function model(ds) {
   const setups = ds.setups.map((s, i) => ({ ...s, idx: i }));
-  const singles = setups.filter((s) => s.kind === "single").map((s) => s.idx);
+  // Pools use council members only (as scoring/report.py does), else every single model.
+  const councilMembers = [...new Set(setups.filter((s) => s.kind === "council").flatMap((s) => s.members || []))];
+  const singles = councilMembers.length ? councilMembers : setups.filter((s) => s.kind === "single").map((s) => s.idx);
   const rows = ds.questions.map((q) => {
     const ps = q.f.map((c) => (c ? c.p : undefined));
     const extra = {};
