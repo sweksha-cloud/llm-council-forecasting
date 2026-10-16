@@ -8,6 +8,12 @@ closed, taken from each market's price history.
 Output: appended to data/questions.csv with set = "settled". Questions
 already in the file are kept unchanged.
 
+The price is taken N days before the scheduled close, or before the resolution if
+that came first, so the "as of" date given to the models is always before the event.
+
+`--reprice-late` fixes questions already in the file whose price date is on or after
+their scheduled close (collected before that rule; Polymarket only).
+
 Usage (run from the repo root):
   python3 -m collect.collect_settled                         # resolved 2026-07-01 → yesterday, 200 per source
   python3 -m collect.collect_settled --from 2026-07-01 --horizon-days 7 --per-source 200
@@ -28,6 +34,7 @@ from collect.collect_live import (DEFAULT_OUT, KALSHI_EVENTS_URL, KALSHI_EXCLUDE
                                   write_rows)
 
 POLYMARKET_HISTORY_URL = "https://clob.polymarket.com/prices-history"
+POLYMARKET_MARKET_URL = "https://gamma-api.polymarket.com/markets/{id}"
 KALSHI_CANDLES_URL = "https://api.elections.kalshi.com/trade-api/v2/series/{series}/markets/{ticker}/candlesticks"
 
 POLYMARKET_TOPICS = ("Politics", "Sports", "Science", "Tech", "Culture", "Economy", "World",
@@ -138,7 +145,9 @@ def polymarket_event_rows(ev, min_volume, seen) -> Iterable[Dict[str, Any]]:
             "outcome": 1 if prices == ["1", "0"] else 0,
             "resolved_at": iso(resolved_dt),
             "_event": f"polymarket:{ev.get('id')}",
-            "_price_key": tokens[0], "_close": resolved_dt,
+            # Price before whichever came first: the scheduled close or the resolution. Polymarket
+            # can resolve days after the scheduled close, and the event is over by then.
+            "_price_key": tokens[0], "_close": min(close_dt, resolved_dt),
         })
     return rows
 
@@ -227,6 +236,34 @@ def add_prices(candidates: List[Dict[str, Any]], horizon: timedelta, want: int,
     return pick_top(with_price, want, max_per_event, max_topic_share)
 
 
+def reprice_late(path: Path, horizon: timedelta, dry_run: bool) -> None:
+    """Re-take the price `horizon` before the scheduled close for settled questions priced too late."""
+    rows = load_existing(path)
+    fixed = 0
+    for r in rows:
+        close, priced = parse_dt(r.get("resolution_date")), parse_dt(r.get("price_time"))
+        if r.get("set") == "live" or not close or not priced or priced < close:
+            continue
+        if not r["question_id"].startswith("polymarket:"):
+            print(f"  ! {r['question_id']}: only Polymarket can be repriced; drop it or fix by hand")
+            continue
+        market = get_json(POLYMARKET_MARKET_URL.format(id=r["question_id"].split(":", 1)[1]), {})
+        tokens = parse_json_list(market.get("clobTokenIds"))
+        at = close - horizon
+        price = polymarket_price_at(tokens[0], at) if tokens else None
+        print(f"  {r['question_id']}: {r['price_time']} p={r['market_price']} → {iso(at)} p={price}"
+              f"  {r['question_text'][:60]}")
+        if price is None:
+            print("    no price at the new date; drop this question or fix by hand")
+            continue
+        r["market_price"], r["price_time"] = price, iso(at)
+        fixed += 1
+    print(f"Repriced {fixed} questions")
+    if fixed and not dry_run:
+        write_rows(path, rows)
+        print(f"Saved to {path}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--from", dest="start", default="2026-07-01", help="earliest close date (UTC, YYYY-MM-DD)")
@@ -242,7 +279,12 @@ def main() -> None:
     ap.add_argument("--skip-kalshi", action="store_true", help="Kalshi's public API has no markets before ~2025")
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--reprice-late", action="store_true",
+                    help="only fix existing questions whose price date is on/after their scheduled close")
     args = ap.parse_args()
+    if args.reprice_late:
+        reprice_late(Path(args.out), timedelta(days=args.horizon_days), args.dry_run)
+        return
 
     start = datetime.fromisoformat(args.start).replace(tzinfo=timezone.utc)
     end = (datetime.fromisoformat(args.end).replace(hour=23, minute=59, second=59, tzinfo=timezone.utc)

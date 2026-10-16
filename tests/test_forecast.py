@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
     ('{"probability": 70, "reasoning": "x"}', 0.7),     # percent written as a number
     ('probability: 35%', 0.35),
     ('Probability = 0.4', 0.4),
+    ('{"probability": "70%", "reasoning": "x"}', 0.7),   # percent as a string
 ])
 def test_parse_response_finds_probability(text, expected):
     p, _ = parse_response(text)
@@ -104,3 +105,54 @@ def test_merge_forecasts_appends_only_new_keys(tmp_path):
     assert rows[("q0", "single:a", "v2")]["probability"] == "0.3"
     assert ("q1", "single:a", "v2") in rows
     assert merge([src], into) == 0
+
+
+# ── Audit fixes ───────────────────────────────────────────────────────────────
+
+from forecast.run_forecasts import as_of_date, load_existing
+
+
+@pytest.mark.parametrize("q, expected", [
+    ({"set": "live"}, "2026-10-16"),
+    ({"set": "settled", "price_time": "2026-03-01T00:00:00Z", "resolution_date": "2026-03-08T00:00:00Z"}, "2026-03-01"),
+    ({"set": "settled", "price_time": "", "resolution_date": "2026-03-08T00:00:00Z"}, None),          # no price date
+    ({"set": "contamination", "price_time": "2026-03-09T00:00:00Z",
+      "resolution_date": "2026-03-08T00:00:00Z"}, None),                                              # priced after close
+])
+def test_as_of_date_never_after_close(q, expected):
+    assert as_of_date(q, "2026-10-16") == expected
+
+
+def test_failed_calls_are_retried_not_kept(tmp_path):
+    out = tmp_path / "f.csv"
+    out.write_text("question_id,setup,prompt_id,raw_response\n"
+                   "q1,single:a,v2,ERROR: connection refused\n"
+                   'q2,single:a,v2,"{""probability"": 0.3}"\n')
+    assert set(load_existing(out)) == {("q2", "single:a", "v2")}
+
+
+def test_settled_question_priced_after_close_is_skipped(tmp_path):
+    questions, out = tmp_path / "q.csv", tmp_path / "f.csv"
+    cols = ["question_id", "source", "question_text", "resolution_criteria", "set",
+            "resolution_date", "outcome", "market_price", "price_time"]
+    with questions.open("w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cols)
+        w.writeheader()
+        w.writerow({"question_id": "test:late", "source": "test", "question_text": "Ceasefire by July 31?",
+                    "resolution_criteria": "", "set": "settled", "resolution_date": "2026-07-31T23:59:00Z",
+                    "outcome": "1", "market_price": "0.83", "price_time": "2026-08-05T18:04:28Z"})
+    subprocess.run([sys.executable, "-m", "forecast.run_forecasts", "--backend", "fake", "--set", "settled",
+                    "--questions", str(questions), "--out", str(out), "--models", "a", "b", "--chairmen", "a"],
+                   cwd=ROOT, check=True, capture_output=True)
+    assert not out.exists()
+
+
+def test_polymarket_settled_price_anchored_before_scheduled_close():
+    from collect.collect_settled import polymarket_event_rows
+    ev = {"id": 1, "slug": "x", "tags": [], "markets": [{
+        "id": "9", "question": "Ceasefire by July 31?", "outcomes": '["Yes", "No"]',
+        "outcomePrices": '["1", "0"]', "clobTokenIds": '["t"]', "volumeNum": 1e6, "closed": True,
+        "endDate": "2026-07-31T23:59:00Z", "closedTime": "2026-08-12 18:04:28+00"}]}
+    row = polymarket_event_rows(ev, 0, set())[0]
+    assert row["_close"].isoformat() == "2026-07-31T23:59:00+00:00"   # not the later resolution time
+    assert row["resolved_at"] == "2026-08-12T18:04:28Z"

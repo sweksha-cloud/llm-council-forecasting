@@ -146,3 +146,17 @@ def test_judge_table():
     assert (row["right"], row["wrong"]) == (1, 2)
     assert row["judge_mean_right"] == 5 and row["judge_mean_wrong"] == 4.5
     assert row["judge_auroc_for_right"] == approx(0.75)   # 5 vs 4 wins, 5 vs 5 ties: (1 + 0.5) / 2
+
+
+def test_retry_replaces_failed_call(tmp_path):
+    _write(tmp_path / "q.csv", [{"question_id": "q0", "set": "settled", "outcome": "1", "market_price": ""}])
+    _write(tmp_path / "f.csv", [
+        {"question_id": "q0", "setup": "single:a", "probability": "", "raw_response": "ERROR: timed out",
+         "members": "", "prompt_id": "v2", "market_price_at_forecast": ""},
+        {"question_id": "q0", "setup": "single:a", "probability": "0.8", "raw_response": "{}",
+         "members": "", "prompt_id": "v2", "market_price_at_forecast": ""},
+        {"question_id": "q0", "setup": "single:a", "probability": "0.1", "raw_response": "{}",
+         "members": "", "prompt_id": "v2", "market_price_at_forecast": ""},
+    ])
+    _, probs, _, _ = load([str(tmp_path / "q.csv")], [str(tmp_path / "f.csv")])
+    assert probs["single:a"]["q0"] == 0.8   # the retry, and after that the first real answer still wins

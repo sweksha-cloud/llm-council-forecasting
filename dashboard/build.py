@@ -92,11 +92,16 @@ def build_dataset(ds: Dict) -> Dict:
     forecast_price: Dict[str, float] = {}
     for f in _read(ds["forecasts"]):
         qid, setup = f["question_id"], f["setup"]
-        if qid not in by_id or setup in cells.get(qid, {}):
-            continue  # first (locked) forecast wins, as in scoring/report.py
+        if qid not in by_id:
+            continue
+        kept = cells.get(qid, {}).get(setup)
+        if kept is not None and not kept.get("failed"):
+            continue  # first (locked) forecast wins, as in scoring/report.py; a retry replaces a failed call
         if setup not in setups:
             setups.append(setup)
         cell = {"p": _float(f.get("probability")), "r": reasoning(f)}
+        if (f.get("raw_response") or "").startswith("ERROR:"):
+            cell["failed"] = True
         judge = _float(f.get("judge_score"))
         if judge is not None:
             cell["j"] = judge
