@@ -1,0 +1,4 @@
+setup,questions,answered,coverage,brier,log_score,accuracy,ece,sharpness,auroc,balanced_accuracy,mcc,brier_abstain_0.5,common_n,brier_common,log_common,accuracy_common,auroc_common,skill_vs_market,n_vs_market,skill_vs_market_paired,skill_ci_low,skill_ci_high
+baseline:always_no,515,515,1.0,0.4369,6.0359,0.5631,0.4369,0.5,0.5,0.5,0.0,0.4369,513,0.4347,6.0056,0.5653,0.5,-2.425,513,-2.425,-3.0272,-1.9677
+baseline:base_rate,515,515,1.0,0.246,0.6852,0.5631,0.0,0.0631,0.5,0.5,0.0,0.246,513,0.2457,0.6846,0.5653,0.5,-0.9359,513,-0.9362,-1.2375,-0.7203
+market,515,513,0.996,0.1269,0.3956,0.8119,0.0576,0.3216,0.9038,0.8038,0.6181,0.1274,513,0.1269,0.3956,0.8119,0.9038,,,,,

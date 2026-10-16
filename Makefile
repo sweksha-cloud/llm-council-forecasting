@@ -24,6 +24,9 @@ results:          ## all results tables (results/*/)
 	    --forecasts data/imported/aye-2026/forecasts.csv --id-prefix aye-new: --out results/aye-2026-new
 	$(PY) -m scoring.report --questions data/imported/aye-2026/questions.csv \
 	    --forecasts data/imported/aye-2026/forecasts.csv --id-prefix aye-old: --out results/aye-2026-old
+	$(PY) -m scoring.report --set settled --out results/settled
+	$(PY) -m scoring.report --set contamination --out results/contamination
+	$(PY) -m scoring.report --set settled contamination --out results/backtest   # includes the contamination split
 
 dashboard:        ## dashboard/index.html, built from the same data files
 	$(PY) -m dashboard.build

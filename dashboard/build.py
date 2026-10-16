@@ -29,6 +29,13 @@ DATASETS = [
     {"key": "live", "label": "Live set", "who": "This project, Oct 2026",
      "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": "live", "prefix": None,
      "note": "Probability forecasts (prompt v2), locked before the questions resolved. Scored as questions resolve."},
+    {"key": "settled", "label": "Settled set", "who": "This project, resolved Jul–Oct 2026",
+     "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": "settled", "prefix": None,
+     "note": "Asked as of the price date, 7 days before each question closed; the market is the price on that date."},
+    {"key": "contamination", "label": "Contamination set", "who": "This project, resolved 2023–2024",
+     "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": "contamination", "prefix": None,
+     "note": "Older questions, some resolved before the models' training cutoffs: better scores here than on "
+             "the settled set may be memory, not forecasting. See results/backtest/contamination.csv."},
     {"key": "aye-new", "label": "Aye, new set", "who": "Aye Nyein Kyaw, Jul 2026",
      "questions": "data/imported/aye-2026/questions.csv", "forecasts": "data/imported/aye-2026/forecasts.csv",
      "set": None, "prefix": "aye-new:",
@@ -149,7 +156,9 @@ STANDALONE = """<!doctype html>
 
 
 def build(out: Path, fragment: bool = False) -> Path:
-    data = {"datasets": [build_dataset(ds) for ds in DATASETS],
+    # A set appears once it has forecasts (settled and contamination fill in after the spark runs).
+    datasets = [d for d in (build_dataset(ds) for ds in DATASETS) if d["questions"]]
+    data = {"datasets": datasets,
             "models": MODEL_NAMES}
     template = (ROOT / "template.html").read_text(encoding="utf-8")
     metrics = (ROOT / "metrics.js").read_text(encoding="utf-8")
