@@ -46,7 +46,7 @@ def test_load_skips_unresolved_and_adds_market(data):
 
 def test_baselines(data):
     outcomes, probs, _, _ = data
-    notes = add_baselines(probs, outcomes)
+    notes = add_baselines(probs, outcomes, min_n=1)
     assert probs["baseline:mean"]["q0"] == approx(0.7)       # (0.8 + 0.6) / 2
     assert probs["baseline:median"]["q1"] == approx(0.3)     # median of 0.2, 0.4
     assert probs["baseline:mean"]["q2"] is None               # only one member answered
@@ -57,7 +57,7 @@ def test_baselines(data):
 def test_scores_and_common_set(data):
     outcomes, probs, _, _ = data
     assert common_questions(probs, outcomes) == ["q0", "q1"]  # b abstained on q2
-    rows = {r["setup"]: r for r in score_table(probs, outcomes)}
+    rows = {r["setup"]: r for r in score_table(probs, outcomes, min_n=1)}
     # council answered: (0.01 + 0.01 + 0.09)/3 = 0.036667
     assert rows["council:chair=a"]["brier"] == approx(0.0367)
     # council on common q0, q1: (0.01 + 0.01)/2 = 0.01 ; market on common: (0.16 + 0.09)/2 = 0.125
@@ -110,7 +110,7 @@ def test_best_single_ignores_models_that_barely_answered():
         "single:many": {q: (0.7 if y else 0.3) for q, y in outcomes.items()},          # Brier 0.09 on 10
         "single:few": {q: (float(y) if q in ("q0", "q1") else None) for q, y in outcomes.items()},  # perfect on 2
     }
-    notes = add_baselines(probs, outcomes)
+    notes = add_baselines(probs, outcomes, min_n=1)
     assert "single:many" in notes["baseline:best_single"]
 
 
@@ -131,7 +131,7 @@ def test_market_skill_paired(data):
     outcomes, probs, _, _ = data
     # single:b answered q0, q1. Brier b: 0.16, 0.16 ; market (0.6, 0.3): 0.16, 0.09
     # skill = 1 - 0.32 / 0.25 = -0.28
-    res = market_skill(probs["single:b"], probs["market"], outcomes, n_boot=200)
+    res = market_skill(probs["single:b"], probs["market"], outcomes, n_boot=200, min_n=1)
     assert res["n_vs_market"] == 2
     assert res["skill_vs_market_paired"] == approx(-0.28)
     assert res["skill_ci_low"] <= res["skill_vs_market_paired"] <= res["skill_ci_high"]
@@ -160,3 +160,44 @@ def test_retry_replaces_failed_call(tmp_path):
     ])
     _, probs, _, _ = load([str(tmp_path / "q.csv")], [str(tmp_path / "f.csv")])
     assert probs["single:a"]["q0"] == 0.8   # the retry, and after that the first real answer still wins
+# ── Minimum sample sizes ──────────────────────────────────────────────────────
+
+def test_no_best_single_when_every_model_answered_few():
+    # the old Aye set: models answered 2, 7 and 9 questions
+    outcomes = {f"q{i}": i % 2 for i in range(40)}
+    probs = {f"single:m{k}": {q: (0.9 if y else 0.1) if i < n else None for i, (q, y) in enumerate(outcomes.items())}
+             for k, n in enumerate((2, 7, 9))}
+    notes = add_baselines(probs, outcomes)
+    assert "baseline:best_single" not in probs
+    assert notes["baseline:best_single"].startswith("not reported")
+    probs["single:m3"] = {q: 0.6 if y else 0.4 for q, y in outcomes.items()}   # 40 answers -> eligible
+    add_baselines(probs, outcomes)
+    assert probs["baseline:best_single"] == probs["single:m3"]
+
+
+def test_market_skill_edge_cases():
+    from scoring.report import market_skill
+    outcomes = {f"q{i}": i % 2 for i in range(40)}
+    model = {q: 0.6 if y else 0.4 for q, y in outcomes.items()}
+    market = {q: 0.8 if y else 0.2 for q, y in outcomes.items()}
+    few = {q: (p if i < 7 else None) for i, (q, p) in enumerate(model.items())}
+    assert market_skill(few, market, outcomes) is None                         # 7 shared questions
+    perfect = {q: float(y) for q, y in outcomes.items()}
+    assert market_skill(model, perfect, outcomes) is None                      # market Brier 0
+    # model Brier 0.16, market 0.04 on every question -> skill 1 - 0.16/0.04 = -3, and the interval is exact
+    res = market_skill(model, market, outcomes, n_boot=100)
+    assert res["skill_vs_market_paired"] == approx(-3.0)
+    assert res["skill_ci_low"] == approx(-3.0) and res["skill_ci_high"] == approx(-3.0)
+
+
+def test_skill_interval_blank_when_a_resample_has_a_perfect_market():
+    from scoring.report import market_skill
+    # market perfect on 39 of 40 questions: about a third of bootstrap samples have market Brier 0
+    outcomes = {f"q{i}": 1 for i in range(40)}
+    market = {q: 1.0 for q in outcomes}
+    market["q0"] = 0.99
+    model = {q: 0.9 for q in outcomes}
+    res = market_skill(model, market, outcomes, n_boot=200)
+    # Brier: model 0.01 on each question, market 0.0001 on one -> 1 - 0.40 / 0.0001 = -3999
+    assert res["skill_vs_market_paired"] == approx(-3999.0)
+    assert res["skill_ci_low"] == "" and res["skill_ci_high"] == ""

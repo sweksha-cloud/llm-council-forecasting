@@ -54,6 +54,11 @@ ROOT = Path(__file__).resolve().parent.parent
 
 Probs = Dict[str, Dict[str, Optional[float]]]  # setup -> question_id -> probability (None = abstained)
 
+# Below this many questions a model can't be "best single", and skill vs market isn't reported:
+# with a handful of questions both are noise (a market that was near-certain on 7 questions
+# gives skill around -10).
+MIN_N = 30
+
 
 # ── Loading ───────────────────────────────────────────────────────────────────
 
@@ -171,7 +176,7 @@ def add_reference_baselines(probs: Probs, outcomes: Dict[str, int]) -> Dict[str,
                                    "so it's slightly optimistic")}
 
 
-def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0) -> Dict[str, str]:
+def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0, min_n: int = MIN_N) -> Dict[str, str]:
     """Adds baseline:* setups built from the single models. Returns notes about them."""
     singles = [s for s in probs if s.startswith("single:")]
     notes = {}
@@ -188,10 +193,10 @@ def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0) -> Dic
         for name, fn in pools.items():
             probs[name][qid] = fn(ps) if len(ps) >= 2 else None
 
-    # Only models that answered at least half as many questions as the most-answering
-    # model are eligible, so a model that answered 2 easy questions can't "win".
+    # Only models that answered at least MIN_N questions, and at least half as many as the
+    # most-answering model, are eligible, so a model that answered 2 easy questions can't "win".
     answered_n = {s: sum(p is not None for p in probs[s].values()) for s in singles}
-    min_n = max(answered_n.values()) / 2
+    min_n = max(min_n, max(answered_n.values()) / 2)
     best, best_score = None, None
     for s in singles:
         answered = [(p, outcomes[q]) for q, p in probs[s].items() if p is not None]
@@ -199,6 +204,8 @@ def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0) -> Dic
             score = mean_brier([p for p, _ in answered], [y for _, y in answered])
             if best_score is None or score < best_score:
                 best, best_score = s, score
+    if not best:
+        notes["baseline:best_single"] = f"not reported: no single model answered {min_n:g} or more questions"
     if best:
         probs["baseline:best_single"] = dict(probs[best])
         notes["baseline:best_single"] = (f"= {best} (lowest Brier on these same questions, "
@@ -218,11 +225,13 @@ def _round(x: Optional[float], digits: int = 4):
 
 
 def market_skill(ps: Dict[str, Optional[float]], market: Dict[str, Optional[float]], outcomes: Dict[str, int],
-                 n_boot: int = 1000, seed: int = 0) -> Optional[Dict]:
+                 n_boot: int = 1000, seed: int = 0, min_n: int = MIN_N) -> Optional[Dict]:
     """Brier skill vs the market, 1 - Brier(setup) / Brier(market), on the questions both answered,
-    with a 95% paired bootstrap interval. Positive means better than the market."""
+    with a 95% paired bootstrap interval. Positive means better than the market.
+    None with fewer than min_n shared questions, or if the market was perfect on them; the interval
+    is blank if some resample has a perfect market (the ratio is undefined there)."""
     qs = [q for q in outcomes if ps.get(q) is not None and market.get(q) is not None]
-    if len(qs) < 2:
+    if len(qs) < min_n:
         return None
     pairs = [(brier(ps[q], outcomes[q]), brier(market[q], outcomes[q])) for q in qs]
     ref = sum(m for _, m in pairs)
@@ -236,12 +245,15 @@ def market_skill(ps: Dict[str, Optional[float]], market: Dict[str, Optional[floa
         if sample_ref:
             boots.append(1 - sum(s for s, _ in sample) / sample_ref)
     boots.sort()
-    return {"n_vs_market": len(qs), "skill_vs_market_paired": round(1 - sum(s for s, _ in pairs) / ref, 4),
-            "skill_ci_low": round(boots[int(0.025 * len(boots))], 4),
-            "skill_ci_high": round(boots[int(0.975 * len(boots)) - 1], 4)}
+    row = {"n_vs_market": len(qs), "skill_vs_market_paired": round(1 - sum(s for s, _ in pairs) / ref, 4),
+           "skill_ci_low": "", "skill_ci_high": ""}
+    if len(boots) == n_boot:  # undefined if any resample had a perfect market, so left blank
+        row["skill_ci_low"], row["skill_ci_high"] = round(boots[int(0.025 * n_boot)], 4), round(boots[int(0.975 * n_boot) - 1], 4)
+    return row
 
 
-def score_table(probs: Probs, outcomes: Dict[str, int], n_bins: int = 10, n_boot: int = 1000) -> List[Dict]:
+def score_table(probs: Probs, outcomes: Dict[str, int], n_bins: int = 10, n_boot: int = 1000,
+                min_n: int = MIN_N) -> List[Dict]:
     common = common_questions(probs, outcomes)
     market = probs.get("market", {})
     rows = []
@@ -270,11 +282,12 @@ def score_table(probs: Probs, outcomes: Dict[str, int], n_bins: int = 10, n_boot
             row["log_common"] = round(mean_log_score([ps[q] for q in common], c_ys), 4)
             row["accuracy_common"] = round(accuracy([ps[q] for q in common], c_ys), 4)
             row["auroc_common"] = _round(auroc([ps[q] for q in common], c_ys))
-            if setup != "market" and market and all(market.get(q) is not None for q in common):
+            if (setup != "market" and market and len(common) >= min_n
+                    and all(market.get(q) is not None for q in common)):
                 ref = mean_brier([market[q] for q in common], c_ys)
                 row["skill_vs_market"] = round(1 - row["brier_common"] / ref, 4) if ref else ""
         if setup != "market" and market:
-            row.update(market_skill(ps, market, outcomes, n_boot) or {})
+            row.update(market_skill(ps, market, outcomes, n_boot, min_n=min_n) or {})
         rows.append(row)
     return rows
 
