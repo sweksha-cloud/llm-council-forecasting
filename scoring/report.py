@@ -83,12 +83,16 @@ def load(question_files, forecast_files, which_set="all", prompt_id=None, id_pre
     probs: Probs = defaultdict(dict)
     members: Dict[Tuple[str, str], List[str]] = {}
     forecast_price: Dict[str, float] = {}
+    failed = set()  # (setup, qid) whose kept row is a failed call ("ERROR: …"); a retry replaces it
     for f in _read(forecast_files):
         qid, setup = f["question_id"], f["setup"]
         if qid not in outcomes or (prompt_id and f.get("prompt_id") != prompt_id):
             continue
-        if qid in probs[setup]:
+        if qid in probs[setup] and (setup, qid) not in failed:
             continue  # first (locked) forecast wins
+        failed.discard((setup, qid))
+        if (f.get("raw_response") or "").startswith("ERROR:"):
+            failed.add((setup, qid))
         probs[setup][qid] = _float(f.get("probability"))
         if f.get("members"):
             members[(setup, qid)] = json.loads(f["members"])

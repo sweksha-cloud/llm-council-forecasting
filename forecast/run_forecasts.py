@@ -12,6 +12,12 @@ Rows are only ever appended. Re-running skips (question, setup, prompt) rows
 that already exist, so an interrupted run resumes where it stopped and a
 locked forecast is never redone. A reply that doesn't contain a usable
 probability is recorded as an abstention, never as a made-up number.
+A failed call (raw_response "ERROR: …", e.g. Ollama was down) is retried on the
+next run; scoring uses the retry in its place.
+
+Settled and contamination questions are asked "as of" their price date, which is
+before they closed. One without a price date, or priced on/after its close, is
+skipped rather than asked with a date that would leak the answer.
 
 Run from the repo root (on the GPU server, where Ollama is running):
   python3 -m forecast.run_forecasts --set live --lock \\
@@ -54,6 +60,8 @@ PROB_RE = re.compile(r'"?probability"?\s*[:=]\s*"?([0-9]*\.?[0-9]+)\s*(%?)', re.
 
 
 def _normalise(value: Any, percent: bool = False) -> Optional[float]:
+    if isinstance(value, str) and value.strip().endswith("%"):  # "70%"
+        value, percent = value.strip()[:-1], True
     try:
         p = float(value)
     except (TypeError, ValueError):
@@ -169,7 +177,24 @@ def load_existing(path: Path) -> Dict[Tuple[str, str, str], Dict[str, str]]:
     if not path.exists():
         return {}
     with path.open(newline="", encoding="utf-8") as f:
-        return {(r["question_id"], r["setup"], r["prompt_id"]): r for r in csv.DictReader(f)}
+        # failed calls don't count as done, so they're retried
+        return {(r["question_id"], r["setup"], r["prompt_id"]): r for r in csv.DictReader(f)
+                if not is_error(r.get("raw_response"))}
+
+
+def is_error(raw: Optional[str]) -> bool:
+    return (raw or "").startswith("ERROR:")
+
+
+def as_of_date(q: Dict[str, str], today: str) -> Optional[str]:
+    """The date the model is told it is. Live: today. Settled/contamination: the price date,
+    or None (skip) if there isn't one before the close, since any later date leaks the answer."""
+    if q.get("set") == "live":
+        return today
+    priced, close = (q.get("price_time") or "")[:10], (q.get("resolution_date") or "")[:10]
+    if not priced or (close and priced >= close):
+        return None
+    return priced
 
 
 def append_rows(path: Path, rows: List[Dict[str, Any]]) -> None:
@@ -215,7 +240,10 @@ def run(args) -> None:
         # Settled questions are asked "as of" the day their market price was taken,
         # so the model isn't told a date after the question closed.
         backtest = q.get("set") != "live"
-        as_of = (q.get("price_time") or today)[:10] if backtest else today
+        as_of = as_of_date(q, today)
+        if as_of is None:
+            print(f"[{i}/{len(questions)}] SKIPPED, no price date before close: {qid}")
+            continue
         block = prompts.question_block(q["question_text"], q["resolution_date"][:10],
                                        q.get("resolution_criteria", ""), as_of)
         needed_single = [m for m in args.models if (qid, f"single:{m}", prompts.PROMPT_ID) not in existing]
