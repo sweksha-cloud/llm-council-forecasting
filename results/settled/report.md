@@ -8,8 +8,8 @@ Resolved questions scored: **362** (set: settled). Lower Brier/log score is bett
 
 | setup | questions | answered | coverage | brier | log_score | accuracy | ece | sharpness | auroc | balanced_accuracy | mcc | brier_abstain_0.5 | common_n | brier_common | log_common | accuracy_common | auroc_common | skill_vs_market | n_vs_market | skill_vs_market_paired | skill_ci_low | skill_ci_high |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| baseline:always_no | 362 | 362 | 1.0 | 0.4779 | 6.6024 | 0.5221 | 0.4779 | 0.5 | 0.5 | 0.5 | 0.0 | 0.4779 | 360 | 0.475 | 6.5624 | 0.525 | 0.5 | -2.2916 | 360 | -2.2916 | -2.9201 | -1.7949 |
-| baseline:base_rate | 362 | 362 | 1.0 | 0.2495 | 0.6922 | 0.5221 | 0.0 | 0.0221 | 0.5 | 0.5 | 0.0 | 0.2495 | 360 | 0.2494 | 0.6919 | 0.525 | 0.5 | -0.7283 | 360 | -0.7281 | -1.0098 | -0.501 |
+| baseline:always_no | 362 | 362 | 1.0 | 0.4779 | 6.6024 | 0.5221 | 0.4779 | 0.5 | 0.5 | 0.5 | 0.0 | 0.4779 | 360 | 0.475 | 6.5624 | 0.525 | 0.5 | -2.2916 | 360 | -2.2916 | -2.9038 | -1.7961 |
+| baseline:base_rate | 362 | 362 | 1.0 | 0.2495 | 0.6922 | 0.5221 | 0.0 | 0.0221 | 0.5 | 0.5 | 0.0 | 0.2495 | 360 | 0.2494 | 0.6919 | 0.525 | 0.5 | -0.7283 | 360 | -0.7281 | -1.034 | -0.4987 |
 | market | 362 | 360 | 0.994 | 0.1443 | 0.4506 | 0.7875 | 0.0744 | 0.2992 | 0.878 | 0.7867 | 0.5784 | 0.1449 | 360 | 0.1443 | 0.4506 | 0.7875 | 0.878 |  |  |  |  |  |
 
 - `baseline:always_no` = 0% on every question; the accuracy any setup gets just by saying No
@@ -29,6 +29,8 @@ Above 0.5 is a Yes call, below a No call, exactly 0.5 no call. `precision`: shar
 
 
 ## Council vs baselines (paired Brier difference, negative = council better)
+
+Bootstrap resamples within each source, so the source mix is fixed. Per-source results follow.
 
 _none_
 

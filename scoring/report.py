@@ -176,9 +176,17 @@ def add_reference_baselines(probs: Probs, outcomes: Dict[str, int]) -> Dict[str,
                                    "so it's slightly optimistic")}
 
 
-def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0, min_n: int = MIN_N) -> Dict[str, str]:
-    """Adds baseline:* setups built from the single models. Returns notes about them."""
-    singles = [s for s in probs if s.startswith("single:")]
+def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0, min_n: int = MIN_N,
+                  members: Optional[Dict[Tuple[str, str], List[str]]] = None) -> Dict[str, str]:
+    """Adds baseline:* setups built from the single models. Returns notes about them.
+
+    If there are councils (`members`), the pools and the best single use only the models that
+    sit on a council, so "council vs pool" compares the same models. A model run only on its
+    own (e.g. deepseek-r1) is scored as a single model but kept out of the pools. Without
+    councils, every single model is used."""
+    council_models = sorted({m for ms in (members or {}).values() for m in ms})
+    singles = ([f"single:{m}" for m in council_models if f"single:{m}" in probs] if council_models
+               else [s for s in probs if s.startswith("single:")])
     notes = {}
     if len(singles) < 2:
         return notes
@@ -206,6 +214,8 @@ def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0, min_n:
                 best, best_score = s, score
     if not best:
         notes["baseline:best_single"] = f"not reported: no single model answered {min_n:g} or more questions"
+    if council_models and len(singles) < len([s for s in probs if s.startswith("single:")]):
+        notes["baseline:mean"] = "and the other pools use only council members: " + ", ".join(council_models)
     if best:
         probs["baseline:best_single"] = dict(probs[best])
         notes["baseline:best_single"] = (f"= {best} (lowest Brier on these same questions, "
@@ -224,8 +234,27 @@ def _round(x: Optional[float], digits: int = 4):
     return "" if x is None else round(x, digits)
 
 
+def resample(items: List, keys: List[str], rng: random.Random) -> List:
+    """One bootstrap resample, stratified: items are redrawn with replacement within each stratum
+    (e.g. source), keeping each stratum's size, so the source mix is the same in every resample.
+    With one stratum this is the same draw as rng.choices(items, k=len(items))."""
+    groups: Dict[str, List] = {}
+    for item, key in zip(items, keys):
+        groups.setdefault(key, []).append(item)
+    out: List = []
+    for key in sorted(groups):
+        out += rng.choices(groups[key], k=len(groups[key]))
+    return out
+
+
+def load_sources(question_files) -> Dict[str, str]:
+    """question_id -> source (polymarket / kalshi), the bootstrap strata."""
+    return {q["question_id"]: q.get("source") or "" for q in _read(question_files)}
+
+
 def market_skill(ps: Dict[str, Optional[float]], market: Dict[str, Optional[float]], outcomes: Dict[str, int],
-                 n_boot: int = 1000, seed: int = 0, min_n: int = MIN_N) -> Optional[Dict]:
+                 n_boot: int = 1000, seed: int = 0, min_n: int = MIN_N,
+                 strata: Optional[Dict[str, str]] = None) -> Optional[Dict]:
     """Brier skill vs the market, 1 - Brier(setup) / Brier(market), on the questions both answered,
     with a 95% paired bootstrap interval. Positive means better than the market.
     None with fewer than min_n shared questions, or if the market was perfect on them; the interval
@@ -240,7 +269,7 @@ def market_skill(ps: Dict[str, Optional[float]], market: Dict[str, Optional[floa
     rng = random.Random(seed)
     boots = []
     for _ in range(n_boot):
-        sample = rng.choices(pairs, k=len(pairs))
+        sample = resample(pairs, [(strata or {}).get(q, "") for q in qs], rng)
         sample_ref = sum(m for _, m in sample)
         if sample_ref:
             boots.append(1 - sum(s for s, _ in sample) / sample_ref)
@@ -253,7 +282,7 @@ def market_skill(ps: Dict[str, Optional[float]], market: Dict[str, Optional[floa
 
 
 def score_table(probs: Probs, outcomes: Dict[str, int], n_bins: int = 10, n_boot: int = 1000,
-                min_n: int = MIN_N) -> List[Dict]:
+                min_n: int = MIN_N, strata: Optional[Dict[str, str]] = None) -> List[Dict]:
     common = common_questions(probs, outcomes)
     market = probs.get("market", {})
     rows = []
@@ -287,7 +316,7 @@ def score_table(probs: Probs, outcomes: Dict[str, int], n_bins: int = 10, n_boot
                 ref = mean_brier([market[q] for q in common], c_ys)
                 row["skill_vs_market"] = round(1 - row["brier_common"] / ref, 4) if ref else ""
         if setup != "market" and market:
-            row.update(market_skill(ps, market, outcomes, n_boot, min_n=min_n) or {})
+            row.update(market_skill(ps, market, outcomes, n_boot, min_n=min_n, strata=strata) or {})
         rows.append(row)
     return rows
 
@@ -302,26 +331,30 @@ def _setup_order(s: str) -> Tuple[int, str]:
 # ── Paired comparisons ────────────────────────────────────────────────────────
 
 def paired_brier_diff(a: Dict[str, Optional[float]], b: Dict[str, Optional[float]],
-                      outcomes: Dict[str, int], n_boot: int = 1000, seed: int = 0) -> Optional[Dict]:
-    """Mean of Brier(a) - Brier(b) on questions both answered, with a 95% bootstrap interval.
-    Negative means `a` is better."""
+                      outcomes: Dict[str, int], n_boot: int = 1000, seed: int = 0,
+                      strata: Optional[Dict[str, str]] = None) -> Optional[Dict]:
+    """Mean of Brier(a) - Brier(b) on questions both answered, with a 95% bootstrap interval,
+    resampling within each stratum (source) when `strata` is given. Negative means `a` is better."""
     qs = [q for q in outcomes if a.get(q) is not None and b.get(q) is not None]
     if len(qs) < 2:
         return None
     diffs = [brier(a[q], outcomes[q]) - brier(b[q], outcomes[q]) for q in qs]
     rng = random.Random(seed)
-    boots = sorted(statistics.fmean(rng.choices(diffs, k=len(diffs))) for _ in range(n_boot))
+    keys = [(strata or {}).get(q, "") for q in qs]
+    boots = sorted(statistics.fmean(resample(diffs, keys, rng)) for _ in range(n_boot))
     return {"n": len(qs), "mean_diff": round(statistics.fmean(diffs), 4),
             "ci_low": round(boots[int(0.025 * n_boot)], 4), "ci_high": round(boots[int(0.975 * n_boot) - 1], 4)}
 
 
-def comparison_table(probs: Probs, outcomes: Dict[str, int], n_boot: int) -> List[Dict]:
+def comparison_table(probs: Probs, outcomes: Dict[str, int], n_boot: int,
+                     strata: Optional[Dict[str, str]] = None) -> List[Dict]:
     councils = [s for s in probs if s.startswith("council:")]
-    refs = [r for r in ("market", "baseline:best_single", "baseline:mean", "baseline:always_no") if r in probs]
+    refs = [r for r in ("market", "baseline:best_single", "baseline:mean", "baseline:logit_pool",
+                        "baseline:always_no") if r in probs]
     rows = []
     for c in councils:
         for r in refs:
-            res = paired_brier_diff(probs[c], probs[r], outcomes, n_boot)
+            res = paired_brier_diff(probs[c], probs[r], outcomes, n_boot, strata=strata)
             if res:
                 verdict = ("council better" if res["ci_high"] < 0 else
                            "council worse" if res["ci_low"] > 0 else "no clear difference")
@@ -447,12 +480,17 @@ def run(args) -> None:
     if not outcomes:
         print("No resolved questions to score yet.")
         return
-    notes = add_baselines(probs, outcomes, args.extremize_a)
+    notes = add_baselines(probs, outcomes, args.extremize_a, members=members)
     notes.update(add_reference_baselines(probs, outcomes))
-    scores = score_table(probs, outcomes, args.bins, args.bootstrap)
+    strata = load_sources(args.questions)
+    scores = score_table(probs, outcomes, args.bins, args.bootstrap, strata=strata)
     truth = ground_truth_table(probs, outcomes)
     judged = judge_table(probs, load_judge_scores(args.forecasts, outcomes, args.prompt_id), outcomes)
-    comps = comparison_table(probs, outcomes, args.bootstrap)
+    comps = comparison_table(probs, outcomes, args.bootstrap, strata=strata)
+    sources = sorted({strata.get(q, "") for q in outcomes})
+    by_source = [] if len(sources) < 2 else [
+        {"source": src, **row} for src in sources
+        for row in comparison_table(probs, {q: y for q, y in outcomes.items() if strata.get(q, "") == src}, args.bootstrap)]
     decomp, bins = calibration_tables(probs, outcomes, args.bins)
     disagree = disagreement_table(probs, members, outcomes)
     contam = split_table(probs, outcomes, load_resolution_dates(args.questions, outcomes),
@@ -505,7 +543,13 @@ def run(args) -> None:
                "allows for the older questions being easier; clearly negative points to recall. Cutoffs: "
                "`scoring/contamination.py` (stated cutoff, else release date; councils use their latest member).\n",
                md_table(contam)]
-    md += ["\n## Council vs baselines (paired Brier difference, negative = council better)\n", md_table(comps),
+    md += ["\n## Council vs baselines (paired Brier difference, negative = council better)\n",
+           "Bootstrap resamples within each source, so the source mix is fixed. Per-source results follow.\n",
+           md_table(comps)]
+    if by_source:
+        write_csv(out / "comparisons_by_source.csv", by_source)
+        md += ["\n## Council vs baselines, by source\n", md_table(by_source)]
+    md += [
            "\n## Murphy decomposition (Brier = reliability − resolution + uncertainty)\n",
            "Each row uses the questions that setup answered (see `n`), so rows with different `n` "
            "aren't directly comparable; compare them on `brier_common` above.\n", md_table(decomp),
@@ -520,7 +564,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--questions", nargs="+", default=[str(ROOT / "data" / "questions.csv")])
     ap.add_argument("--forecasts", nargs="+", default=[str(ROOT / "data" / "forecasts.csv")])
-    ap.add_argument("--set", nargs="+", choices=["live", "settled", "contamination", "all"], default=["all"],
+    ap.add_argument("--set", nargs="+", choices=["live", "settled", "settled-ext", "contamination", "all"], default=["all"],
                     help="one or more question sets, e.g. --set settled contamination")
     ap.add_argument("--prompt-id", default=None, help="only forecasts made with this prompt version")
     ap.add_argument("--id-prefix", default=None, help="only questions whose id starts with this, e.g. aye-new:")

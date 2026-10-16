@@ -201,3 +201,19 @@ def test_skill_interval_blank_when_a_resample_has_a_perfect_market():
     # Brier: model 0.01 on each question, market 0.0001 on one -> 1 - 0.40 / 0.0001 = -3999
     assert res["skill_vs_market_paired"] == approx(-3999.0)
     assert res["skill_ci_low"] == "" and res["skill_ci_high"] == ""
+
+
+def test_pools_use_council_members_only():
+    # a and b sit on the council; c is a single model run on its own (like deepseek-r1)
+    outcomes = {f"q{i}": i % 2 for i in range(40)}
+    probs = {"single:a": {q: 0.8 if y else 0.2 for q, y in outcomes.items()},
+             "single:b": {q: 0.6 if y else 0.4 for q, y in outcomes.items()},
+             "single:c": {q: 1.0 if y else 0.0 for q, y in outcomes.items()}}
+    members = {("council:chair=a", q): ["a", "b"] for q in outcomes}
+    notes = add_baselines(probs, outcomes, members=members)
+    assert probs["baseline:mean"]["q1"] == approx(0.7)                 # (0.8 + 0.6) / 2, c left out
+    assert probs["baseline:best_single"] == probs["single:a"]          # c is better but isn't a member
+    assert "council members: a, b" in notes["baseline:mean"]
+    probs = {k: v for k, v in probs.items() if k.startswith("single:")}
+    add_baselines(probs, outcomes)                                       # no councils: every single model
+    assert probs["baseline:mean"]["q1"] == approx((0.8 + 0.6 + 1.0) / 3)

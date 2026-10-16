@@ -1,4 +1,4 @@
 setup,answered,yes_calls,no_calls,no_call_0.5,tp,fp,tn,fn,precision,recall,f1,balanced_accuracy,mcc
-baseline:always_no,515,0,515,0,0,0,290,225,,0.0,0.0,0.5,0.0
-baseline:base_rate,515,0,515,0,0,0,290,225,,0.0,0.0,0.5,0.0
-market,513,197,313,3,161,36,254,59,0.8173,0.7318,0.7722,0.8038,0.6181
+baseline:always_no,1195,0,1195,0,0,0,688,507,,0.0,0.0,0.5,0.0
+baseline:base_rate,1195,0,1195,0,0,0,688,507,,0.0,0.0,0.5,0.0
+market,1193,447,740,6,330,117,569,171,0.7383,0.6587,0.6962,0.7441,0.4976

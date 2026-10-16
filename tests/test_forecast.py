@@ -156,3 +156,18 @@ def test_polymarket_settled_price_anchored_before_scheduled_close():
     row = polymarket_event_rows(ev, 0, set())[0]
     assert row["_close"].isoformat() == "2026-07-31T23:59:00+00:00"   # not the later resolution time
     assert row["resolved_at"] == "2026-08-12T18:04:28Z"
+
+
+def test_polymarket_market_dates_must_fall_in_the_window():
+    from datetime import datetime, timezone
+    from collect.collect_settled import polymarket_event_rows
+    utc = lambda *a: datetime(*a, tzinfo=timezone.utc)
+    market = lambda mid, end, closed: {"id": mid, "question": f"Q{mid}?", "outcomes": '["Yes", "No"]',
+                                       "outcomePrices": '["0", "1"]', "clobTokenIds": '["t"]', "volumeNum": 1e6,
+                                       "closed": True, "endDate": end, "closedTime": closed}
+    ev = {"id": 1, "slug": "x", "tags": [], "markets": [
+        market("in", "2025-09-30T00:00:00Z", "2025-10-01 00:00:00+00"),
+        market("early", "2025-09-30T00:00:00Z", "2025-02-21 00:00:00+00"),   # resolved before the window
+        market("late", "2026-12-31T00:00:00Z", "2026-12-31 00:00:00+00")]}   # closes after the window
+    rows = polymarket_event_rows(ev, 0, set(), utc(2025, 7, 1), utc(2026, 6, 30, 23, 59, 59))
+    assert [r["question_id"] for r in rows] == ["polymarket:in"]

@@ -96,7 +96,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--questions", default=str(ROOT / "data" / "questions.csv"))
     ap.add_argument("--forecasts", nargs="+", default=[str(ROOT / "data" / "forecasts.csv")])
-    ap.add_argument("--set", choices=["live", "settled", "contamination", "all"], default="all")
+    ap.add_argument("--set", choices=["live", "settled", "settled-ext", "contamination", "all"], default="all")
     ap.add_argument("--resolved-only", action="store_true", help="only questions with a known outcome")
     ap.add_argument("--prompt-id", default=None)
     ap.add_argument("--out", default=str(ROOT / "results" / "latest" / "chairman_table.csv"))
