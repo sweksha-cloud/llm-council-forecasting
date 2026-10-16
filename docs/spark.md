@@ -57,7 +57,7 @@ deepseek-r1:8b (the Qwen3-based build on spark) ignores `think=false` and reason
 
 ## Outcome updates
 
-A cron job on spark runs `python3 -m collect.update_outcomes` every Monday and Thursday at 9am (log: `logs/outcomes_cron.log`). That makes spark's `data/questions.csv` the up-to-date copy: copy it back before committing outcomes. Remove the job with `crontab -e`.
+A cron job on spark runs `python3 -m collect.update_outcomes` every Monday and Thursday at 9am (log: `logs/outcomes_cron.log`). That makes spark's `data/questions.csv` the up-to-date copy for live outcomes. Bring them back with `SPARK_USER=<username> bash scripts/sync_live.sh` (add `--dry-run` first to see what changes): it copies only new live outcomes into the laptop's file, rescores the live set, rebuilds the dashboard and commits on a `data/live-outcomes-<date>` branch. Remove the cron job with `crontab -e`.
 
 ## Getting results back
 
