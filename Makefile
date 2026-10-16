@@ -4,7 +4,7 @@
 
 PY ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 
-.PHONY: setup test aye-prices import results dashboard reproduce clean
+.PHONY: setup test aye-prices import results dashboard reproduce clean postrun
 
 setup:            ## create .venv and install pinned dependencies
 	python3 -m venv .venv
@@ -36,6 +36,9 @@ results:          ## all results tables (results/*/)
 
 dashboard:        ## dashboard/index.html, built from the same data files
 	$(PY) -m dashboard.build
+
+postrun:          ## check spark's forecasts, merge them, rebuild: make postrun SPARK=data/tmp/spark_forecasts.csv
+	$(PY) -m forecast.postrun $(SPARK) --log logs/cmds_spark.log
 
 reproduce: test import results dashboard   ## rebuild everything and confirm nothing committed changed
 	git diff --exit-code -- data/imported results && echo "Reproduced: every committed result matches."

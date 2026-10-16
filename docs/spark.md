@@ -67,7 +67,8 @@ mkdir -p data/tmp
 scp <username>@100.110.180.56:llm-council-forecasting/data/forecasts.csv data/tmp/spark_forecasts.csv
 scp <username>@100.110.180.56:llm-council-forecasting/data/questions.csv data/
 scp <username>@100.110.180.56:llm-council-forecasting/logs/cmds_spark.log logs/
-python3 -m forecast.merge_forecasts data/tmp/spark_forecasts.csv
-git add data/forecasts.csv data/questions.csv logs/cmds_spark.log && git commit -m "..." && git push
+make postrun SPARK=data/tmp/spark_forecasts.csv     # check, merge, make results + dashboard
+git checkout -b data/settled-results && git add data/forecasts.csv data/questions.csv logs/cmds_spark.log results && git commit -m "..."
 ```
+`make postrun` checks the spark file first (every queued setup answered every eligible question, failed calls, abstention and malformed-reply rates, one prompt version, council members, market prices match `questions.csv`, no seed/temperature overrides in the log) and stops with a report, merging nothing, if anything is off. `python3 -m forecast.postrun data/tmp/spark_forecasts.csv --dry-run` only checks. Variance runs live in their own files: copy `data/variance/seed*.csv` back as they are.
 Merge instead of overwriting: the laptop's `data/forecasts.csv` may hold rows spark's copy doesn't (e.g. from a run written to a separate file). The merge only appends rows it doesn't already have, so locked forecasts never change.
