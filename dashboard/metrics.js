@@ -91,30 +91,13 @@ const Metrics = (() => {
     };
   }
 
-  // Paired Brier difference a - b with a 95% bootstrap interval (seeded, so it's stable on reload).
-  function pairedDiff(pairs, nBoot = 1000, seed = 7) {
-    if (pairs.length < 2) return null;
-    const diffs = pairs.map(([a, b, y]) => brier(a, y) - brier(b, y));
-    let s = seed >>> 0;
-    const rand = () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1);
-      t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-    const boots = [];
-    for (let b = 0; b < nBoot; b++) {
-      let sum = 0;
-      for (let i = 0; i < diffs.length; i++) sum += diffs[Math.floor(rand() * diffs.length)];
-      boots.push(sum / diffs.length);
-    }
-    boots.sort((x, y) => x - y);
-    return { n: pairs.length, diff: mean(diffs), lo: boots[Math.floor(0.025 * nBoot)], hi: boots[Math.floor(0.975 * nBoot) - 1] };
-  }
-
   const meanPool = (ps) => mean(ps);
   const medianPool = (ps) => {
     const s = [...ps].sort((a, b) => a - b), m = s.length >> 1;
     return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
   };
 
-  return { MIN_N, brier, logScore, hit, bins, ece, auroc, confusion, balancedAccuracy, mcc, skill, score, pairedDiff, meanPool, medianPool };
+  return { MIN_N, brier, logScore, hit, bins, ece, auroc, confusion, balancedAccuracy, mcc, skill, score, meanPool, medianPool };
 })();
 
 if (typeof module !== "undefined") module.exports = Metrics;

@@ -178,12 +178,46 @@ code { font: 13px var(--mono); background: var(--sunken); padding: 1px 5px; bord
     <textarea id="csv-fallback" hidden rows="6" style="width:100%;font:12px var(--mono)" aria-label="CSV text"></textarea>
   </section>
 
-  <section aria-labelledby="h-vs">
+  <section aria-labelledby="h-vs" id="sec-vs" hidden>
     <div class="section-head">
-      <h2 id="h-vs">Council against its references</h2>
-      <p>Paired Brier difference on the questions both answered. Negative means the council is better. The interval is a 95% bootstrap.</p>
+      <h2 id="h-vs">Pre-registered comparisons</h2>
+      <p>Each council against, in this fixed order: the mean and logit pools of its own members, its best member, the market, and always saying No. Paired Brier difference on the questions both answered; negative means the council is better. 95% bootstrap interval, resampled within each source. Computed on the whole set by the same code as <code>results/</code>; the filters above don't apply here or below.</p>
     </div>
     <div class="table-wrap"><table id="vs"></table></div>
+    <div id="vs-source-wrap" hidden><h3>By source</h3><div class="table-wrap"><table id="vs-source"></table></div></div>
+  </section>
+
+  <section aria-labelledby="h-contam" id="sec-contam" hidden>
+    <div class="section-head">
+      <h2 id="h-contam">Contamination split</h2>
+      <p>Brier on questions resolved before vs after each setup's training cutoff, across all backtest sets. Gap = before − after (negative = better on questions it might remember). Excess gap subtracts the market's own gap on the same questions, so older questions being easier doesn't count as recall.</p>
+    </div>
+    <div class="table-wrap"><table id="contam"></table></div>
+  </section>
+
+  <section aria-labelledby="h-robust" id="sec-robust" hidden>
+    <div class="section-head">
+      <h2 id="h-robust">Robustness</h2>
+      <p>The same comparisons inside groups of questions. Groups under 30 questions get no interval.</p>
+    </div>
+    <div class="controls"><label>Split by <select id="robust-cut"></select></label></div>
+    <div class="table-wrap"><table id="robust"></table></div>
+  </section>
+
+  <section aria-labelledby="h-recal" id="sec-recal" hidden>
+    <div class="section-head">
+      <h2 id="h-recal">Recalibration</h2>
+      <p>Extremizing and Platt scaling, each fitted on one half of the questions and tested on the other, so every Brier here is out of sample. A change below 0 means recalibration helps; <i>a</i> above 1 means the setup was underconfident.</p>
+    </div>
+    <div class="table-wrap"><table id="recal"></table></div>
+  </section>
+
+  <section aria-labelledby="h-var" id="sec-var" hidden>
+    <div class="section-head">
+      <h2 id="h-var">Variance across seeds</h2>
+      <p>The comparisons on the fixed 200-question subset: the main temperature-0 run (T=0) and three runs at temperature 0.7. "Same sign" counts the seeds that agree with T=0 on which side is better.</p>
+    </div>
+    <div class="table-wrap"><table id="var"></table></div>
   </section>
 
   <section aria-labelledby="h-cal">
@@ -256,7 +290,7 @@ const state = {
   ds: DATA.datasets.find((d) => d.key === store.get("ds"))?.key
     || [...DATA.datasets].sort((a, b) => b.questions.filter((q) => q.y != null).length - a.questions.filter((q) => q.y != null).length)[0].key,
   source: "all", topic: "all", month: "all", mode: "answered",
-  sort: { key: "brier", dir: 1 }, picked: null, page: 0, search: "", outcome: "all", open: null,
+  sort: { key: "brier", dir: 1 }, picked: null, cut: null, page: 0, search: "", outcome: "all", open: null,
 };
 const PAGE = 25;
 const SERIES = ["--s1", "--s2", "--s3"];
@@ -407,36 +441,62 @@ function renderBoard(rows) {
   $("board").innerHTML = head + `<tbody>${body || `<tr><td colspan="${cols.length}">No resolved questions match these filters.</td></tr>`}</tbody>`;
 }
 
-function renderVs(rows) {
-  const resolved = rows.filter((r) => r.y != null);
-  const councils = M.setups.filter((s) => s.kind === "council");
-  const out = [];
-  for (const c of councils) {
-    const refs = [];
-    const market = M.setups.find((s) => s.id === "market");
-    if (market) refs.push({ label: "Market price", s: market });
-    const members = (c.members || []).map((i) => M.setups.find((s) => s.idx === i)).filter(Boolean);
-    let best = null, bestB = Infinity;
-    for (const m of members) {
-      const ans = resolved.filter((r) => m.get(r) != null);
-      if (ans.length < Metrics.MIN_N) continue;
-      const b = Metrics.score(ans.map(m.get), ans.map((r) => r.y)).brier;
-      if (b < bestB) { bestB = b; best = m; }
-    }
-    if (best) refs.push({ label: `Best member (${best.label})`, s: best });
-    const mean = M.setups.find((s) => s.id === "baseline:mean");
-    if (mean) refs.push({ label: "Mean of single models", s: mean });
-    for (const ref of refs) {
-      const pairs = resolved.filter((r) => c.get(r) != null && ref.s.get(r) != null).map((r) => [c.get(r), ref.s.get(r), r.y]);
-      const d = Metrics.pairedDiff(pairs);
-      if (!d) continue;
-      const v = d.hi < 0 ? ["better", "Council better"] : d.lo > 0 ? ["worse", "Council worse"] : ["unclear", "No clear difference"];
-      out.push(`<tr><td><span class="kind council">council</span>${esc(c.label)}</td><td>${esc(ref.label)}</td><td class="r num">${d.n}</td>
-        <td class="r num">${d.diff >= 0 ? "+" : ""}${f3(d.diff)}</td><td class="r num">${f3(d.lo)} to ${f3(d.hi)}</td><td><span class="verdict ${v[0]}">${v[1]}</span></td></tr>`);
-    }
+const REF_LABEL = { "baseline:mean": "Mean pool of its members", "baseline:logit_pool": "Logit pool of its members",
+  "baseline:best_single": "Best member", "market": "Market price", "baseline:always_no": "Always No",
+  "baseline:base_rate": "Base rate" };
+const nameOf = (id) => REF_LABEL[id] || M.setups.find((s) => s.id === id)?.label || id;
+const signed = (x) => (x == null || x === "" ? "–" : (x >= 0 ? "+" : "") + Number(x).toFixed(3));
+const num = (x, d = 3) => (x == null || x === "" ? "–" : Number(x).toFixed(d));
+const ci = (lo, hi) => (lo == null || lo === "" ? "–" : `${num(lo)} to ${num(hi)}`);
+function verdictCell(v) {
+  if (!v) return "<td>–</td>";
+  const cls = v === "council better" ? "better" : v === "council worse" ? "worse" : "unclear";
+  return `<td><span class="verdict ${cls}">${esc(v[0].toUpperCase() + v.slice(1))}</span></td>`;
+}
+function table(el, head, rows) {
+  $(el).innerHTML = `<thead><tr>${head.map(([t, r]) => `<th class="${r ? "r" : ""}">${t}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody>`;
+}
+function comparisonRows(list, extra = []) {
+  return list.map((r) => `<tr>${extra.map((k) => `<td>${esc(r[k])}</td>`).join("")}<td><span class="kind council">council</span>${esc(nameOf(r.council))}</td>
+    <td>${esc(nameOf(r.versus))}</td><td class="r num">${r.n}</td><td class="r num">${signed(r.mean_diff)}</td>
+    <td class="r num">${ci(r.ci_low, r.ci_high)}</td>${verdictCell(r.verdict)}</tr>`);
+}
+const COMP_HEAD = [["Council"], ["Against"], ["Questions", 1], ["Brier difference", 1], ["95% interval", 1], ["Verdict"]];
+
+function renderAnalyses() {
+  const A = current().analyses || {};
+  $("sec-vs").hidden = !A.comparisons;
+  if (A.comparisons) {
+    table("vs", COMP_HEAD, comparisonRows(A.comparisons));
+    $("vs-source-wrap").hidden = !A.by_source;
+    if (A.by_source) table("vs-source", [["Source"], ...COMP_HEAD], comparisonRows(A.by_source, ["source"]));
   }
-  $("vs").innerHTML = `<thead><tr><th>Council</th><th>Against</th><th class="r">Questions</th><th class="r">Brier difference</th><th class="r">95% interval</th><th>Verdict</th></tr></thead>
-    <tbody>${out.join("") || `<tr><td colspan="6">Needs at least two resolved questions answered by both. ${councils.length ? "" : "This set has no council results."}</td></tr>`}</tbody>`;
+  $("sec-contam").hidden = !A.contamination;
+  if (A.contamination) table("contam", [["Setup"], ["Cutoff"], ["Before", 1], ["After", 1], ["Brier before", 1], ["Brier after", 1],
+    ["Gap", 1], ["95% interval", 1], ["Excess gap", 1]], A.contamination.map((r) => `<tr><td>${esc(nameOf(r.setup))}</td>
+    <td>${esc(r.cutoff)} <small>${esc(r.basis)}</small></td><td class="r num">${r.n_before}</td><td class="r num">${r.n_after}</td>
+    <td class="r num">${num(r.brier_before)}</td><td class="r num">${num(r.brier_after)}</td><td class="r num">${signed(r.gap)}</td>
+    <td class="r num">${ci(r.gap_ci_low, r.gap_ci_high)}</td><td class="r num">${signed(r.excess_gap)}</td></tr>`));
+  $("sec-robust").hidden = !A.robustness;
+  if (A.robustness) {
+    const cuts = [...new Set(A.robustness.map((r) => r.cut))];
+    if (!cuts.includes(state.cut)) state.cut = cuts[0];
+    $("robust-cut").innerHTML = cuts.map((c) => `<option value="${esc(c)}"${c === state.cut ? " selected" : ""}>${esc(c)}</option>`).join("");
+    table("robust", [["Group"], ...COMP_HEAD], comparisonRows(A.robustness.filter((r) => r.cut === state.cut), ["group"]));
+  }
+  $("sec-recal").hidden = !A.recalibration;
+  if (A.recalibration) table("recal", [["Setup"], ["Questions", 1], ["Brier, raw", 1], ["Extremized", 1], ["Platt", 1],
+    ["Platt − raw", 1], ["95% interval", 1], ["a (two halves)", 1]], A.recalibration.map((r) => `<tr><td>${esc(nameOf(r.setup))}</td>
+    <td class="r num">${r.n}</td><td class="r num">${num(r.brier_raw)}</td><td class="r num">${num(r.brier_extremized)}</td>
+    <td class="r num">${num(r.brier_platt)}</td><td class="r num">${signed(r.platt_minus_raw)}</td>
+    <td class="r num">${ci(r.platt_ci_low, r.platt_ci_high)}</td><td class="r num">${num(r.a_half0, 2)}, ${num(r.a_half1, 2)}</td></tr>`));
+  $("sec-var").hidden = !A.variance;
+  if (A.variance) {
+    const runs = [...new Set(A.variance.flatMap((r) => Object.keys(r).filter((k) => k === "T=0" || k.startsWith("seed "))))];
+    table("var", [["Council"], ["Against"], ...runs.map((k) => [k, 1]), ["Same sign as T=0", 1]], A.variance.map((r) =>
+      `<tr><td>${esc(nameOf(r.council))}</td><td>${esc(nameOf(r.versus))}</td>${runs.map((k) => `<td class="r num">${signed(r[k])}</td>`).join("")}
+       <td class="r num">${esc(r.same_sign_as_T0 || "–")}</td></tr>`));
+  }
 }
 
 function defaultPicked() {
@@ -544,7 +604,7 @@ function render({ controls = false } = {}) {
   const rows = filtered();
   renderStatus(rows);
   renderBoard(rows);
-  renderVs(rows);
+  renderAnalyses();
   renderCalibration(rows);
   renderQuestions(rows);
 }
@@ -557,6 +617,7 @@ function selectDataset(key) {
 }
 
 // ── Events ──
+$("robust-cut").addEventListener("change", (e) => { state.cut = e.target.value; renderAnalyses(); });
 $("ds").addEventListener("click", (e) => { const b = e.target.closest("button[data-ds]"); if (b) selectDataset(b.dataset.ds); });
 $("mode").addEventListener("click", (e) => { const b = e.target.closest("button[data-mode]"); if (!b) return; state.mode = b.dataset.mode; render({ controls: true }); });
 for (const [id, key] of [["f-source", "source"], ["f-topic", "topic"], ["f-month", "month"]])
