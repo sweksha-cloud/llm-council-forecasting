@@ -105,7 +105,7 @@ def polymarket_candidates(start: datetime, end: datetime, min_volume: float,
             if not batch:
                 break
             for ev in batch:
-                out.extend(polymarket_event_rows(ev, min_volume, seen))
+                out.extend(polymarket_event_rows(ev, min_volume, seen, start, end))
             if len(batch) < 100 or offset >= 100 * (pages_per_chunk - 1):
                 break
             offset += 100
@@ -115,7 +115,11 @@ def polymarket_candidates(start: datetime, end: datetime, min_volume: float,
     return out
 
 
-def polymarket_event_rows(ev, min_volume, seen) -> Iterable[Dict[str, Any]]:
+def polymarket_event_rows(ev, min_volume, seen, start: Optional[datetime] = None,
+                          end: Optional[datetime] = None) -> Iterable[Dict[str, Any]]:
+    """Yes/No markets of one closed event. The API filters events by the event's end date, but a
+    market inside an event can close or resolve much earlier or later, so with a window
+    (start, end) each market's own scheduled close and resolution must both fall inside it."""
     tags = [str(t.get("label", "")) for t in (ev.get("tags") or [])]
     if {t.lower() for t in tags} & POLYMARKET_EXCLUDED_TAGS:
         return []
@@ -130,6 +134,8 @@ def polymarket_event_rows(ev, min_volume, seen) -> Iterable[Dict[str, Any]]:
         volume = to_float(m.get("volumeNum")) or 0.0
         close_dt = parse_dt(m.get("endDate"))
         resolved_dt = parse_closed_time(m.get("closedTime")) or close_dt
+        if start and end and not (close_dt and start <= close_dt <= end and start <= resolved_dt <= end):
+            continue
         if (mid in seen or not question or outcomes != ["yes", "no"] or prices not in (["1", "0"], ["0", "1"])
                 or not m.get("closed") or not tokens or close_dt is None
                 or volume < min_volume or has_excluded_phrase(question)):

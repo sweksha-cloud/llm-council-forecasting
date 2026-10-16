@@ -30,6 +30,8 @@ Above 0.5 is a Yes call, below a No call, exactly 0.5 no call. `precision`: shar
 
 ## Council vs baselines (paired Brier difference, negative = council better)
 
+Bootstrap resamples within each source, so the source mix is fixed. Per-source results follow.
+
 _none_
 
 

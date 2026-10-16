@@ -57,6 +57,8 @@ Mean judge score (1–5) for answers that turned out right vs wrong. `judge_auro
 
 ## Council vs baselines (paired Brier difference, negative = council better)
 
+Bootstrap resamples within each source, so the source mix is fixed. Per-source results follow.
+
 _none_
 
 

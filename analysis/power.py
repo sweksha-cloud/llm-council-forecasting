@@ -20,7 +20,8 @@ Questions aren't fully independent (e.g. several "ceasefire by <date>?" markets)
 effective n is smaller than the count; the design effect at the end allows for that.
 
 Usage (from the repo root):
-  python3 -m analysis.power
+  python3 -m analysis.power                              # the original 360 settled questions
+  python3 -m analysis.power --set settled settled-ext    # the full settled sample
 """
 
 import csv
@@ -65,11 +66,11 @@ def aye_sds() -> List[Tuple[str, int, float]]:
     return out
 
 
-def settled_market() -> Tuple[List[float], List[int]]:
+def settled_market(sets: Tuple[str, ...] = ("settled",)) -> Tuple[List[float], List[int]]:
     ps, ys = [], []
     with (ROOT / "data/questions.csv").open(newline="", encoding="utf-8") as f:
         for q in csv.DictReader(f):
-            if q["set"] == "settled" and q["outcome"] in ("0", "1") and q["market_price"]:
+            if q["set"] in sets and q["outcome"] in ("0", "1") and q["market_price"]:
                 ps.append(float(q["market_price"]))
                 ys.append(int(q["outcome"]))
     return ps, ys
@@ -107,9 +108,13 @@ def simulated_sds(ps: List[float], ys: List[int], sigma: float, rho: float = 0.7
 
 
 def main() -> None:
-    ps, ys = settled_market()
+    import argparse
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--set", nargs="+", default=["settled"], help="e.g. --set settled settled-ext")
+    sets = tuple(ap.parse_args().set)
+    ps, ys = settled_market(sets)
     n = len(ps)
-    print(f"Settled set: {n} questions with a market price and an outcome "
+    print(f"{' + '.join(sets)}: {n} questions with a market price and an outcome "
           f"(market Brier {statistics.fmean(brier(p, y) for p, y in zip(ps, ys)):.3f}, "
           f"{sum(ys) / n:.1%} resolved Yes)\n")
 
@@ -119,6 +124,8 @@ def main() -> None:
         print(f"Simulated forecaster with σ={sigma}: Brier {sds['model_brier']:.3f}")
         rows.append((f"Sim σ={sigma}: council vs market", n, sds["vs_market"]))
         rows.append((f"Sim σ={sigma}: council vs a member (ρ=0.7)", n, sds["vs_member"]))
+        pool = simulated_sds(ps, ys, sigma, rho=0.85)
+        rows.append((f"Sim σ={sigma}: council vs pool of its members (ρ=0.85)", n, pool["vs_member"]))
 
     print(f"| Comparison | sd(d) | MDE, n={n} | MDE, n={n}, design effect 1.5 | n for 0.01 | n for 0.02 | n for 0.05 |")
     print("|---|---|---|---|---|---|---|")
