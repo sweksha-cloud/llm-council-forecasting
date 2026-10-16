@@ -30,7 +30,7 @@ The new set has 1,611 resolved Yes/No questions, collected 15 July 2026; **33.0%
 | Base rate (0.33) | 1,611 (100%) | 0.221 | 67.0% | 0.500 | 0 |
 | **Market** | 1,572 (98%) | **0.194** | **72.2%** | **0.638** | **0.370** |
 
-Paired on the questions both answered, every council's Brier score is higher than the market's by 0.16–0.19. All three 95% bootstrap intervals exclude zero (Table 2). As Brier skill vs the market, the councils score −0.85 to −1.36: their squared error is roughly double the market's.
+Paired on the questions both answered, every council's Brier score is higher than the market's by 0.16–0.19. All three 95% bootstrap intervals exclude zero (Table 2). As Brier skill vs the market, the councils score −0.85 to −1.36: their squared error is 1.9–2.4 times the market's.
 
 ## Finding 2: the councils are no better than always saying No
 
@@ -46,7 +46,7 @@ The councils' accuracy (64–72%) brackets the 67% that "always No" gets for fre
 
 **The councils beat the single models by saying No more often, not by aggregating better.**
 - **Single models:** they call Yes on most questions they answer. Phi-3 does so on 822 of 887, and its recall on Yes events is 0.96.
-- **Councils:** they call No on 52–80% of questions.
+- **Councils:** they call No on 53–80% of questions.
 - **Why that matters:** two-thirds of questions resolve No, so moving toward No alone cuts the error rate, with or without deliberation.
 
 Balanced accuracy and MCC separate the two effects:
@@ -79,4 +79,4 @@ The judge's AUROC is 0.44–0.54 for the three councils and the largest single-m
 - **Judge self-preference.** The judge was Llama 3.1 8B, which is also a council member, one of the chairs, and a single model under evaluation. LLM judges are known to favour their own outputs (Zheng et al., 2023).
 - **Related questions.** Several markets come from the same event family, e.g. dated deadlines for the same ceasefire. The bootstrap treats questions as independent, so the intervals are somewhat too narrow. The council-vs-market gaps are large enough that this doesn't change the conclusion; the always-No comparisons were already null.
 - **Single source.** All questions are Polymarket questions from two collection dates, and topics follow what was trading then.
-- **Old set.** Under strict grading, its single models answered 2, 7 and 9 of 839 questions. No conclusion about them is possible. Its market baseline (Brier 0.194, accuracy 66.9%, n=832) matches the new set's.
+- **Old set.** Under strict grading, its single models answered 2, 7 and 9 of the 839 questions they were asked. No conclusion about them is possible. Its market baseline (Brier 0.194, accuracy 66.9%, n=832) matches the new set's.
