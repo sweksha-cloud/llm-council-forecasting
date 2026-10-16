@@ -27,13 +27,18 @@ REPO = ROOT.parent
 # Each dataset is a set of questions picked out of a questions file, plus the forecasts file for them.
 DATASETS = [
     {"key": "live", "label": "Live set", "who": "This project, Oct 2026",
-     "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": "live", "prefix": None,
+     "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": ["live"], "prefix": None,
      "note": "Probability forecasts (prompt v2), locked before the questions resolved. Scored as questions resolve."},
-    {"key": "settled", "label": "Settled set", "who": "This project, resolved Jul–Oct 2026",
-     "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": "settled", "prefix": None,
-     "note": "Asked as of the price date, 7 days before each question closed; the market is the price on that date."},
+    {"key": "settled-all", "label": "Settled + extension", "who": "This project, closing Jul 2025–Oct 2026 (pre-registered sample)",
+     "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": ["settled", "settled-ext"], "prefix": None,
+     "note": "The pre-registered sample: the original settled set plus the Polymarket extension. Asked as of the "
+             "price date, 7 days before the earlier of close and resolution; the market is the price on that date."},
+    {"key": "settled", "label": "Settled set (original)", "who": "This project, closing Jul–Oct 2026",
+     "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": ["settled"], "prefix": None,
+     "note": "The original settled questions on their own. Asked as of the price date, 7 days before the earlier "
+             "of close and resolution; the market is the price on that date."},
     {"key": "contamination", "label": "Contamination set", "who": "This project, resolved 2023–2024",
-     "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": "contamination", "prefix": None,
+     "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": ["contamination"], "prefix": None,
      "note": "Older questions, some resolved before the models' training cutoffs: better scores here than on "
              "the settled set may be memory, not forecasting. See results/backtest/contamination.csv."},
     {"key": "aye-new", "label": "Aye, new set", "who": "Aye Nyein Kyaw, Jul 2026",
@@ -89,7 +94,7 @@ def reasoning(row: Dict[str, str]) -> str:
 
 def build_dataset(ds: Dict) -> Dict:
     questions = [q for q in _read(ds["questions"])
-                 if (ds["set"] is None or q.get("set") == ds["set"])
+                 if (ds["set"] is None or q.get("set") in ds["set"])
                  and (ds["prefix"] is None or q["question_id"].startswith(ds["prefix"]))]
     by_id = {q["question_id"]: q for q in questions}
 
@@ -141,6 +146,55 @@ def build_dataset(ds: Dict) -> Dict:
             "questions": rows}
 
 
+# ── Analyses, computed by the same code as results/ (not recomputed in the page) ──
+
+COMPARISON_ORDER = ["baseline:mean", "baseline:logit_pool", "baseline:best_single", "market", "baseline:always_no"]
+BACKTEST = ["settled", "settled-ext", "contamination"]
+
+
+def _ordered(rows: List[Dict]) -> List[Dict]:
+    """Pre-registered order: each council vs the pools of its own members first, then best member, market, always No."""
+    rank = {r: i for i, r in enumerate(COMPARISON_ORDER)}
+    return sorted(rows, key=lambda r: (r.get("source", ""), r.get("cut", ""), r.get("group", ""),
+                                       r["council"], rank.get(r["versus"], 9)))
+
+
+def analyses(ds: Dict, n_boot: int = 1000) -> Dict[str, List[Dict]]:
+    """The pre-registered tables for one dataset, from scoring/ and analysis/ (the same code as results/)."""
+    from analysis import recalibration, robustness, variance
+    from scoring.contamination import split_table
+    from scoring.report import (add_baselines, add_reference_baselines, comparison_table, load,
+                                load_resolution_dates, load_sources, members_of_setups)
+    qfiles, ffiles = [str(REPO / ds["questions"])], [str(REPO / ds["forecasts"])]
+    outcomes, probs, members, market = load(qfiles, ffiles, ds["set"] or "all", None, ds["prefix"])
+    out: Dict[str, List[Dict]] = {}
+    if not any(p is not None for s, ps in probs.items() if s != "market" for q, p in ps.items()):
+        return out
+    add_baselines(probs, outcomes, members=members)
+    add_reference_baselines(probs, outcomes)
+    strata = load_sources(qfiles)
+    out["comparisons"] = _ordered(comparison_table(probs, outcomes, n_boot, strata=strata))
+    sources = sorted({strata.get(q, "") for q in outcomes})
+    if len(sources) > 1:
+        out["by_source"] = _ordered([{"source": src, **r} for src in sources for r in comparison_table(
+            probs, {q: y for q, y in outcomes.items() if strata.get(q, "") == src}, n_boot)])
+    cuts = robustness.question_groups(qfiles, outcomes, market, ffiles)
+    out["robustness"] = _ordered(robustness.tables(probs, outcomes, cuts, n_boot)[1])
+    out["recalibration"] = recalibration.table(probs, outcomes, n_boot)
+    if ds["key"] in ("settled-all", "contamination"):
+        b_out, b_probs, b_members, _ = load(qfiles, ffiles, BACKTEST)
+        add_baselines(b_probs, b_out, members=b_members)
+        split = split_table(b_probs, b_out, load_resolution_dates(qfiles, b_out),
+                            members_of_setups(b_probs, b_members), n_boot)
+        if any(r.get("n_before") for r in split):
+            out["contamination"] = split
+    if ds["key"] in ("settled", "settled-all"):
+        setups, paired = variance.tables(variance.collect_runs(REPO / ds["forecasts"], REPO / "data" / "variance", 200))
+        if any(k.startswith("seed") for r in paired for k in r):
+            out["variance"], out["variance_setups"] = paired, setups
+    return {k: v for k, v in out.items() if v}
+
+
 STANDALONE = """<!doctype html>
 <html lang="en">
 <head>
@@ -157,7 +211,12 @@ STANDALONE = """<!doctype html>
 
 def build(out: Path, fragment: bool = False) -> Path:
     # A set appears once it has forecasts (settled and contamination fill in after the spark runs).
-    datasets = [d for d in (build_dataset(ds) for ds in DATASETS) if d["questions"]]
+    datasets = []
+    for spec in DATASETS:
+        d = build_dataset(spec)
+        if d["questions"]:
+            d["analyses"] = analyses(spec)
+            datasets.append(d)
     data = {"datasets": datasets,
             "models": MODEL_NAMES}
     template = (ROOT / "template.html").read_text(encoding="utf-8")
