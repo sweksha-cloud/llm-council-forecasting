@@ -29,6 +29,8 @@ results:          ## all results tables (results/*/)
 	$(PY) -m scoring.report --set settled settled-ext --out results/settled-all   # the pre-registered sample
 	$(PY) -m analysis.robustness --set settled settled-ext --out results/settled-all
 	$(PY) -m analysis.robustness --set settled --out results/settled
+	$(PY) -m analysis.recalibration --set settled settled-ext --out results/settled-all
+	$(PY) -m analysis.recalibration --set settled --out results/settled
 	$(PY) -m scoring.report --set contamination --out results/contamination
 	$(PY) -m scoring.report --set settled settled-ext contamination --out results/backtest   # includes the contamination split
 
