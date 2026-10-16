@@ -1,0 +1,945 @@
+question_id,source,question_text,resolution_criteria,answer_type,choices,set,topic,url,collected_at,resolution_date,market_price,price_time,volume,outcome,resolved_at
+kalshi:KX1ALBUM-26DEC-ENH,kalshi,Will ENHYPEN have a #1 album this year?,"If ENHYPEN has a #1 album on the Billboard 200 by Dec 26, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Entertainment,https://kalshi.com/markets/kx1album,2026-10-09T18:23:46Z,2026-08-31T14:47:20Z,0.96,2026-08-24T14:47:20Z,92696.58,1,2026-08-31T14:47:20Z
+kalshi:KXAAPLPRICEFOLD-27-2000,kalshi,What will be the price of a foldable iPhone? (Yes = At least $2000),"If the first price announced for a foldable iPhone is at least $2000, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Science and Technology,https://kalshi.com/markets/kxaaplpricefold,2026-10-09T18:23:46Z,2026-09-09T18:32:07Z,0.78,2026-09-02T18:32:07Z,110892.64,0,2026-09-09T18:32:07Z
+kalshi:KXAIPAUSE-27,kalshi,Will any of the major AI companies pause research before 2027?,"If any of xAI, DeepMind, Anthropic, OpenAI pause any AI research training or development for safety reasons before Jan 1, 2027, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Science and Technology,https://kalshi.com/markets/kxaipause,2026-10-09T18:23:46Z,2026-08-06T00:10:10Z,0.585,2026-07-30T00:10:10Z,169552.6,1,2026-08-06T00:10:10Z
+kalshi:KXAISPIKE-27B-1520,kalshi,"AI capability growth this year?: Will any AI model have a score of at least 1520 before Jan 1, 2027?","If an AI model has a score of at least 1520 before Jan 1, 2027 on the LMSYS leaderboard, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Science and Technology,https://kalshi.com/markets/kxaispike,2026-10-09T18:23:46Z,2026-10-01T18:16:50Z,0.52,2026-09-24T18:16:50Z,143451.6,1,2026-10-01T18:16:50Z
+kalshi:KXAKPRIMARY-26MAY19-JWIL,kalshi,Will John Brendan Williams qualify for the runoff in the 2026 Alaska top-four primary?,"If John Brendan Williams advances in the 2026 Alaska top-four primary, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxakprimary,2026-10-09T18:23:46Z,2026-08-31T21:11:41Z,0.015,2026-08-24T21:11:41Z,248253.31,1,2026-08-31T21:11:41Z
+kalshi:KXARRESTNETANYAHU-28JAN01-26OCT01,kalshi,"Will Benjamin Netanyahu be arrested before Oct 1, 2026?","If Benjamin Netanyahu has been arrested before Oct 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxarrestnetanyahu,2026-10-09T18:23:46Z,2026-10-01T03:59:00Z,0.05,2026-09-24T03:59:00Z,65158.15,0,2026-10-01T03:59:00Z
+kalshi:KXATPRETURN-27-ALC-901,kalshi,"Will Carlos Alcaraz compete in an ATP match before September 1, 2026?","If Carlos Alcaraz competes in an ATP Match after May 19, 2026 and before September 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxatpreturn,2026-10-09T18:23:46Z,2026-08-31T20:17:17Z,0.76,2026-08-24T20:17:17Z,70521.49,1,2026-08-31T20:17:17Z
+kalshi:KXBALLONDOR-26-BSAK,kalshi,Who will win the Ballon d'Or in 2026? (Yes = Bukayo Saka),"If Bukayo Saka wins the Ballon d'Or in 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxballondor,2026-10-09T18:23:46Z,2026-09-10T20:43:55Z,0.01,2026-09-03T20:43:55Z,68846.92,0,2026-09-10T20:43:55Z
+kalshi:KXBIGBROTHER-26DEC31-RIC,kalshi,Will Rick Devens win Big Brother Season 28?,"If Rick Devens are officially declared the winner of Big Brother Season 28, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Entertainment,https://kalshi.com/markets/kxbigbrother,2026-10-09T18:23:46Z,2026-10-02T03:27:03Z,0.37,2026-09-25T03:27:03Z,1095288.93,1,2026-10-02T03:27:03Z
+kalshi:KXBIGBROTHERRANK-26DEC31R2-RIC,kalshi,Will Rick Devens finish in 2 place in Big Brother Season 28?,"If Rick Devens finishes 2nd in Big Brother Season 28, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Entertainment,https://kalshi.com/markets/kxbigbrotherrank,2026-10-09T18:23:46Z,2026-10-02T03:29:47Z,0.045,2026-09-25T03:29:47Z,286561.96,0,2026-10-02T03:29:47Z
+kalshi:KXBIGBROTHERRANK-26DEC31R3-DRE,kalshi,Will Drew Campbell finish in 3 place in Big Brother Season 28?,"If Drew Campbell finishes 3rd in Big Brother Season 28, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Entertainment,https://kalshi.com/markets/kxbigbrotherrank,2026-10-09T18:23:46Z,2026-10-02T03:30:09Z,0.11,2026-09-25T03:30:09Z,165653.46,1,2026-10-02T03:30:09Z
+kalshi:KXBRASILEIROBTTS-26OCT07CRUSPA-BTTS,kalshi,Cruzeiro vs Sao Paulo: BTTS: Both Teams To Score?,"If Cruzeiro and Sao Paulo both score a goal in the Cruzeiro vs Sao Paulo Brasileiro Serie A match originally scheduled for Oct 7, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxbrasileirobtts,2026-10-09T18:23:46Z,2026-10-08T02:27:46Z,0.545,2026-10-01T02:27:46Z,72136.34,0,2026-10-08T02:27:46Z
+kalshi:KXBRASILEIROBTTS-26OCT07INTCOR-BTTS,kalshi,Internacional vs Corinthians: BTTS: Both Teams To Score?,"If Internacional and Corinthians both score a goal in the Internacional vs Corinthians Brasileiro Serie A match originally scheduled for Oct 7, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxbrasileirobtts,2026-10-09T18:23:46Z,2026-10-08T00:30:02Z,0.52,2026-10-01T00:30:02Z,53666.49,1,2026-10-08T00:30:02Z
+kalshi:KXBRASILEIROGAME-26OCT07RBBMIR-MIR,kalshi,Bragantino vs Mirassol: Mirassol wins?,"If Mirassol wins the Bragantino vs Mirassol professional Brasileiro Serie A soccer game originally scheduled for Oct 7, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxbrasileirogame,2026-10-09T18:23:46Z,2026-10-08T00:31:04Z,0.2025,2026-10-01T00:31:04Z,638647.87,0,2026-10-08T00:31:04Z
+kalshi:KXBRASILEIROGAME-26OCT07VITCHA-CHA,kalshi,Vitoria vs Chapecoense: Chapecoense wins?,"If Chapecoense wins the Vitoria vs Chapecoense professional Brasileiro Serie A soccer game originally scheduled for Oct 7, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxbrasileirogame,2026-10-09T18:23:46Z,2026-10-08T00:58:34Z,0.18,2026-10-01T00:58:34Z,89099.46,0,2026-10-08T00:58:34Z
+kalshi:KXBRPRES-26-RSAN,kalshi,Will Renan Santos win the 2026 Brazilian presidential election?,"If Renan Santos has won the 2026 Brazilian presidential election, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxbrpres,2026-10-09T18:23:46Z,2026-10-05T00:43:52Z,0.009,2026-09-28T00:43:52Z,1208871.92,0,2026-10-05T00:43:52Z
+kalshi:KXBRPRES1MOV-BRPRES26-FBOL-P7,kalshi,"Will the margin of victory for Flávio Bolsonaro in the first round of the 2026 Brazilian presidential election be between 5% and 10%? (Yes = Flávio Bolsonaro, 5-10%)","If the margin of victory for Flávio Bolsonaro in the first round of the 2026 Brazilian presidential election falls within 5% to 10%, inclusive of its lower bound and exclusive of its upper bound, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxbrpres1mov,2026-10-09T18:23:46Z,2026-10-05T22:37:23Z,0.04,2026-09-28T22:37:23Z,55927.17,0,2026-10-05T22:37:23Z
+kalshi:KXBRPRESADVANCE-26OCT04-LSIL,kalshi,Will Luiz Inácio Lula da Silva qualify for the runoff in the 2026 Brazilian presidential election?,"If Luiz Inácio Lula da Silva is announced to qualify for the runoff in the 2026 Brazilian presidential election, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxbrpresadvance,2026-10-09T18:23:46Z,2026-10-05T00:44:23Z,0.975,2026-09-28T00:44:23Z,275143.97,1,2026-10-05T00:44:23Z
+kalshi:KXBRPRESIDENT2-BRPRES26-2-FBOL,kalshi,Will Flávio Bolsonaro finish 2nd in the first round of the 2026 Brazilian presidential election?,"If Flávio Bolsonaro finishes in 2nd place in the first round of the 2026 Brazilian presidential election according to the certified results, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxbrpresident2,2026-10-09T18:23:46Z,2026-10-05T22:19:01Z,0.765,2026-09-28T22:19:01Z,111168.6,0,2026-10-05T22:19:01Z
+kalshi:KXCA14SWINNER-26-AWAH,kalshi,Who will win the 2026 CA-14 special election? (Yes = Aisha Wahab),"If Aisha Wahab wins the 2026 CA-14 special election, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxca14swinner,2026-10-09T18:23:46Z,2026-08-20T23:48:51Z,0.855,2026-08-13T23:48:51Z,145238.13,1,2026-08-20T23:48:51Z
+kalshi:KXCLAUDE-MYTH-26SEP01,kalshi,"Will Anthropic release Mythos before Sep 1, 2026?","If Anthropic releases A model called Mythos  before Sep 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Science and Technology,https://kalshi.com/markets/kxclaude,2026-10-09T18:23:46Z,2026-09-01T03:59:00Z,0.015,2026-08-25T03:59:00Z,173529.51,0,2026-09-01T03:59:00Z
+kalshi:KXDANCINGWITHTHESTARS-26DEC31-THAN,kalshi,Will Taylor Hanson win Dancing with the Stars Season 35?,"If Taylor Hanson is officially declared the winner of Dancing with the Stars Season 35, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Entertainment,https://kalshi.com/markets/kxdancingwiththestars,2026-10-09T18:23:46Z,2026-09-30T14:26:43Z,0.015,2026-09-23T14:26:43Z,199768.59,0,2026-09-30T14:26:43Z
+kalshi:KXDEMSENATEPRIMARYCOMBO-26NOV03,kalshi,"Will at least 5 of the following 6 Democratic candidates win their 2026 Senate primaries: James Talarico in Texas, Raja Krishnamoorthi in Illinois, Josh Turek in Iowa, Graham Platner in Maine, Mallory McMorrow in Michigan, and Peggy Flanagan in Minnesota?","If at least 5 of the following 6 Democratic candidates win their 2026 Senate primaries: James Talarico in Texas, Raja Krishnamoorthi in Illinois, Josh Turek in Iowa, Graham Platner in Maine, Mallory McMorrow in Michigan, and Peggy Flanagan in Minnesota, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxdemsenateprimarycombo,2026-10-09T18:23:46Z,2026-08-06T17:02:21Z,0.0215,2026-07-30T17:02:21Z,144382.71,0,2026-08-06T17:02:21Z
+kalshi:KXDIAZOUT-MDC-26SEP01,kalshi,"Will Miguel Díaz-Canel leave office before 2026-09-01T14:00:00.000Z? (Yes = Before September 1, 2026)","If Miguel Díaz-Canel leaves office before September 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxdiazout,2026-10-09T18:23:46Z,2026-09-01T13:23:01Z,0.0305,2026-08-25T13:23:01Z,194089.2,0,2026-09-01T13:23:01Z
+kalshi:KXDJTATTACKWARSH-26SEP-26OCT01,kalshi,"Will Trump publicly criticize Kevin Warsh before Oct 1, 2026?","If Donald Trump publicly criticizes Kevin Warsh before Oct 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxdjtattackwarsh,2026-10-09T18:23:46Z,2026-10-01T03:59:00Z,0.035,2026-09-24T03:59:00Z,52073.92,0,2026-10-01T03:59:00Z
+kalshi:KXEARNINGSMENTIONCCL-26SEP28-HOLL,kalshi,What will Carnival Corporation say during their next earnings call? (Yes = Holland America),"If Holland America is said by any Carnival Corporation representative (including the operator of the call) during the next Carnival Corporation earnings call (including the Q+A), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Mentions,https://kalshi.com/markets/kxearningsmentionccl,2026-10-09T18:23:46Z,2026-09-29T15:33:09Z,0.805,2026-09-22T15:33:09Z,67479.29,1,2026-09-29T15:33:09Z
+kalshi:KXEARNINGSMENTIONSTZ-26OCT05-PACI,kalshi,"What will Constellation Brands, Inc. say during their next earnings call? (Yes = Pacifico)","If Pacifico is said by any Constellation Brands, Inc. representative (including the operator of the call) during the next Constellation Brands, Inc. earnings call (including the Q+A), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Mentions,https://kalshi.com/markets/kxearningsmentionstz,2026-10-09T18:23:46Z,2026-10-07T16:55:02Z,0.84,2026-09-30T16:55:02Z,50947.68,1,2026-10-07T16:55:02Z
+kalshi:KXELECTIONEMERGENCY-26SEP01,kalshi,"Will Donald Trump issue any executive action on declaring a national emergency regarding the 2026 United States midterm election before Sep 1, 2026?","If Donald Trump has taken any executive action declaring a national emergency regarding the 2026 United States midterm election before Sep 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxelectionemergency,2026-10-09T18:23:46Z,2026-09-01T03:59:00Z,0.0225,2026-08-25T03:59:00Z,94169.39,0,2026-09-01T03:59:00Z
+kalshi:KXELECTVENEZUELA-26SEP01,kalshi,"Will Venezuela hold a presidential election before Sep 1, 2026?","If Venezuela holds a presidential election before Sep 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxelectvenezuela,2026-10-09T18:23:46Z,2026-09-01T13:22:15Z,0.004,2026-08-25T13:22:15Z,76204.42,0,2026-09-01T13:22:15Z
+kalshi:KXFDAANNOUNCE-BPC-26SEP01,kalshi,When will FDA announce Reclassification of BPC-157 to Category 1 of the Bulk Drug Substances List? (Yes = Before September),"If the FDA announces Reclassification of BPC-157 to Category 1 of the Bulk Drug Substances List before Sep 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Science and Technology,https://kalshi.com/markets/kxfdaannounce,2026-10-09T18:23:46Z,2026-09-01T03:59:00Z,0.075,2026-08-25T03:59:00Z,59415.1,0,2026-09-01T03:59:00Z
+kalshi:KXFEDCHGCOUNT-27JAN01-E0,kalshi,Will the number of rate changes before 2027 be exactly 0?,"If the number of rate changes before 2027 is exactly 0, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Economics,https://kalshi.com/markets/kxfedchgcount,2026-10-09T18:23:46Z,2026-09-16T18:29:25Z,0.247,2026-09-09T18:29:25Z,52962.69,0,2026-09-16T18:29:25Z
+kalshi:KXFLPRIMARY-02R26-AROG,kalshi,Will Austin Rogers be the Republican nominee for FL-02?,"If Austin Rogers wins the nomination for the Republican Party to contest the 2026 FL-02 House seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxflprimary,2026-10-09T18:23:46Z,2026-08-19T00:50:34Z,0.66,2026-08-12T00:50:34Z,64935.63,1,2026-08-19T00:50:34Z
+kalshi:KXFLPRIMARY-09R26-BBUT,kalshi,Will Ben Butler be the Republican nominee for FL-09?,"If Ben Butler wins the nomination for the Republican Party to contest the 2026 FL-09 House seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxflprimary,2026-10-09T18:23:46Z,2026-08-20T21:29:14Z,0.445,2026-08-13T21:29:14Z,52818.83,0,2026-08-20T21:29:14Z
+kalshi:KXFLPRIMARY-22R26-MCAR,kalshi,Will Michael Carbonara be the Republican nominee for FL-22?,"If Michael Carbonara wins the nomination for the Republican Party to contest the 2026 FL-22 House seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxflprimary,2026-10-09T18:23:46Z,2026-08-19T00:05:05Z,0.33,2026-08-12T00:05:05Z,142549.46,0,2026-08-19T00:05:05Z
+kalshi:KXFLPRIMARY-23D26-OLAR,kalshi,Will Oliver Larkin be the Democratic nominee for FL-23?,"If Oliver Larkin wins the nomination for the Democratic Party to contest the 2026 FL-23 House seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxflprimary,2026-10-09T18:23:46Z,2026-08-19T14:23:18Z,0.0045,2026-08-12T14:23:18Z,110907.94,0,2026-08-19T14:23:18Z
+kalshi:KXGEMINI-GEM4-26OCT01,kalshi,"Will Google release Gemini 4 before Oct 1, 2026?","If Google releases Gemini 4 before Oct 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Science and Technology,https://kalshi.com/markets/kxgemini,2026-10-09T18:23:46Z,2026-10-01T03:59:00Z,0.045,2026-09-24T03:59:00Z,179884.42,0,2026-10-01T03:59:00Z
+kalshi:KXGEMINI-GEMI35P-26AUG16,kalshi,"Will Google release Gemini 3.5 Pro before Aug 16, 2026?","If Google releases A model called Gemini 3.5 Pro or greater before Aug 16, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Science and Technology,https://kalshi.com/markets/kxgemini,2026-10-09T18:23:46Z,2026-08-16T03:59:00Z,0.08,2026-08-09T03:59:00Z,216932.41,0,2026-08-16T03:59:00Z
+kalshi:KXGOVKSNOMD-26-EC,kalshi,Will Ethan Corson be the Democratic nominee for Governor in Kansas?,"If Ethan Corson wins the nomination for the Democratic Party to contest the 2026 Kansas Governorship, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxgovksnomd,2026-10-09T18:23:46Z,2026-08-05T02:54:22Z,0.235,2026-07-29T02:54:22Z,51904.76,0,2026-08-05T02:54:22Z
+kalshi:KXGOVKSNOMR-26-TM,kalshi,Will Ty Masterson be the Republican nominee for Governor in Kansas?,"If Ty Masterson wins the nomination for the Republican Party to contest the 2026 Kansas Governorship, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxgovksnomr,2026-10-09T18:23:46Z,2026-08-05T01:31:13Z,0.815,2026-07-29T01:31:13Z,85538.69,1,2026-08-05T01:31:13Z
+kalshi:KXGOVMINOMR-26-JJ,kalshi,Will John James be the Republican nominee for Governor in Michigan?,"If John James wins the nomination for the Republican Party to contest the 2026 Michigan Governorship, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxgovminomr,2026-10-09T18:23:46Z,2026-08-05T02:54:55Z,0.9095,2026-07-29T02:54:55Z,784960.37,1,2026-08-05T02:54:55Z
+kalshi:KXGOVMNNOMR-26-MLIN,kalshi,Will Mike Lindell be the Republican nominee for Governor in Minnesota?,"If Mike Lindell wins the nomination for the Republican Party to contest the 2026 Minnesota Governorship, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxgovmnnomr,2026-10-09T18:23:46Z,2026-08-12T03:29:19Z,0.755,2026-08-05T03:29:19Z,1068116.81,0,2026-08-12T03:29:19Z
+kalshi:KXGPT-OPEN-26OCT01,kalshi,"Will OpenAI release GPT-6 before Oct 1, 2026?","If OpenAI releases A model called GPT-6 or greater before Oct 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Science and Technology,https://kalshi.com/markets/kxgpt,2026-10-09T18:23:46Z,2026-09-07T15:13:46Z,0.355,2026-08-31T15:13:46Z,272586.68,1,2026-09-07T15:13:46Z
+kalshi:KXINTLFRIENDLYGAME-26OCT06INDURU-IND,kalshi,India vs Uruguay: India wins?,"If India wins the India vs Uruguay professional Intl Friendlies soccer game originally scheduled for Oct 6, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxintlfriendlygame,2026-10-09T18:23:46Z,2026-10-06T16:30:19Z,0.045,2026-09-29T16:30:19Z,1554347.99,0,2026-10-06T16:30:19Z
+kalshi:KXINTLFRIENDLYGAME-26OCT06RUSNGR-NGR,kalshi,Russia vs Nigeria: Nigeria wins?,"If Nigeria wins the Russia vs Nigeria professional Intl Friendlies soccer game originally scheduled for Oct 6, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxintlfriendlygame,2026-10-09T18:23:46Z,2026-10-06T18:10:02Z,0.25,2026-09-29T18:10:02Z,914063.92,0,2026-10-06T18:10:02Z
+kalshi:KXIPHONERELEASE-IPHONE18-26OCT01,kalshi,"Will Apple Inc. release iPhone 18 before Oct 1, 2026? (Yes = Before October)","If Apple Inc. releases iPhone 18 to the public before Oct 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Companies,https://kalshi.com/markets/kxiphonerelease,2026-10-09T18:23:46Z,2026-10-01T03:59:00Z,0.01,2026-09-24T03:59:00Z,3534404.27,0,2026-10-01T03:59:00Z
+kalshi:KXLEADERMLBSTEALS-26-NNUN,kalshi,Will Nasim Nuñez lead Pro Baseball in steals for the 2026 regular season?,"If Nasim Nuñez leads Pro Baseball in steals for the 2026 regular season, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxleadermlbsteals,2026-10-09T18:23:46Z,2026-09-28T00:51:41Z,0.385,2026-09-21T00:51:41Z,50936.26,1,2026-09-28T00:51:41Z
+kalshi:KXLEADERSOUT-27JAN01-GPETCOL,kalshi,"Will Gustavo Petro leave President of Colombia before Jan 1, 2027?","If Gustavo Petro has either officially announced their intention to leave as President of Colombia or has actually left President of Colombia before Jan 1, 2027, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxleadersout,2026-10-09T18:23:46Z,2026-08-08T00:05:10Z,0.996,2026-08-01T00:05:10Z,193987.27,1,2026-08-08T00:05:10Z
+kalshi:KXLOSEPRIMARYSENATED-26NOV03-0,kalshi,Will exactly 0 Senate Democratic members lose their primary in 2026?,"If the number of Democratic Senate members that lose their primary in 2026 before Nov 03, 2026 is exactly 0, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxloseprimarysenated,2026-10-09T18:23:46Z,2026-09-16T15:31:42Z,0.9945,2026-09-09T15:31:42Z,49785.37,1,2026-09-16T15:31:42Z
+kalshi:KXLOSEPRIMARYSENATER-26NOV03-2,kalshi,Will exactly 2 Senate Republican members lose their primary in 2026?,"If the number of Republican Senate members that lose their primary in 2026 before Nov 3, 2026 is exactly 2, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxloseprimarysenater,2026-10-09T18:23:46Z,2026-08-28T15:50:40Z,0.73,2026-08-21T15:50:40Z,199499.29,1,2026-08-28T15:50:40Z
+kalshi:KXMAPRIMARY-08D26-SLYN,kalshi,Will Stephen Lynch be the Democratic nominee for MA-08?,"If Stephen Lynch wins the nomination for the Democratic Party to contest the 2026 MA-08 House seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxmaprimary,2026-10-09T18:23:46Z,2026-09-02T14:51:21Z,0.695,2026-08-26T14:51:21Z,362397.74,1,2026-09-02T14:51:21Z
+kalshi:KXMLB-26-HOU,kalshi,Will Houston win the 2026 Pro Baseball Championship?,"If Houston wins the 2026 Pro Baseball Championship, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxmlb,2026-10-09T18:23:46Z,2026-10-01T01:59:46Z,0.024,2026-09-24T01:59:46Z,16826609.75,0,2026-10-01T01:59:46Z
+kalshi:KXMLBAL-26-NYY,kalshi,Will New York Y win the 2026 Pro Baseball American League Championship?,"If New York Y win the 2026 Pro Baseball American League Championship, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxmlbal,2026-10-09T18:23:46Z,2026-10-08T04:59:24Z,0.375,2026-10-01T04:59:24Z,1942152.74,0,2026-10-08T04:59:24Z
+kalshi:KXMLBALCENT-26-CLE,kalshi,Will Cleveland be the 2026 AL Central Division Winner?,"If Cleveland is the 2026 Pro Baseball AL Central Division Winner, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxmlbalcent,2026-10-09T18:23:46Z,2026-09-27T03:38:22Z,0.515,2026-09-20T03:38:22Z,680890.44,1,2026-09-27T03:38:22Z
+kalshi:KXMLBNLCENT-26-CHC,kalshi,Will Chicago C be the 2026 NL Central Division Winner?,"If Chicago C is the 2026 Pro Baseball NL Central Division Winner, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxmlbnlcent,2026-10-09T18:23:46Z,2026-09-18T15:02:53Z,0.01,2026-09-11T15:02:53Z,572442.69,0,2026-09-18T15:02:53Z
+kalshi:KXMLBNLEAST-26-ATL,kalshi,Will Atlanta be the 2026 NL East Division Winner?,"If Atlanta is the 2026 Pro Baseball NL East Division Winner, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxmlbnleast,2026-10-09T18:23:46Z,2026-09-21T15:22:19Z,0.965,2026-09-14T15:22:19Z,394749.39,1,2026-09-21T15:22:19Z
+kalshi:KXMLBPLAYOFFS-26-SD,kalshi,Pro Baseball Playoff Qualifiers?,"If San Diego is one of the 2026 Pro Baseball Playoff Qualifiers, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxmlbplayoffs,2026-10-09T18:23:46Z,2026-09-27T23:44:20Z,0.985,2026-09-20T23:44:20Z,568321.41,1,2026-09-27T23:44:20Z
+kalshi:KXMLBWINS-ATL-26-T100,kalshi,Will Atlanta win at least 100 games this season? (Yes = 100+ wins),"If Atlanta has 100+ wins in the 2026 pro baseball team regular season, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxmlbwins-atl,2026-10-09T18:23:46Z,2026-09-15T04:00:20Z,0.045,2026-09-08T04:00:20Z,53968.94,0,2026-09-15T04:00:20Z
+kalshi:KXMLBWINS-COL-26-T60,kalshi,Will Colorado win at least 60 games this season? (Yes = 60+ wins),"If Colorado has 60+ wins in the 2026 pro baseball team regular season, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxmlbwins-col,2026-10-09T18:23:46Z,2026-09-26T04:00:13Z,0.41,2026-09-19T04:00:13Z,54644.52,0,2026-09-26T04:00:13Z
+kalshi:KXMLBWINS-PHI-26-T90,kalshi,Will Philadelphia win at least 90 games this season? (Yes = 90+ wins),"If Philadelphia has 90+ wins in the 2026 pro baseball team regular season, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxmlbwins-phi,2026-10-09T18:23:46Z,2026-09-26T03:00:09Z,0.46,2026-09-19T03:00:09Z,48679.46,0,2026-09-26T03:00:09Z
+kalshi:KXMLSGAME-26OCT06CHIVAN-CHI,kalshi,Chicago Fire vs Vancouver: Chicago Fire wins?,"If Chicago Fire wins the Chicago Fire vs Vancouver professional MLS soccer game originally scheduled for Oct 6, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxmlsgame,2026-10-09T18:23:46Z,2026-10-07T02:36:20Z,0.335,2026-09-30T02:36:20Z,1515161.33,1,2026-10-07T02:36:20Z
+kalshi:KXMO01D-26-CBUS,kalshi,Will Cori Bush be the Democratic nominee for MO-01?,"If Cori Bush wins the nomination for the Democratic Party to contest the 2026 MO-01 House seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxmo01d,2026-10-09T18:23:46Z,2026-08-05T01:31:44Z,0.405,2026-07-29T01:31:44Z,881243.0,0,2026-08-05T01:31:44Z
+kalshi:KXNCAAFGAME-26OCT06USMTROY-USM,kalshi,Southern Miss vs Troy: Southern Miss wins?,"If Southern Miss wins the Southern Miss vs Troy college football game originally scheduled for Oct 6, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxncaafgame,2026-10-09T18:23:46Z,2026-10-07T03:44:48Z,0.39,2026-09-30T03:44:48Z,3938941.22,0,2026-10-07T03:44:48Z
+kalshi:KXNEXTAG-29-TBLA,kalshi,Who will be Trump's next Attorney General? (Yes = Todd Blanche),"If the first new person to be Attorney General is Todd Blanche before Jan 20, 2029, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxnextag,2026-10-09T18:23:46Z,2026-08-08T23:48:24Z,0.645,2026-08-01T23:48:24Z,3713983.8,1,2026-08-08T23:48:24Z
+kalshi:KXNEXTLABORSEC-29-KSON,kalshi,Who will be Trump's next Secretary of Labor? (Yes = Keith Sonderling),"If the first new person to be Secretary of Labor is Keith Sonderling before Jan 20, 2029, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxnextlaborsec,2026-10-09T18:23:46Z,2026-10-01T13:07:34Z,0.965,2026-09-24T13:07:34Z,66439.24,1,2026-10-01T13:07:34Z
+kalshi:KXNFLCOMPETE-ADON27FEB-Y,kalshi,Aaron Donald to compete in the Pro Football Game in 2026-27 season?,"If Aaron Donald competes in a Pro Football game (including preseason, regular season and playoffs) in the 2026-27 season, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxnflcompete,2026-10-09T18:23:46Z,2026-09-22T01:39:28Z,0.99,2026-09-15T01:39:28Z,644885.73,1,2026-09-22T01:39:28Z
+kalshi:KXNFLLASTTOLOSE-27-LV,kalshi,Will Las Vegas be the last undefeated team in the 2026-27 Pro Football regular season?,"If Las Vegas is the last remaining undefeated team in the 2026-27 Pro Football regular season, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxnfllasttolose,2026-10-09T18:23:46Z,2026-10-05T01:00:24Z,0.055,2026-09-28T01:00:24Z,240917.71,0,2026-10-05T01:00:24Z
+kalshi:KXNHPRIMARY-01R26-ADIL,kalshi,Will Anthony DiLorenzo be the Republican nominee for NH-01?,"If Anthony DiLorenzo wins the nomination for the Republican Party to contest the 2026 NH-01 House seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxnhprimary,2026-10-09T18:23:46Z,2026-09-09T00:10:38Z,0.75,2026-09-02T00:10:38Z,56485.17,1,2026-09-09T00:10:38Z
+kalshi:KXOAIPERSONALAGENT-27JAN01-26OCT01,kalshi,"Will OpenAI release a personal AI agent before Oct 1, 2026?","If an OpenAI product has implemented a general-purpose personal AI agent that remembers the user and starts multi-step tasks across third-party apps on its own before Oct 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Science and Technology,https://kalshi.com/markets/kxoaipersonalagent,2026-10-09T18:23:46Z,2026-10-01T03:59:00Z,0.2,2026-09-24T03:59:00Z,128451.52,0,2026-10-01T03:59:00Z
+kalshi:KXPERFORMVMA-26-BRU,kalshi,Will Bruno Mars perform at MTV Video Music Awards 2026?,"If Bruno Mars performs (or it is announced that they will perform at) the MTV Video Music Awards 2026 during the official event timeframe, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Entertainment,https://kalshi.com/markets/kxperformvma,2026-10-09T18:23:46Z,2026-09-28T04:12:26Z,0.095,2026-09-21T04:12:26Z,87801.68,1,2026-09-28T04:12:26Z
+kalshi:KXPFAPOY-2526-EHAA,kalshi,Who will win Players' Player of the Year? (Yes = Erling Haaland),"If Erling Haaland wins the Professional Footballers' Association (PFA) Players' Player of the Year in the 2025-2026 season, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxpfapoy,2026-10-09T18:23:46Z,2026-08-25T20:44:30Z,0.035,2026-08-18T20:44:30Z,387906.93,0,2026-08-25T20:44:30Z
+kalshi:KXPRIMARYMOV-FLPRIMARY06R-DBIL-P2,kalshi,"Will the margin of victory for Dan Bilzerian in the 2026 FL-06 Republican primary be between 0% and 5%? (Yes = Dan Bilzerian, 0-5%)","If the margin of victory for Dan Bilzerian in the 2026 FL-06 Republican primary falls within 0% to 5%, inclusive of its lower bound and exclusive of its upper bound, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxprimarymov,2026-10-09T18:23:46Z,2026-08-27T00:54:05Z,0.01,2026-08-20T00:54:05Z,63030.59,0,2026-08-27T00:54:05Z
+kalshi:KXPRIMARYMOV-KXSENATEMID26-AELS-P57,kalshi,"Will the margin of victory for Abdul El-Sayed in the 2026 Michigan Democratic Senate primary be above 15%? (Yes = Abdul El-Sayed, ≥15%)","If the margin of victory for Abdul El-Sayed in the 2026 Michigan Democratic Senate primary falls within 15% to 100%, inclusive of its lower bound and exclusive of its upper bound, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxprimarymov,2026-10-09T18:23:46Z,2026-08-25T00:11:15Z,0.01,2026-08-18T00:11:15Z,2491143.63,0,2026-08-25T00:11:15Z
+kalshi:KXPRIMARYMOV-SCRSENS262-DGRA-P4,kalshi,"Will the margin of victory for Darline Graham in the 2026 South Carolina Republican Senate special primary runoff be between 3% and 6%? (Yes = Darline Graham, 3-6%)","If the margin of victory for Darline Graham in the 2026 South Carolina Republican Senate special primary runoff falls within 3% to 6%, inclusive of its lower bound and exclusive of its upper bound, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxprimarymov,2026-10-09T18:23:46Z,2026-08-29T00:16:48Z,0.095,2026-08-22T00:16:48Z,322107.32,1,2026-08-29T00:16:48Z
+kalshi:KXPRIMARYMOV-SCRSENS263-DGRA-P51,kalshi,"Will the margin of victory for Darline Graham in the 2026 South Carolina Senate special election runoff be at least 3%? (Yes = Darline Graham, ≥3%)","If the margin of victory for Darline Graham in the 2026 South Carolina Senate special election runoff falls within 3% to 100%, inclusive of its lower bound and exclusive of its upper bound, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxprimarymov,2026-10-09T18:23:46Z,2026-08-29T00:18:36Z,0.66,2026-08-22T00:18:36Z,120093.47,1,2026-08-29T00:18:36Z
+kalshi:KXPRIMARYPLACE-KXGOVFLNOMR-2-JFIS,kalshi,Will James Fishback finish 2nd in the 2026 Florida gubernatorial primary?,"If James Fishback finishes in 2nd place in the 2026 Florida gubernatorial primary according to the certified results, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxprimaryplace,2026-10-09T18:23:46Z,2026-08-27T01:13:12Z,0.01,2026-08-20T01:13:12Z,426796.3,0,2026-08-27T01:13:12Z
+kalshi:KXPRIMARYTURNOUT-GOVFLNOMR26-1700000,kalshi,Will the total vote count for all participants in the 2026 Florida Republican gubernatorial primary be above 1700000? (Yes = Above 1.7M),"If the total vote count for all participants in the 2026 Florida Republican gubernatorial primary is above 1700000, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxprimaryturnout,2026-10-09T18:23:46Z,2026-08-27T01:12:44Z,0.105,2026-08-20T01:12:44Z,175050.4,0,2026-08-27T01:12:44Z
+kalshi:KXSCRSENSOUTRIGHT-26AUG11,kalshi,Will anyone win the 2026 South Carolina Senate special Republican primary in the first round?,"If any candidate receives the required threshold of votes to be declared the winner after the first round of voting in the 2026 South Carolina Senate special Republican primary, eliminating the need for any subsequent rounds, runoffs, or instant-runoff tabulations, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxscrsensoutright,2026-10-09T18:23:46Z,2026-08-12T00:17:58Z,0.075,2026-08-05T00:17:58Z,64963.06,0,2026-08-12T00:17:58Z
+kalshi:KXSENATEFLD-26-ANIX,kalshi,Will Angie Nixon be the Democratic nominee for the Senate in Florida?,"If Angie Nixon wins the nomination for the Democratic Party to contest the 2026 Class III (special election) Florida Senate seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxsenatefld,2026-10-09T18:23:46Z,2026-08-19T00:08:16Z,0.0635,2026-08-12T00:08:16Z,204869.97,1,2026-08-19T00:08:16Z
+kalshi:KXSENATENHR-26-SB,kalshi,Will Scott Brown be the Republican nominee for the Senate in New Hampshire?,"If Scott Brown wins the nomination for the Republican Party to contest the 2026 Class II New Hampshire Senate seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxsenatenhr,2026-10-09T18:23:46Z,2026-09-09T00:11:39Z,0.027,2026-09-02T00:11:39Z,146215.9,0,2026-09-09T00:11:39Z
+kalshi:KXSENATEOKD-26-NTHO,kalshi,Will N’Kiyla Thomas be the Democratic nominee for the Senate in Oklahoma?,"If N’Kiyla Thomas wins the nomination for the Democratic Party to contest the 2026 Class II Oklahoma Senate seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxsenateokd,2026-10-09T18:23:46Z,2026-08-26T00:52:48Z,0.9535,2026-08-19T00:52:48Z,69592.48,1,2026-08-26T00:52:48Z
+kalshi:KXSONGCHARTTSWIFT-26OCT10TAY,kalshi,"Will Taylor Swift have the top 4 songs on the Billboard 100 for the week of October 10, 2026?","If exactly 4 unique songs credited to Taylor Swift appear in the top 4 songs on the Billboard Hot 100 chart for the week of October 10, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Entertainment,https://kalshi.com/markets/kxsongcharttswift,2026-10-09T18:23:46Z,2026-10-06T14:18:57Z,0.03,2026-09-29T14:18:57Z,124418.71,0,2026-10-06T14:18:57Z
+kalshi:KXSPACEXSTARSHIP-14-26SEP01,kalshi,"Will SpaceX launch another Starship before Sep 1, 2026?","If SpaceX launches Starship flight test number 14 After issuance and before Sep 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Science and Technology,https://kalshi.com/markets/kxspacexstarship,2026-10-09T18:23:46Z,2026-09-01T03:59:00Z,0.015,2026-08-25T03:59:00Z,102023.26,0,2026-09-01T03:59:00Z
+kalshi:KXTAKEOVERACQWB-27JUN30-PSKY,kalshi,Will Paramount's takeover of Warner Brothers succeed Before July 2027?,"If qualifying public announcements indicate Paramount's takeover of Warner Brothers has succeeded Before July 2027, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Companies,https://kalshi.com/markets/kxtakeoveracqwb,2026-10-09T18:23:46Z,2026-10-06T13:57:26Z,0.955,2026-09-29T13:57:26Z,1912108.37,1,2026-10-06T13:57:26Z
+kalshi:KXTNPRIMARY-09D26-JPEA,kalshi,Will Justin Pearson be the Democratic nominee for TN-09?,"If Justin Pearson wins the nomination for the Democratic Party to contest the 2026 TN-09 House seat, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxtnprimary,2026-10-09T18:23:46Z,2026-08-07T01:46:37Z,0.9665,2026-07-31T01:46:37Z,55177.27,1,2026-08-07T01:46:37Z
+kalshi:KXTOPALBUMRECORD-PET-ARI-1,kalshi,How many straight weeks will 'petal' be #1? (Yes = More than 1 week),"If petal by Ariana Grande has had the #1 spot on the Billboard 200 for more than 1 consecutive weeks, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Entertainment,https://kalshi.com/markets/kxtopalbumrecord,2026-10-09T18:23:46Z,2026-08-18T15:14:02Z,0.01,2026-08-11T15:14:02Z,316285.12,0,2026-08-18T15:14:02Z
+kalshi:KXTOPSONG-26OCT10B-ELL,kalshi,"Taylor Swift vs Ella Langley · Who tops the Hot 100 for October 10?: Will Ella Langley be #1 on the Billboard Hot 100 during the week of Oct 10, 2026?","If Ella Langley is #1 on the Billboard Hot 100  chart for the Week of Oct 10, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Entertainment,https://kalshi.com/markets/kxtopsong,2026-10-09T18:23:46Z,2026-10-05T03:59:00Z,0.015,2026-09-28T03:59:00Z,147044.24,0,2026-10-05T03:59:00Z
+kalshi:KXTRUMPADMINLEAVE-26DEC31-KLEA,kalshi,Will Karoline Leavitt leaves White House Press Secretary in before 2027?,"If Karoline Leavitt leaves as White House Press Secretary before 2027, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxtrumpadminleave,2026-10-09T18:23:46Z,2026-08-28T16:50:07Z,0.9965,2026-08-21T16:50:07Z,782439.31,1,2026-08-28T16:50:07Z
+kalshi:KXTRUMPAIMEET-26OCT01-JHUA,kalshi,Will Trump meet Jensen Huang in September?,"If Donald Trump and Jensen Huang meet in person after Issuance and before Oct 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxtrumpaimeet,2026-10-09T18:23:46Z,2026-09-29T20:14:29Z,0.895,2026-09-22T20:14:29Z,52896.27,1,2026-09-29T20:14:29Z
+kalshi:KXTRUMPAIRENAME-26SEP-OCT01,kalshi,"Will Trump officially rename AI before Oct 1, 2026?","If Donald Trump formally adopts or directs adoption of a replacement name for Artificial Intelligence or AI for United States official use through a personally signed presidential action after Issuance and before Oct 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxtrumpairename,2026-10-09T18:23:46Z,2026-09-29T21:22:18Z,0.37,2026-09-22T21:22:18Z,121827.09,1,2026-09-29T21:22:18Z
+kalshi:KXTRUMPAPOLOGY-26-27JAN01,kalshi,"Will Donald Trump apologize for any statement, action, or conduct personally made or taken by Donald Trump before Jan 1, 2027?","If Donald Trump issues a public apology for any of his own statements, actions, or conduct before Jan 1, 2027, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Entertainment,https://kalshi.com/markets/kxtrumpapology,2026-10-09T18:23:46Z,2026-09-09T20:17:17Z,0.055,2026-09-02T20:17:17Z,123870.98,1,2026-09-09T20:17:17Z
+kalshi:KXTRUMPNUMSTATES-26SEP01-AL9,kalshi,Will the number of distinct US states Donald Trump has visited (per VISITAREA rules) be at least 9 in Aug 2026?,"If the number of distinct US states Donald Trump has visited (per VISITAREA rules) is at least 9 in Aug 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxtrumpnumstates,2026-10-09T18:23:46Z,2026-09-01T13:11:18Z,0.855,2026-08-25T13:11:18Z,79630.13,1,2026-09-01T13:11:18Z
+kalshi:KXUEFANLGAME-26OCT05FRABEL-FRA,kalshi,France vs Belgium: France wins?,"If France wins the France vs Belgium professional UEFA Nations League soccer game originally scheduled for Oct 5, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxuefanlgame,2026-10-09T18:23:46Z,2026-10-05T20:45:01Z,0.68,2026-09-28T20:45:01Z,3833874.38,1,2026-10-05T20:45:01Z
+kalshi:KXUEFANLGAME-26OCT05ITATUR-ITA,kalshi,Italy vs Turkiye: Italy wins?,"If Italy wins the Italy vs Turkiye professional UEFA Nations League soccer game originally scheduled for Oct 5, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxuefanlgame,2026-10-09T18:23:46Z,2026-10-05T20:40:01Z,0.65,2026-09-28T20:40:01Z,2053402.51,1,2026-10-05T20:40:01Z
+kalshi:KXUEFANLGAME-26OCT06ALBSMR-SMR,kalshi,Albania vs San Marino: San Marino wins?,"If San Marino wins the Albania vs San Marino professional UEFA Nations League soccer game originally scheduled for Oct 6, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxuefanlgame,2026-10-09T18:23:46Z,2026-10-06T20:44:49Z,0.035,2026-09-29T20:44:49Z,1412847.83,0,2026-10-06T20:44:49Z
+kalshi:KXUEFANLGAME-26OCT06CROESP-ESP,kalshi,Croatia vs Spain: Spain wins?,"If Spain wins the Croatia vs Spain professional UEFA Nations League soccer game originally scheduled for Oct 6, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxuefanlgame,2026-10-09T18:23:46Z,2026-10-06T20:40:09Z,0.76,2026-09-29T20:40:09Z,13256406.78,1,2026-10-06T20:40:09Z
+kalshi:KXUEFANLGAME-26OCT06LUXBUL-BUL,kalshi,Luxembourg vs Bulgaria: Bulgaria wins?,"If Bulgaria wins the Luxembourg vs Bulgaria professional UEFA Nations League soccer game originally scheduled for Oct 6, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxuefanlgame,2026-10-09T18:23:46Z,2026-10-06T20:40:10Z,0.52,2026-09-29T20:40:10Z,211425.16,1,2026-10-06T20:40:10Z
+kalshi:KXUEFANLGAME-26OCT06SCOSLO-SCO,kalshi,Scotland vs Slovenia: Scotland wins?,"If Scotland wins the Scotland vs Slovenia professional UEFA Nations League soccer game originally scheduled for Oct 6, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxuefanlgame,2026-10-09T18:23:46Z,2026-10-06T20:44:48Z,0.56,2026-09-29T20:44:48Z,713826.0,0,2026-10-06T20:44:48Z
+kalshi:KXUEFANLGAME-26OCT06SUIMKD-SUI,kalshi,Switzerland vs North Macedonia: Switzerland wins?,"If Switzerland wins the Switzerland vs North Macedonia professional UEFA Nations League soccer game originally scheduled for Oct 6, 2026 after 90 minutes plus stoppage time (does not include extra time or penalties), then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxuefanlgame,2026-10-09T18:23:46Z,2026-10-06T20:34:56Z,0.78,2026-09-29T20:34:56Z,1068678.53,1,2026-10-06T20:34:56Z
+kalshi:KXUSACOMPANYSTAKE-27JAN01-RGTI,kalshi,Will any part of the United States federal government take a stake of above 0% in Rigetti? (Yes = Rigetti Computing),"If any part of the United States federal government has taken a stake of Rigetti Computing before Jan 1, 2027, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Companies,https://kalshi.com/markets/kxusacompanystake,2026-10-09T18:23:46Z,2026-09-09T13:18:20Z,0.87,2026-09-02T13:18:20Z,59987.16,1,2026-09-09T13:18:20Z
+kalshi:KXUSAIRANAGREEMENT-27-26SEP,kalshi,"Will the US agree to a new Iranian nuclear deal this year? (Yes = Before Sep 1, 2026)","If the United States has agreed to, signed, or accepted a new Iran-US nuclear deal before Sep 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxusairanagreement,2026-10-09T18:23:46Z,2026-09-01T13:20:11Z,0.01,2026-08-25T13:20:11Z,2188400.45,0,2026-09-01T13:20:11Z
+kalshi:KXUSCHINAAIHOTLINE-27-26OCT01,kalshi,"Will the U.S. and China agree to establish an AI hotline before Oct 1, 2026?","If the governments of the United States and China have formally announced an agreement to establish, or have implemented, a bilateral notification mechanism for AI incidents that could affect national security after Issuance and before Oct 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxuschinaaihotline,2026-10-09T18:23:46Z,2026-09-30T17:10:53Z,0.375,2026-09-23T17:10:53Z,103127.88,1,2026-09-30T17:10:53Z
+kalshi:KXVOTEBLANCHE-27-BCAS,kalshi,Will Bill Cassidy vote for Todd Blanche?,"If Bill Cassidy votes Yea for Todd Blanche for Attorney General before Jan 1, 2027, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxvoteblanche,2026-10-09T18:23:46Z,2026-08-08T12:57:09Z,0.305,2026-08-01T12:57:09Z,48334.58,1,2026-08-08T12:57:09Z
+kalshi:KXVOTEPRIMARY-GOVFLNOMR26BDONBDON-75,kalshi,Will Byron Donalds receive at least 50% of the popular vote in the 2026 Florida Republican gubernatorial primary?,"If the certified percentage of the popular vote received by Byron Donalds in the 2026 Florida Republican gubernatorial primary is 50% to 100%, inclusive of both endpoints, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxvoteprimary,2026-10-09T18:23:46Z,2026-08-27T01:06:22Z,0.01,2026-08-20T01:06:22Z,112593.09,0,2026-08-27T01:06:22Z
+kalshi:KXVOTEPRIMARY-GOVWINOMD26DCRO-45,kalshi,Will David Crowley receive at least 45% of the popular vote in the 2026 Wisconsin Democratic gubernatorial primary?,"If the certified percentage of the popular vote received by David Crowley in the 2026 Wisconsin Democratic gubernatorial primary is 45% to 100%, inclusive of both endpoints, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxvoteprimary,2026-10-09T18:23:46Z,2026-08-26T16:34:01Z,0.01,2026-08-19T16:34:01Z,87296.68,0,2026-08-26T16:34:01Z
+kalshi:KXVOTEPRIMARY-GOVWINOMD26FHONFHON-70,kalshi,Will Francesca Hong receive at least 40% of the popular vote in the 2026 Wisconsin Democratic gubernatorial primary?,"If the certified percentage of the popular vote received by Francesca Hong in the 2026 Wisconsin Democratic gubernatorial primary is 40% to 100%, inclusive of both endpoints, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxvoteprimary,2026-10-09T18:23:46Z,2026-08-26T16:33:00Z,0.01,2026-08-19T16:33:00Z,57194.85,0,2026-08-26T16:33:00Z
+kalshi:KXVOTEPRIMARY-SENATEMAD26SMOU-40,kalshi,Will Seth Moulton receive at least 40% of the popular vote in the 2026 Massachusetts Democratic Senate primary?,"If the certified percentage of the popular vote received by Seth Moulton in the 2026 Massachusetts Democratic Senate primary is 40% to 100%, inclusive of both endpoints, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Elections,https://kalshi.com/markets/kxvoteprimary,2026-10-09T18:23:46Z,2026-09-09T22:51:23Z,0.01,2026-09-02T22:51:23Z,130269.53,0,2026-09-09T22:51:23Z
+kalshi:KXWNBADPOY-26-AREESE5,kalshi,Will Angel Reese win Defensive Player of the Year?,"If Angel Reese wins the Women's Pro Basketball Defensive Player of the Year in the 2026 season, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Sports,https://kalshi.com/markets/kxwnbadpoy,2026-10-09T18:23:46Z,2026-10-01T19:54:34Z,0.545,2026-09-24T19:54:34Z,75936.19,1,2026-10-01T19:54:34Z
+kalshi:KXXIUSA-26JUL07-OCT01,kalshi,"Will Xi Jinping visit the United States of America before Oct 1, 2026?","If Xi Jinping has physically travelled to and been present within the geographic boundaries of the United States of America before Oct 1, 2026, then the market resolves to Yes.",binary,"[""Yes"", ""No""]",settled,Politics,https://kalshi.com/markets/kxxiusa,2026-10-09T18:23:46Z,2026-09-23T22:27:53Z,0.945,2026-09-16T22:27:53Z,429286.4,1,2026-09-23T22:27:53Z
+polymarket:1088141,polymarket,Will Laura Siegemund be the 2026 Women’s Wimbledon Winner?,"Wimbledon 2026 is scheduled for June 29 - July 12, 2026.
+
+This market will resolve to the player that wins the 2026 Wimbledon Women’s Singles Tournament.
+
+If at any point it becomes impossible for a listed player to win the 2026 Wimbledon Women’s Singles Tournament per the rules of the tournament, the corresponding market will resolve to “No”.
+
+If the 2026 Wimbledon Women’s Singles Tournament is cancelled, postponed after August 31, 2026, or there is otherwise no winner declared within that timeframe, this market will resolve to “Other”.
+
+The primary resolution source will be official information from Wimbledon (https://www.wimbledon.com/index.html); however, a consensus of credible reporting may also be used.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/2026-womens-wimbledon-winner,2026-10-09T18:23:46Z,2026-07-12T00:00:00Z,0.0015,2026-06-23T20:07:55Z,9201412.09,0,2026-06-30T20:07:55Z
+polymarket:1129894,polymarket,Will United Russia (ER) win the most seats in the next Russian parliamentary election?,"Parliamentary elections are to be scheduled to be held in Russia in September 2026.
+
+This market will resolve according to the political party that wins the greatest number of seats in the next Russian State Duma election.
+
+If the results are not known definitively by September 30, 2027, 11:59 PM ET, this market will resolve to ""Other"".
+
+In the event of a tie between multiple parties for the most seats won, this market will resolve in favor of the party that received a greater number of valid votes. In the event that results in a tie, this market will resolve in favor of the party whose listed abbreviation appears first in alphabetical order.
+
+This market's resolution will be based solely on the number of seats won by the named party in the State Duma of the Federal Assembly of the Russian Federation.
+
+This market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results reported by Russian government sources such as the Central Election Commission of the Russian Federation.
+
+Note: If a listed party contests the election as part of a jointly listed coalition with one or more parties not listed in this market, the market corresponding to the listed party will represent the coalition and will count all seats won by the coalition collectively. If two or more listed parties contest the election as a jointly listed coalition, with or without additional parties not listed in this market, the market corresponding to the party within that coalition that won the most seats in the previous election will represent the coalition and will count all seats won by the coalition collectively. If such a coalition dissolves, each market will again represent its respective party individually.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/russia-parliamentary-election-winner,2026-10-09T18:23:46Z,2026-09-30T00:00:00Z,0.9905,2026-09-14T10:44:42Z,2314238.29,1,2026-09-21T10:44:42Z
+polymarket:1363963,polymarket,Will CDU win the most seats in the 2026 Sachsen-Anhalt parliamentary elections?,"Parliamentary elections to elect the Landtag of Sachsen-Anhalt are scheduled to take place on September 6, 2026.
+
+This market will resolve to the political party that wins the greatest number of seats in the state parliament of Sachsen-Anhalt (Landtag) as a result of this election.
+
+If voting in the Sachsen-Anhalt election for the Landtag does not occur by January 31, 2027, this market will resolve to ""Other"".
+
+In the event of a tie between multiple parties for the most seats won, this market will resolve in favor of the party that received a greater number of valid votes. In the event that results in a tie, this market will resolve in favor of the party whose listed abbreviation appears first in alphabetical order.
+
+This market's resolution will be based solely on the number of seats won by the named party or coalition.
+
+This market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as published on the official website of the Landtag of Sachsen-Anhalt (https://www.landtag.sachsen-anhalt.de/).",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/sachsen-anhalt-parliamentary-election-winner,2026-10-09T18:23:46Z,2026-09-06T00:00:00Z,0.006,2026-08-31T09:15:06Z,527082.65,0,2026-09-07T09:15:06Z
+polymarket:1364103,polymarket,Will AfD win the most seats in the 2026 Mecklenburg-Vorpommern parliamentary elections?,"Parliamentary elections to elect the Landtag of Mecklenburg-Vorpommern are scheduled to take place on September 20, 2026.
+
+This market will resolve to the political party that wins the greatest number of seats in the state parliament of Mecklenburg-Vorpommern (Landtag) as a result of this election.
+
+If voting in the Mecklenburg-Vorpommern election for the Landtag does not occur by January 31, 2027, this market will resolve to ""Other"".
+
+In the event of a tie between multiple parties for the most seats won, this market will resolve in favor of the party that received a greater number of valid votes. In the event that results in a tie, this market will resolve in favor of the party whose listed abbreviation appears first in alphabetical order.
+
+This market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as published on the official Mecklenburg-Vorpommern elections page of the Landesamt für innere Verwaltung (www.laiv-mv.de/Wahlen/Landtagswahlen/2026/).",binary,"[""Yes"", ""No""]",settled,World,https://polymarket.com/event/mecklenburg-vorpommern-parliamentary-election-winner,2026-10-09T18:23:46Z,2026-09-20T00:00:00Z,0.825,2026-09-14T04:19:28Z,1156782.32,1,2026-09-21T04:19:28Z
+polymarket:1365861,polymarket,Will Flávio Bolsonaro finish in second place in the first round of the 2026 Brazilian presidential election?,"A presidential election is scheduled to take place in Brazil on October 4, 2026.
+
+This market will resolve according to the listed candidate who receives the second-most valid votes in the first round of this election.
+
+The named candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidates' last names. This market will resolve to the candidate that occupies the second-highest finishing position after applying this ranking.
+
+If the result of this election isn't known definitively by June 30, 2027, 11:59 PM ET, the market will resolve to ""Other"".
+
+This market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., https://dadosabertos.tse.jus.br/).",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/brazil-presidential-election-first-round-2nd-place,2026-10-09T18:23:46Z,2026-10-05T03:59:00Z,0.755,2026-09-28T07:30:41Z,2674006.06,0,2026-10-05T07:30:41Z
+polymarket:1365894,polymarket,Will Renan Santos finish in third place in the first round of the 2026 Brazilian presidential election?,"A presidential election is scheduled to take place in Brazil on October 4, 2026.
+
+This market will resolve according to the listed candidate who receives the third-most valid votes in the first round of this election.
+
+The named candidates will be primarily ranked by the number of valid votes received in the specified election. If two or more candidates are tied on valid votes, ties will be broken by alphabetical order of the candidates' last names. This market will resolve to the candidate that occupies the third-highest finishing position after applying this ranking.
+
+If the result of this election isn't known definitively by June 30, 2027, 11:59 PM ET, the market will resolve to ""Other"".
+
+This market will resolve based on the result of the election, as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., https://dadosabertos.tse.jus.br/).",binary,"[""Yes"", ""No""]",settled,World,https://polymarket.com/event/brazil-presidential-election-first-round-3rd-place,2026-10-09T18:23:46Z,2026-10-05T03:59:00Z,0.43,2026-09-28T07:32:11Z,991191.67,0,2026-10-05T07:32:11Z
+polymarket:1387123,polymarket,Will Tyreek Hill play for the Chicago Bears next?,"This market will resolve to the next NFL team Tyreek Hill joins by August 31, 2026, 11:59 PM ET.
+
+If Tyreek Hill does not join a new NFL team by August 31, 2026, 11:59 PM ET, this market will resolve to “Other”.
+
+If Tyreek Hill joins a team that is not listed, this market will resolve to “Other”.
+
+If Tyreek Hill is released and is not signed by another team, retires, or is not under contract with any NFL team by August 31, 2026, 11:59 PM ET, this market will resolve to “Other”.
+
+Transfers or assignments between a team’s senior team and reserve or affiliate teams will not be considered for this market.
+
+An official signing announcement prior to the market’s close date will immediately resolve this market to the corresponding option.
+
+The resolution source for this market will be official information from the NFL or the acquiring team.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/where-will-tyreek-hill-play-in-2026,2026-10-09T18:23:46Z,2026-08-31T23:55:00Z,0.007,2026-08-25T08:30:30Z,2195683.91,0,2026-09-01T08:30:30Z
+polymarket:1630444,polymarket,Will Neymar play in the World Cup?,"This market will resolve to ""Yes"" if Neymar da Silva Santos Júnior takes the field as a player in at least one official match for Brazil during the 2026 FIFA World Cup at the group stage or later. Otherwise, this market will resolve to ""No"".
+
+Any on-field appearance as a player will qualify, in regulation, stoppage time, extra time, for a shootout, etc.
+
+The primary resolution source for this market will be information from FIFA (https://www.fifa.com/), however a consensus of credible reporting will also be used.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/will-neymar-play-in-the-world-cup,2026-10-09T18:23:46Z,2026-07-19T00:00:00Z,0.85,2026-06-18T01:43:50Z,3533769.48,1,2026-06-25T01:43:50Z
+polymarket:1986647,polymarket,Tamas Sulyok out as President of Hungary by June 30?,"This market will resolve to “Yes” if Tamas Sulyok ceases to be the President of Hungary for any period of time between market creation and June 30 (ET). Otherwise, this market will resolve to “No”.
+
+An announcement of Sulyok's resignation/removal before this market's end date will immediately resolve this market to ""Yes"", regardless of when the announced resignation/removal goes into effect.
+
+The resolution source for this market will be official information from Tamas Sulyok and the Hungarian government; however, a consensus of credible reporting may also be used.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/tamas-sulyok-out-as-president-of-hungary-by-june-30,2026-10-09T18:23:46Z,2026-06-30T00:00:00Z,0.055,2026-06-24T06:50:34Z,636224.78,0,2026-07-01T06:50:34Z
+polymarket:2069635,polymarket,Will Lionel Messi be the top goalscorer at the 2026 FIFA World Cup?,"This market will resolve to the player who scores the most goals through all main tournament rounds of the 2026 FIFA World Cup competition.
+
+In the event of a tie, this market will resolve according to the official leader as determined by FIFA rules. If multiple leaders are announced then this market will resolve to the player who scored fewer goals from penalty kicks. If a tie still persists, this market will resolve to the player whose listed last name comes first alphabetically.
+
+If the 2026 FIFA World Cup is cancelled, postponed after August 2, 2026, 11:59 PM ET, or there is no leader declared within that timeframe, the corresponding market will resolve to “Other”.
+
+The resolution source for this market will be official information from FIFA; however, a consensus of credible reporting may also be used.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/world-cup-golden-boot-winner,2026-10-09T18:23:46Z,2026-07-20T00:00:00Z,0.342,2026-07-13T00:07:13Z,11152807.78,0,2026-07-20T00:07:13Z
+polymarket:2071432,polymarket,World Cup: Unbeaten Champion?,"This market will resolve to “Yes” if the 2026 FIFA World Cup champion goes unbeaten in every match during the 2026 FIFA World Cup competition. Otherwise, this market will resolve to “No”.
+
+For the purpose of this market, “unbeaten” is defined as having not recorded a loss during any match in any stage of the 2026 FIFA World Cup. 
+
+If the 2026 FIFA World Cup competition is cancelled, postponed after August 2, 2026, 11:59 PM ET, or there is no confirmed unbeaten champion within that timeframe, this market will resolve to “No”.
+
+The resolution source for this market will be official information from FIFA; however, a consensus of credible reporting may also be used.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/world-cup-unbeaten-champion,2026-10-09T18:23:46Z,2026-07-20T00:00:00Z,0.9985,2026-07-13T00:10:00Z,2863546.63,1,2026-07-20T00:10:00Z
+polymarket:2100070,polymarket,"GPT-5.6 released by July 31, 2026?","This market will resolve to ""Yes"" if OpenAI's GPT-5.6 model is made available to the general public by the specified date (ET). Otherwise, this market will resolve to ""No.""
+
+GPT-5.6 refers to a product explicitly named GPT-5.6, or a variant that is recognized as a direct successor to GPT-5.5, similar to the progression from GPT-5.1 to GPT-5.2. (e.g., GPT-5.7, GPT-5.8, etc., would qualify toward a ""Yes"" resolution to this market)
+
+Qualifying releases of task-specialized models (e.g., GPT-Codex/Transcribe), cost-efficiency variants (e.g., Nano/Mini), or reasoning models of the o-series family will count for this market. Products labeled as a new flagship generation GPT-6 or similar will NOT qualify.
+
+For this market to resolve to ""Yes,"" a qualifying model must be launched and publicly accessible, including via open beta or open rolling waitlist signups. A closed beta or any form of private access will not suffice. 
+
+The release must be either clearly defined and publicly announced by OpenAI as being accessible to the general public or otherwise made publicly accessible and explicitly labeled within the company’s official website. Labeling errors, placeholder text, or version names displayed on the website that do not correspond to a model that is actually accessible to the general public will not qualify.
+
+The primary resolution source for this market will be official information from OpenAI, with additional verification from a consensus of credible reporting.",binary,"[""Yes"", ""No""]",settled,Tech,https://polymarket.com/event/gpt-5pt6-released-by,2026-10-09T18:23:46Z,2026-07-31T00:00:00Z,0.968,2026-07-02T19:56:01Z,685166.96,1,2026-07-09T19:56:01Z
+polymarket:2252244,polymarket,Will there be no change in Fed interest rates after the September 2026 meeting?,"The FED interest rates are defined in this market by the upper bound of the target federal funds range. The decisions on the target federal funds range are made by the Federal Open Market Committee (FOMC) meetings.
+
+This market will resolve to the amount of basis points the upper bound of the target federal funds rate is changed by versus the level it was prior to the Federal Reserve's September 2026 meeting.
+
+If the target federal funds rate is changed to a level not expressed in the displayed options, the change will be rounded up to the nearest 25 and will resolve to the relevant bracket. (e.g. if there's a cut/increase of 12.5 bps it will be considered to be 25 bps)
+
+The resolution source for this market is the FOMC’s statement after its meeting scheduled for September 15-16, 2026 according to the official calendar: https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm.
+
+The level and change of the target federal funds rate is also published at the official website of the Federal Reserve at https://www.federalreserve.gov/monetarypolicy/openmarket.htm.
+
+This market may resolve as soon as the FOMC’s statement for their September meeting with relevant data is issued. If no statement is released by the end date of the next scheduled meeting, this market will resolve to the ""No change"" bracket.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/fed-decision-in-september-762,2026-10-09T18:23:46Z,2026-09-16T00:00:00Z,0.475,2026-09-09T20:02:43Z,56435144.72,0,2026-09-16T20:02:43Z
+polymarket:2296152,polymarket,Israel closes its airspace by June 15?,"This market will resolve to “Yes” if Israel initiates a major closure of its airspace by the specified date, 11:59 PM ET. Otherwise, this market will resolve to “No”. 
+
+A “major closure” is defined as a broad closure, cancellation, or complete suspension of commercial aviation across the entirety of Israeli civilian airspace or a region encompassing a majority of Israeli civilian airspace, including commercial flights transiting, arriving in, and departing from that airspace. A qualifying closure must apply generally to all flights across Israel or a qualifying subset of Israeli airspace. Limited cancellations, delays, temporary ground stops or isolated regional closures will not qualify. Limited exceptions to a broad closure, however, will not disqualify such a closure from counting (e.g. exceptions for certain pre-approved flights may be permitted).
+
+Warnings, No-Fly-Zones, flight suspensions, or other flight restrictions imposed by airlines or countries other than Israel will not be sufficient for a “Yes” resolution.
+
+Airspace closures which occur solely due to weather conditions will not qualify.
+
+The primary resolution source for this market will be official information from Israeli aviation authorities; however, a consensus of credible reporting may also be used.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/israel-closes-its-airspace-by,2026-10-09T18:23:46Z,2026-06-16T03:59:00Z,0.115,2026-06-09T06:03:42Z,5651393.65,0,2026-06-16T06:03:42Z
+polymarket:2431017,polymarket,Will Rodri win the Golden Ball at the 2026 FIFA World Cup?,"This market will resolve to the player who wins the Golden Ball award for the 2026 FIFA World Cup.
+
+In the event of a tie, this market will resolve according to the official winner as determined by FIFA rules. If multiple winners are announced then this market will resolve to the player whose listed last name comes first alphabetically.
+
+If the 2026 FIFA World Cup is cancelled, postponed after August 2, 2026, 11:59 PM ET, or there is otherwise no winner declared within that timeframe, this market will resolve to “Other”.
+
+The resolution source for this market will be official information from FIFA; however, a consensus of credible reporting may also be used.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/world-cup-golden-ball-winner-20260603194031758,2026-10-09T18:23:46Z,2026-07-20T03:59:00Z,0.01,2026-07-13T00:43:49Z,3227355.62,1,2026-07-20T00:43:49Z
+polymarket:2470848,polymarket,Will Trump be in the WC Champions Photo?,"This market will resolve to “Yes” if Donald Trump is visibly in the frame for the winning team's official team photo following the 2026 FIFA World Cup Final. Otherwise, this market will resolve to “No”.
+
+If Trump does not attend the 2026 FIFA World Cup Final, this market will resolve to “No”.
+
+If the 2026 FIFA World Cup Final is cancelled or postponed beyond August 2, 2026, 11:59 PM ET, this market will resolve to “No”.
+
+The resolution source for this market will be a consensus of credible reporting.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/will-trump-be-in-the-wc-champions-photo-20260608152527021,2026-10-09T18:23:46Z,2026-07-20T03:59:00Z,0.705,2026-07-17T00:32:15Z,26990137.75,1,2026-07-24T00:32:15Z
+polymarket:2535468,polymarket,Strait of Hormuz traffic returns to normal by July 15?,"This market will resolve to “Yes” if IMF Portwatch publishes a 7-day moving average of transit calls (“Arrivals of Ships”) for the Strait of Hormuz equal to or above 60 for any date between market creation and July 15, 2026. Otherwise, this market will resolve to “No”.
+
+Daily transit calls include container, dry bulk, roll-on/roll-off, general cargo, and tanker ships. Ships not reported by IMF Portwatch will not be considered.
+
+This market will resolve as soon as IMF Portwatch publishes a 7-day moving average of transit calls equal to or above the specified level, or once data has been published for the final date in the specified period and no such value has been published. If no data has been published for the final date of the specified period within 14 calendar days (ET) after the end of that period, this market will resolve based on data published up to that point.
+
+Revisions to previously published data points made within this market’s timeframe will be considered. However, they will not disqualify a previously published data point from qualifying. Revisions to previously published data points after data is published for July 15, 2026, however, will not be considered.
+
+In case of obvious data integrity issues (i.e., erroneous data), the market may remain open until the end of the third calendar day (ET) after the date on which such data is first released to allow for corrections. Data integrity issues refer only to clerical or other similar errors in the underlying data, and do not include cases where IMF Portwatch differs from alternative sources.
+
+The resolution source for this market will be IMF Portwatch, specifically the transit calls data published for the Strait of Hormuz at https://portwatch.imf.org/pages/cb5856222a5b4105adc6ee7e880a1730, both in the chart and through downloadable files.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/strait-of-hormuz-traffic-returns-to-normal-by-july-15,2026-10-09T18:23:46Z,2026-07-15T00:00:00Z,0.0025,2026-07-14T16:19:13Z,11792334.44,0,2026-07-21T16:19:13Z
+polymarket:2584969,polymarket,U.S. anti-cartel operation outside of the U.S. by July 31?,"This market will resolve to ""Yes"" if U.S. government personnel (military, DEA, CIA, or any other agency) directly participate on the ground in an anti-cartel operation or conduct a kinetic strike directed against a cartel on foreign soil between market creation and the specified date, 11:59 PM ET. Otherwise, this market will resolve to “No”.
+
+U.S. personnel must directly participate to qualify. U.S. personnel involved in intelligence, surveillance, logistical, support, or advisory roles will not count.
+
+Only direct U.S. participation, confirmed by the U.S. Government or by an overwhelming consensus of reporting, will count. For example, previous operations such as the 2014 capture of Joaquín ""El Chapo"" Guzmán, in which U.S. forces were rumored to have been embedded with Mexican Marines, would not qualify.
+
+The primary resolution source for this market will be official statements from the U.S. government; however, an overwhelming consensus of reporting may also be used.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/us-anti-cartel-operation-outside-of-the-us-by-20260616214856017,2026-10-09T18:23:46Z,2026-07-31T11:59:00Z,0.0465,2026-07-27T02:44:20Z,2424409.59,0,2026-08-03T02:44:20Z
+polymarket:2643400,polymarket,Will Iran announce withdrawal from MOU negotiations by July 31?,"On June 14, 2026, the United States and Iran announced a memorandum of understanding ending the immediate conflict and establishing a 60-day framework for negotiating a final agreement.
+
+This market will resolve to “Yes” if the Iranian government, or an authorized representative of the Iranian government, publicly and officially announces its termination of participation in the negotiation process toward the final agreement contemplated by the June 14, 2026 MOU between market creation and the specified date, 11:59 PM ET. Otherwise, this market will resolve to ""No"".
+
+A termination means a definitive end to Iran's participation in the negotiation process as a whole. A temporary suspension, pause, or adjournment of negotiations, however open-ended or indefinite, does not constitute a termination unless it is itself clearly and unambiguously framed as a definitive end to participation. A conditional withdrawal, in which Iran announces it is ending participation subject to or contingent on any future event or condition, does not constitute termination.
+
+A qualifying announcement must be a declarative statement of the Iranian government's present termination of participation in the negotiation process, previously-unannounced prior termination of participation in the negotiation process, or definitive decision to terminate participation in the negotiation process.
+
+A qualifying announcement must clearly and unambiguously identify Iran's termination of participation in the negotiation process. Statements that merely allude to, reference, or describe such termination, without clearly communicating it, do not qualify. The announcement need not use specific terminology or reference the MOU or the negotiation process by name; an announcement of a resumption of prior obligations, the maintenance of a status quo, or a return to a previously agreed baseline qualifies, provided the substantive policy of termination of the negotiation process is clearly and unambiguously communicated.
+
+A qualifying announcement must be made through official channels, by an individual acting in an official capacity. Statements made incidentally or informally in a context not intended for official communication do not qualify.
+
+The following do not qualify:
+- Anonymous, unattributed, or leaked statements not confirmed as official;
+- Statements by persons not authorized to speak for the Iranian government; 
+- Third-party speculation, analysis, or predictions that the Iranian government will announce or terminate participation in negotiations; 
+- Satirical, fabricated, hacked, or impersonated communications; 
+- Statements that describe a prospective, contingent, probable, or conditional termination rather than announcing a present and decided position; 
+- Walkouts, boycotts, or refusals to attend a specific meeting that do not clearly announce a termination of the overall negotiation process; and 
+- Indirect communications through mediators that do not constitute a direct official announcement from Iran.
+
+Once a qualifying announcement is made, this market will resolve to ""Yes"" regardless of whether it is later reversed, or whether Iran actually ceases participation in negotiations.
+
+Resolution will be based on official information from the Iranian government, or the official representatives of the Iranian government.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/iran-announces-withdrawal-from-mou-negotiations-byptptpt-20260622191732319,2026-10-09T18:23:46Z,2026-07-31T23:59:00Z,0.065,2026-07-25T06:06:29Z,3285719.48,0,2026-08-01T06:06:29Z
+polymarket:2643403,polymarket,Will the US announce withdrawal from MOU negotiations by July 31?,"On June 14, 2026, the United States and Iran announced a memorandum of understanding ending the immediate conflict and establishing a 60-day framework for negotiating a final agreement.
+
+This market will resolve to ""Yes"" if the United States government, or an authorized representative of the United States government, publicly and officially announces its termination of participation in the negotiation process toward the final agreement contemplated by the June 14, 2026 MOU between market creation and the specified date, 11:59 PM ET. Otherwise, this market will resolve to ""No.""
+
+A termination means a definitive end to the United States' participation in the negotiation process as a whole. A temporary suspension, pause, or adjournment of negotiations, however open-ended or indefinite, does not constitute a termination unless it is itself clearly and unambiguously framed as a definitive end to participation. A conditional withdrawal, in which the United States announces it is ending participation subject to or contingent on any future event or condition, does not constitute termination.
+
+A qualifying announcement must be a declarative statement of the United States government's present termination of participation in the negotiation process, previously-unannounced prior termination of participation in the negotiation process, or definitive decision to terminate participation in the negotiation process.
+
+A qualifying announcement must clearly and unambiguously identify the United States' termination of participation in the negotiation process. Statements that merely allude to, reference, or describe such termination, without clearly communicating it, do not qualify. The announcement need not use specific terminology or reference the MOU or the negotiation process by name; an announcement of a resumption of prior obligations, the maintenance of a status quo, or a return to a previously agreed baseline qualifies, provided the substantive policy of termination of the negotiation process is clearly and unambiguously communicated.
+
+A qualifying announcement must be made through official channels, by an individual acting in an official capacity. Statements made incidentally or informally in a context not intended for official communication do not qualify.
+
+The following do not qualify:
+- Anonymous, unattributed, or leaked statements not confirmed as official;
+- Statements by persons not authorized to speak for the United States government;
+- Third-party speculation, analysis, or predictions that the United States government will announce or terminate participation in negotiations;
+- Satirical, fabricated, hacked, or impersonated communications;
+- Statements that describe a prospective, contingent, probable, or conditional termination rather than announcing a present and decided position;
+- Walkouts, boycotts, or refusals to attend a specific meeting that do not clearly announce a termination of the overall negotiation process; and
+- Indirect communications through mediators that do not constitute a direct official announcement from the United States.
+
+Once a qualifying announcement is made, this market will resolve to ""Yes"" regardless of whether it is later reversed, or whether the United States actually ceases participation in negotiations.
+
+Resolution will be based on official information from the United States government, including the President, the Department of State, and the National Security Council, or the official representatives of the United States government.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/us-announces-withdrawal-from-mou-negotiations-byptptpt-20260622192051747,2026-10-09T18:23:46Z,2026-08-01T03:59:00Z,0.055,2026-07-25T06:11:47Z,725658.33,0,2026-08-01T06:11:47Z
+polymarket:2663611,polymarket,US-Iran 60 day negotiation period extended?,"On June 14, 2026, the United States and Iran announced a written diplomatic agreement (the MOU), including a 60-day negotiation period toward a “final deal”, extendable by mutual consent.
+
+This market will resolve to “Yes” if both the United States and Iran publicly and officially announce an extension of the 60-day negotiation period initiated by the MOU between market creation and August 20, 2026, 11:59 PM ET. Otherwise, this market will resolve to “No”.
+
+A qualifying announcement must be a declarative statement of a present extension of the 60-day negotiation period, a previously-unannounced prior extension of the 60-day negotiation period, or definitive agreement to extend the 60-day negotiation period.
+
+A qualifying announcement must clearly and unambiguously identify an extension of the 60-day negotiation period initiated by the MOU. Statements that merely allude to, reference, or describe an extension, without clearly communicating it, do not qualify. However, the announcement need not use specific terminology or reference the MOU by name.
+
+A qualifying announcement must be made through official channels, by an individual acting in an official capacity. Statements made incidentally or informally in a context not intended for official communication do not qualify.
+
+The extension must be mutually announced by the United States and the Islamic Republic of Iran by the specified date, 11:59 PM ET. Mutual announcement means that taken together, the announcements from the United States and the Islamic Republic of Iran directly indicate that both parties have agreed to extend the 60-day negotiation period, or have recognized a definitive extension of the period.
+
+The following do not qualify as official announcements: 
+- Anonymous, unattributed, or leaked statements not confirmed as official; 
+- Statements by persons not authorized to speak for the United States or Iran;
+- Third-party speculation, analysis, or predictions that the United States or Iran will announce or implement an extension of the 60-day negotiation period; 
+- Satirical, fabricated, hacked, or impersonated communications; 
+- Statements that describe a prospective, contingent, probable, or conditional extension of the 60-day negotiation period rather than announcing a present and decided position.
+
+Once an extension has been mutually announced by the United States and Iran, this market will resolve to “Yes” regardless of whether it is later reversed, or whether the extension is ever actually implemented.
+
+Resolution will be based on official information from the United States and Iran, including their official representatives.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/us-iran-60-day-negotiation-period-extended-20260624044855448,2026-10-09T18:23:46Z,2026-08-20T23:59:00Z,0.225,2026-08-14T08:47:27Z,2894249.76,0,2026-08-21T08:47:27Z
+polymarket:2698861,polymarket,Will Trump speak to Emmanuel Macron in July?,"This market will resolve to ""Yes"" if the listed individual speaks with Donald Trump between July 1 and July 31, 2026, 11:59 PM ET. Otherwise, it will resolve to ""No"".
+
+Speaking is defined as any verbal interaction between the listed individual and Donald Trump, occurring either in person or through verbal communication by phone or video call.
+
+The resolution source will be credible media reporting. However, in the absence of definitive or in the case of contradictory media reporting, statements by either of the specified individuals or their official representatives will also be considered.
+
+Statements by the specified individuals or their official representatives will only be considered conclusive if the claims explicitly, or in context unambiguously, indicate that a qualifying talk occurred within the specified timeframe and took place via verbal communication, and provided that such claims are not contradicted by the other specified individual, their representatives, or credible media reporting by the end of the third calendar date (ET) following the statement in question.
+
+This market will resolve at the earlier of i) a qualifying verbal interaction being confirmed under the above rules or ii) 11:59 PM ET on the third calendar day following this market's above-specified timeframe.
+
+If the date and time of a qualifying talk cannot be confirmed by a consensus of credible reporting by 11:59 PM ET on the third calendar day following this market's above-specified timeframe, it will resolve to ""No"" regardless of whether it was later confirmed to have taken place.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/who-will-trump-speak-to-in-july-20260626154217421,2026-10-09T18:23:46Z,2026-07-31T23:59:00Z,0.5015,2026-07-29T02:32:54Z,1170437.93,0,2026-08-05T02:32:54Z
+polymarket:2732505,polymarket,Another GTA VI trailer released by August 31?,"This market will resolve to ""Yes"" if another official trailer for GTA VI is released by Rockstar Games or any of its official accounts, including but not limited to Rockstar's official website, YouTube channel, Twitter, or any other official social media platform between market creation and the listed date, 2026, 11:59 PM ET.
+
+An ""official trailer"" is defined as a video clearly labelled and marketed as a trailer for the game in question. Teasers, gameplay snippets, or other promotional materials will not qualify for resolution unless explicitly marketed as an official trailer by Rockstar Games.
+
+This market will resolve immediately if such an official trailer is released by the expiry date. If no official trailer is released by the specified date, this market will resolve to ""No"".",binary,"[""Yes"", ""No""]",settled,Culture,https://polymarket.com/event/another-gta-vi-trailer-released-by,2026-10-09T18:23:46Z,2026-09-01T03:59:00Z,0.335,2026-08-25T06:04:21Z,798671.42,0,2026-09-01T06:04:21Z
+polymarket:2734313,polymarket,"Will Donald Trump publicly insult Vladimir Putin by July 31, 2026?","This market will resolve to ""Yes"" if Donald Trump makes any public statement in which he insults, mocks, or attacks the listed individual personally or professionally in a clearly negative manner between market creation and the specified date (ET). Otherwise, this market will resolve to ""No"". 
+
+This includes calling the individual weak, stupid, disloyal, a failure, using an insulting nickname, using other derogatory language, or using the negative form of a positive trait in a derogatory personal way (e.g., “He/She isn’t smart”). Negative forms used in reference to the individual's professional actions, policies, or decisions (e.g., “He/She isn’t being smart about this policy”) will not count. Policy disagreements stated without disparaging language will not count.
+
+A direct reference will qualify even if the individual is not named, so long as it is reasonably clear from context that they are the subject.
+
+Any written, verbal, or recorded public statement by Trump qualifies.
+
+The resolution source for this market will be public statements from Donald Trump.",binary,"[""Yes"", ""No""]",settled,Culture,https://polymarket.com/event/who-will-trump-publicly-insult-by-july-31-20260626210612709,2026-10-09T18:23:46Z,2026-07-31T23:59:00Z,0.0915,2026-07-27T02:44:45Z,1480348.43,0,2026-08-03T02:44:45Z
+polymarket:2737255,polymarket,Will the Iranian regime fall by September 30?,"This market will resolve to ""Yes"" if the Islamic Republic of Iran’s current ruling regime is overthrown, collapsed, or otherwise ceases to govern by September 30, 2026, 11:59 PM ET. Otherwise, this market will resolve to “No”.
+
+This requires a broad consensus of reporting indicating that core structures of the Islamic Republic (e.g. the office of the Supreme Leader, the Guardian Council, IRGC control under clerical authority) have been dissolved, incapacitated, or replaced by a fundamentally different governing system or otherwise lost de facto power over a majority of the population of Iran. This could occur via revolution, civil war, military coup, or voluntary abdication, but only qualifies if the Islamic Republic no longer exercises sovereign power.
+
+Routine political events such as elections, reforms, or leadership succession do not qualify. Internal coups or power shifts that preserve the Islamic Republic’s core structures also do not qualify. Only a clear break in continuity—such as a new provisional government, revolutionary council, or constitution replacing the Islamic Republic will qualify.
+
+Partial loss of territory or challenges from rebel or exile groups will not qualify unless the Islamic Republic no longer administers the majority of the Iranian population within Iran. 
+
+The resolution source will be a consensus of credible reporting.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/will-the-iranian-regime-fall-by-september-30-20260629143335077,2026-10-09T18:23:46Z,2026-10-01T03:59:00Z,0.0025,2026-09-24T06:04:00Z,2937939.52,0,2026-10-01T06:04:00Z
+polymarket:2738413,polymarket,"Will Elon Musk post 200-219 tweets from July 3 to July 10, 2026?","This market will resolve according to the number of times Elon Musk (@elonmusk), posts on X from July 3 12:00 PM ET to July 10, 2026 12:00 PM ET.
+
+For the purposes of this market, only main feed posts, quote posts and reposts will count.
+
+Replies will NOT count towards the total - however, replies on the main feed such as https://x.com/elonmusk/status/1786073478711353576 will be counted by the tracker.
+
+Deleted posts will count as long as they remain available long enough to be captured by the tracker (~5 minutes).
+
+Community reposts which are not counted by the tracker not count toward the total.
+
+The resolution source for this market is the 'Post Counter' figure for posts found at https://xtracker.polymarket.com. Individual posts can be viewed by clicking ""Export Data"". If the tracker does not update correctly in accordance with the rules, X itself may be used as a secondary resolution source.",binary,"[""Yes"", ""No""]",settled,Culture,https://polymarket.com/event/elon-musk-of-tweets-july-3-july-10,2026-10-09T18:23:46Z,2026-07-10T16:00:00Z,0.175,2026-07-03T18:02:10Z,476299.69,0,2026-07-10T18:02:10Z
+polymarket:2774057,polymarket,Strait of Hormuz traffic returns to normal by September 30?,"This market will resolve to “Yes” if IMF Portwatch publishes a 7-day moving average of transit calls (“Arrivals of Ships”) for the Strait of Hormuz equal to or above 60 for any date between market creation and September 30, 2026. Otherwise, this market will resolve to “No”.
+
+Daily transit calls include container, dry bulk, roll-on/roll-off, general cargo, and tanker ships. Ships not reported by IMF Portwatch will not be considered.
+
+This market will resolve as soon as IMF Portwatch publishes a 7-day moving average of transit calls equal to or above the specified level, or once data has been published for the final date in the specified period and no such value has been published. If no data has been published for the final date of the specified period within 14 calendar days (ET) after the end of that period, this market will resolve based on data published up to that point.
+
+Revisions to previously published data points made within this market’s timeframe will be considered. However, they will not disqualify a previously published data point from qualifying. Revisions to previously published data points after data is published for September 30, 2026, however, will not be considered.
+
+In case of obvious data integrity issues (i.e., erroneous data), the market may remain open until the end of the third calendar day (ET) after the date on which such data is first released to allow for corrections. Data integrity issues refer only to clerical or other similar errors in the underlying data, and do not include cases where IMF Portwatch differs from alternative sources.
+
+The resolution source for this market will be IMF Portwatch, specifically the transit calls data published for the Strait of Hormuz at https://portwatch.imf.org/pages/cb5856222a5b4105adc6ee7e880a1730, both in the chart and through downloadable files.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/strait-of-hormuz-traffic-returns-to-normal-by-september-30-20260702154339440,2026-10-09T18:23:46Z,2026-10-01T03:59:00Z,0.0005,2026-09-29T15:49:59Z,12299800.91,0,2026-10-06T15:49:59Z
+polymarket:2820499,polymarket,"Will 30 ships transit the Strait of Hormuz on any day by July 31, 2026?","This market will resolve to “Yes” if any finalized daily number of transit calls (“Arrivals of Ships”) for the Strait of Hormuz reported by IMF Portwatch is equal to or above the listed value for any date between market creation and July 31, 2026. Otherwise, this market will resolve to “No”.
+
+Transit calls include container, dry bulk, roll-on/roll-off, general cargo, and tanker ships. Ships not reported by IMF Portwatch will not be considered.
+
+Data for a specific date must be finalized before it is considered for this market (namely, once the next date's data point is available, the previous one is finalized).
+
+This market will resolve as soon as a qualifying figure has been finalized or once all relevant data has been finalized. If the data for the final date of the specified timeframe has not been finalized by the end of the third calendar day (ET) after the day on which such data is first released, this market will resolve based on data published up to that point. Additionally, if not all relevant data has been released and finalized within 14 calendar days of the end of the specified period, this market will resolve based on data published up to that point.
+
+In case of obvious data integrity issues (i.e., erroneous data), the market may remain open until the end of the third calendar day (ET) after the date on which such data is first released to allow for corrections. Data integrity issues refer only to clerical or other similar errors in the underlying data, and do not include cases where IMF Portwatch differs from alternative sources.
+
+Only revisions to previously published data points made before the applicable resolution time will be considered.
+
+The resolution source for this market will be IMF Portwatch, specifically the transit calls data published for the Strait of Hormuz at https://portwatch.imf.org/pages/cb5856222a5b4105adc6ee7e880a1730, both in the chart and through downloadable files.",binary,"[""Yes"", ""No""]",settled,Geopolitics,https://polymarket.com/event/will-ships-transit-the-strait-of-hormuz-on-any-day-by-july-31-20260626152655081,2026-10-09T18:23:46Z,2026-07-31T23:59:00Z,0.0125,2026-07-31T09:37:27Z,525005.61,0,2026-08-07T09:37:27Z
+polymarket:2832147,polymarket,Will Count Binface win the Clacton by-election?,"A by-election for the United Kingdom parliamentary constituency of Clacton is expected to be held soon following the announced resignation of incumbent Nigel Farage.
+
+This market will resolve according to the candidate who wins the Clacton parliamentary by-election.
+
+If the election results are not known definitively by June 30, 2027, 11:59 PM ET, this market will resolve to ""Other"".
+
+The resolution source for this market will be a consensus of credible reporting. In case of ambiguity, this market will resolve solely based on official election results as published by Tendring District Council (https://www.tendringdc.gov.uk/) and the UK Parliament (https://www.parliament.uk/).",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/clacton-by-election-winner-20260707143521303,2026-10-09T18:23:46Z,2026-08-13T16:00:00Z,0.0075,2026-08-07T08:37:43Z,3692242.22,0,2026-08-14T08:37:43Z
+polymarket:2896080,polymarket,Will Darline Graham Nordone be the new republican nominee for Senate in South Carolina?,"This market will resolve according to the winner of the special Republican Primary for United States Senator from South Carolina, including any potential runoff.
+
+If no 2026 special South Carolina Republican Senate Primary takes place by November 2, 2026, 11:59 PM ET, this market will resolve according to the candidate who is the official Republican nominee to contest the November 3, 2026 South Carolina U.S. Senate election.
+
+If the results of the special primary are not definitively known, or if there is no Republican nominee to contest the November 3, 2026 South Carolina U.S. Senate election, by November 2, 2026, 11:59 PM ET, this market will resolve to ""Other"".
+
+The resolution source for this market will be the first announcement of the results from the South Carolina Republican party, however an overwhelming consensus of credible reporting may suffice.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/south-carolina-republican-senate-special-primary-winner-20260712135206676,2026-10-09T18:23:46Z,2026-08-25T23:59:00Z,0.8585,2026-08-19T03:41:43Z,2445816.8,1,2026-08-26T03:41:43Z
+polymarket:3008494,polymarket,Will Anthropic have the best AI model at the end of September 2026?,"This market will resolve according to the company which owns the model which has the highest arena rank based on the arena.ai Text Arena (Overall) when the table under the ""Leaderboard"" tab is checked on September 30, 2026, 12:00 PM ET.
+
+Results from the ""Rank"" column under the ""Text Arena | Overall"" Leaderboard tab at https://arena.ai/leaderboard/text/overall-no-style-control with style control off (Adjustments: None) and filtered for ""Models"" will be used to resolve this market.
+
+Models will be ordered primarily by their leaderboard rank at the market’s check time. If two or more models are tied on rank, they will be ordered by their Arena score, including any underlying, unrounded, granular values reflected in the data below the leaderboard. If a tie still remains, alphabetical order of company names as listed in this market group will be used as a final tiebreaker (e.g., if the two models are tied by exact arena score, “Google” would be ranked ahead of “SpaceXAI”). This market will resolve based on the company that occupies first place under this ranking.
+
+The resolution source for this market is the arena.ai Text Arena (Overall). If this resolution source is unavailable at check time, this market will remain open until the leaderboard comes back online and will resolve based on the first check after it becomes available. If it becomes permanently unavailable, this market will resolve to ""Other"".",binary,"[""Yes"", ""No""]",settled,Tech,https://polymarket.com/event/which-company-has-the-best-ai-model-end-of-september-20260717143435868,2026-10-09T18:23:46Z,2026-09-30T16:00:00Z,0.9845,2026-09-23T18:25:18Z,1029022.11,1,2026-09-30T18:25:18Z
+polymarket:3010131,polymarket,"Will Elon Musk post 280-299 tweets from July 24 to July 31, 2026?","This market will resolve according to the number of times Elon Musk (@elonmusk), posts on X from July 24 12:00 PM ET to July 31, 2026 12:00 PM ET.
+
+For the purposes of this market, only main feed posts, quote posts and reposts will count.
+
+Replies will NOT count towards the total - however, replies on the main feed such as https://x.com/elonmusk/status/1786073478711353576 will be counted by the tracker.
+
+Deleted posts will count as long as they remain available long enough to be captured by the tracker (~5 minutes).
+
+Community reposts which are not counted by the tracker not count toward the total.
+
+The resolution source for this market is the 'Post Counter' figure for posts found at https://xtracker.polymarket.com. Individual posts can be viewed by clicking ""Export Data"". If the tracker does not update correctly in accordance with the rules, X itself may be used as a secondary resolution source.",binary,"[""Yes"", ""No""]",settled,Culture,https://polymarket.com/event/elon-musk-of-tweets-july-24-july-31,2026-10-09T18:23:46Z,2026-07-31T16:00:00Z,0.0355,2026-07-24T18:05:44Z,543867.27,0,2026-07-31T18:05:44Z
+polymarket:3121262,polymarket,NATO downs another Russian drone by August 31?,"This market will resolve to ""Yes"" if a NATO military downs another Russian drone by any means (kinetic, jammer, etc.) between market creation and the specified date 11:59 PM Kyiv Time.
+
+The resolution source for this market will be a consensus of credible reporting.
+
+The occurrence, attribution, and timing of a qualifying incident will be primarily determined based on a consensus of information available from the resolution sources. Where multiple sources conflict regarding the occurrence, attribution, or timing of a relevant incident, this market will remain open until the earlier of: i) the confirmation of the occurrence, attribution, and timing of the incident based on a consensus of information available from the resolution sources or ii) 3 full calendar days (CEST) from the date of the first credibly reported evidence of the incident. If this period would extend past the end date, this market will remain open to allow for 3 full calendar days to pass. If, at the end of the third calendar day, conflicting reports remain as to the occurrence, attribution, or timing of the incident, this market will resolve based on the totality of information available from the resolution sources at that time. No single statement, denial, or presentation of evidence will govern where it is contradicted by the totality of information.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/nato-downs-another-russian-drone-byptptpt-20260726214930818,2026-10-09T18:23:46Z,2026-08-31T23:59:00Z,0.365,2026-08-16T00:33:31Z,485611.65,1,2026-08-23T00:33:31Z
+polymarket:3145210,polymarket,"Will Donald Trump publicly insult someone on August 23, 2026?","This market will resolve to ""Yes"" if Donald Trump makes a public statement in which he insults any non-fictional individual on the specified date (ET). Otherwise, this market will resolve to ""No"".
+
+A public statement is any written, verbal, or recorded statement which is either made in a public setting, published by the speaker, or on the record to media, and the direct language of which is made publicly available. Statements made in private that are subsequently leaked will not qualify, even if credibly reported. Narrations and paraphrasings do not qualify.
+
+Images and videos posted on verified social media accounts will only qualify if they contain insulting language clearly directed at the individual, whether within the content itself or in an accompanying caption. A quote post will only qualify if added language independently qualifies as an insult; a repost of another account's post will not qualify.
+
+A public statement qualifies as an insult if it mocks, degrades, or disparages the individual either personally or professionally. This includes calling the individual a clearly insulting trait (e.g., weak, stupid, disloyal, a failure), using an insulting nickname (e.g., Crooked Hillary), using other clearly derogatory language, or using the negative form of a positive trait in a clearly derogatory manner (e.g., “He isn’t smart”, “He has no judgment”). Disparaging the individual in their professional capacity will qualify (e.g., ""He is a disaster candidate,"" ""He is terrible at his job""); however, negative comments directed at the individual's specific actions, policies, or decisions will not qualify (e.g., ""He has bad policies,"" ""He is wrong about healthcare"").
+
+A statement made in direct reference to the individual will qualify even if they are not named, so long as it is reasonably clear from context that they are the subject. 
+
+The resolution sources will be public statements made by Donald Trump and a consensus of credible reporting.",binary,"[""Yes"", ""No""]",settled,Culture,https://polymarket.com/event/will-trump-publicly-insult-someone-onptptpt-20260724221849631,2026-10-09T18:23:46Z,2026-08-24T03:59:00Z,0.855,2026-08-22T00:31:30Z,826048.27,0,2026-08-29T00:31:30Z
+polymarket:3228928,polymarket,Will Paris Saint-Germain win on 2026-08-12?,"In the upcoming game, scheduled for August 12, 2026
+If Paris Saint-Germain wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/usc-psg-av-2026-08-12,2026-10-09T18:23:46Z,2026-08-12T19:00:00Z,0.555,2026-08-05T23:24:13Z,5047261.53,1,2026-08-12T23:24:13Z
+polymarket:3282778,polymarket,Will Deportivo Alavés win on 2026-08-15?,"In the upcoming game, scheduled for August 15, 2026
+If Deportivo Alavés wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-ala-get-2026-08-15,2026-10-09T18:23:46Z,2026-08-15T17:30:00Z,0.415,2026-08-08T19:57:43Z,2222310.63,1,2026-08-15T19:57:43Z
+polymarket:3282785,polymarket,Will Sevilla FC win on 2026-08-15?,"In the upcoming game, scheduled for August 15, 2026
+If Sevilla FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-sev-ray-2026-08-15,2026-10-09T18:23:46Z,2026-08-15T19:30:00Z,0.415,2026-08-09T02:26:43Z,2130476.63,1,2026-08-16T02:26:43Z
+polymarket:3325026,polymarket,"Will Elon Musk post 200-219 tweets from August 7 to August 14, 2026?","This market will resolve according to the number of times Elon Musk (@elonmusk), posts on X from August 7 12:00 PM ET to August 14, 2026 12:00 PM ET.
+
+For the purposes of this market, only main feed posts, quote posts and reposts will count.
+
+Replies will NOT count towards the total - however, replies on the main feed such as https://x.com/elonmusk/status/1786073478711353576 will be counted by the tracker.
+
+Deleted posts will count as long as they remain available long enough to be captured by the tracker (~5 minutes).
+
+Community reposts which are not counted by the tracker not count toward the total.
+
+The resolution source for this market is the 'Post Counter' figure for posts found at https://xtracker.polymarket.com. Individual posts can be viewed by clicking ""Export Data"". If the tracker does not update correctly in accordance with the rules, X itself may be used as a secondary resolution source.",binary,"[""Yes"", ""No""]",settled,Culture,https://polymarket.com/event/elon-musk-of-tweets-august-7-august-14,2026-10-09T18:23:46Z,2026-08-14T16:00:00Z,0.165,2026-08-07T18:02:43Z,545501.3,0,2026-08-14T18:02:43Z
+polymarket:3375989,polymarket,Will Club Atlético de Madrid win on 2026-08-19?,"In the upcoming game, scheduled for August 19, 2026
+If Club Atlético de Madrid wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-mad-mala-2026-08-19,2026-10-09T18:23:46Z,2026-08-19T19:00:00Z,0.75,2026-08-12T21:28:13Z,3390827.44,1,2026-08-19T21:28:13Z
+polymarket:3399197,polymarket,Russia Elections: United Russia Wins Every Region?,"Parliamentary elections are scheduled to be held in Russia on September 20, 2026.
+
+This market will resolve to ""Yes"" if the United Russia party list receives the greatest number of valid votes of any party list in each individual region in the 2026 Russian legislative elections. Otherwise, this market will resolve to ""No"".
+
+For the purposes of this market, a region means any federal subject of the Russian Federation for which results of the federal party-list vote are separately reported by the Central Election Commission of the Russian Federation.
+
+This market will resolve solely according to the valid votes received by each party list in each region. The number of seats won by any party, including any seats won in single-member constituencies, will have no bearing on resolution.
+
+If the United Russia party list is tied with multiple party lists for the greatest number of valid votes in a region, United Russia will be considered to have received the greatest number of valid votes in that region for the purposes of this market.
+
+If the results of this election are not known definitively by September 30, 2027, 11:59 PM ET, this market will resolve to ""No"".
+
+This market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results reported by Russian government sources such as the Central Election Commission of the Russian Federation.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/russia-elections-united-russia-wins-every-region,2026-10-09T18:23:46Z,2027-10-01T03:59:00Z,0.605,2026-09-18T14:24:45Z,1056213.22,1,2026-09-25T14:24:45Z
+polymarket:3399203,polymarket,Russia Elections: Yabloko Clears Duma Threshold?,"Parliamentary elections are scheduled to be held in Russia on September 20, 2026.
+
+This market will resolve to ""Yes"" if the Yabloko party list receives a percentage of valid votes greater than or equal to the threshold to gain seats in the State Duma from the proportional representation system in the 2026 Russian parliamentary elections. Otherwise, this market will resolve to ""No"".
+
+This market will resolve solely according to the percentage of valid votes received by the Yabloko party list. Whether Yabloko is awarded any seats in the State Duma will have no bearing on resolution.
+
+The applicable threshold will be the threshold in effect at the time of the specified election. As of the creation of this market, that threshold is 5% of valid votes.
+
+If the Yabloko party list is not present on the nationwide ballot, or is otherwise excluded from the results of the specified election, this market will resolve to ""No"".
+
+If the results of this election are not known definitively by September 30, 2027, 11:59 PM ET, this market will resolve to ""No"".
+
+This market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results reported by Russian government sources such as the Central Election Commission of the Russian Federation.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/russia-elections-yabloko-clears-duma-threshold,2026-10-09T18:23:46Z,2026-09-20T23:59:00Z,0.005,2026-09-11T08:40:39Z,899582.07,0,2026-09-18T08:40:39Z
+polymarket:3414461,polymarket,"Will Elon Musk post 140-159 tweets from August 11 to August 18, 2026?","This market will resolve according to the number of times Elon Musk (@elonmusk), posts on X from August 11 12:00 PM ET to August 18, 2026 12:00 PM ET.
+
+For the purposes of this market, only main feed posts, quote posts and reposts will count.
+
+Replies will NOT count towards the total - however, replies on the main feed such as https://x.com/elonmusk/status/1786073478711353576 will be counted by the tracker.
+
+Deleted posts will count as long as they remain available long enough to be captured by the tracker (~5 minutes).
+
+Community reposts which are not counted by the tracker not count toward the total.
+
+The resolution source for this market is the 'Post Counter' figure for posts found at https://xtracker.polymarket.com. Individual posts can be viewed by clicking ""Export Data"". If the tracker does not update correctly in accordance with the rules, X itself may be used as a secondary resolution source.",binary,"[""Yes"", ""No""]",settled,Culture,https://polymarket.com/event/elon-musk-of-tweets-august-11-august-18,2026-10-09T18:23:46Z,2026-08-18T16:00:00Z,0.11,2026-08-11T16:57:10Z,545801.54,0,2026-08-18T16:57:10Z
+polymarket:3414490,polymarket,Will Arsenal FC win on 2026-08-21?,"In the upcoming game, scheduled for August 21, 2026
+If Arsenal FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/epl-ars-cov-2026-08-21,2026-10-09T18:23:46Z,2026-08-21T19:00:00Z,0.845,2026-08-14T21:15:01Z,2342005.64,1,2026-08-21T21:15:01Z
+polymarket:3432450,polymarket,Will FC Internazionale Milano win on 2026-08-22?,"In the upcoming game, scheduled for August 22, 2026
+If FC Internazionale Milano wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/sea-int-mon-2026-08-22,2026-10-09T18:23:46Z,2026-08-22T16:30:00Z,0.805,2026-08-15T18:44:13Z,2011432.42,1,2026-08-22T18:44:13Z
+polymarket:3449516,polymarket,Will Arsenal FC win on 2026-08-16?,"In the upcoming game, scheduled for August 16, 2026
+If Arsenal FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/ecs-ars-mci-2026-08-16,2026-10-09T18:23:46Z,2026-08-16T14:00:00Z,0.46,2026-08-09T20:43:43Z,2600516.48,1,2026-08-16T20:43:43Z
+polymarket:3471471,polymarket,Will AC Milan win on 2026-08-23?,"In the upcoming game, scheduled for August 23, 2026
+If AC Milan wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/sea-tor-mil-2026-08-23,2026-10-09T18:23:46Z,2026-08-23T18:45:00Z,0.545,2026-08-16T20:59:30Z,3615096.83,1,2026-08-23T20:59:30Z
+polymarket:3474314,polymarket,Will Liverpool FC win on 2026-08-23?,"In the upcoming game, scheduled for August 23, 2026
+If Liverpool FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/epl-new-liv-2026-08-23,2026-10-09T18:23:46Z,2026-08-23T15:30:00Z,0.505,2026-08-16T17:45:18Z,2883964.74,0,2026-08-23T17:45:18Z
+polymarket:3476559,polymarket,Will FC Barcelona win on 2026-08-23?,"In the upcoming game, scheduled for August 23, 2026
+If FC Barcelona wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-elc-bar-2026-08-23,2026-10-09T18:23:46Z,2026-08-23T19:30:00Z,0.755,2026-08-16T21:46:42Z,2953194.43,1,2026-08-23T21:46:42Z
+polymarket:3505990,polymarket,Will Chelsea FC win on 2026-08-24?,"In the upcoming game, scheduled for August 24, 2026
+If Chelsea FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/epl-ful-che-2026-08-24,2026-10-09T18:23:46Z,2026-08-24T19:00:00Z,0.485,2026-08-17T21:11:12Z,4110608.02,1,2026-08-24T21:11:12Z
+polymarket:3506020,polymarket,"Will Elon Musk post 240-259 tweets from August 14 to August 21, 2026?","This market will resolve according to the number of times Elon Musk (@elonmusk), posts on X from August 14 12:00 PM ET to August 21, 2026 12:00 PM ET.
+
+For the purposes of this market, only main feed posts, quote posts and reposts will count.
+
+Replies will NOT count towards the total - however, replies on the main feed such as https://x.com/elonmusk/status/1786073478711353576 will be counted by the tracker.
+
+Deleted posts will count as long as they remain available long enough to be captured by the tracker (~5 minutes).
+
+Community reposts which are not counted by the tracker not count toward the total.
+
+The resolution source for this market is the 'Post Counter' figure for posts found at https://xtracker.polymarket.com. Individual posts can be viewed by clicking ""Export Data"". If the tracker does not update correctly in accordance with the rules, X itself may be used as a secondary resolution source.",binary,"[""Yes"", ""No""]",settled,Culture,https://polymarket.com/event/elon-musk-of-tweets-august-14-august-21,2026-10-09T18:23:46Z,2026-08-21T16:00:00Z,0.075,2026-08-14T18:07:43Z,558195.58,1,2026-08-21T18:07:43Z
+polymarket:3558749,polymarket,Will Real Madrid CF win on 2026-08-26?,"In the upcoming game, scheduled for August 26, 2026
+If Real Madrid CF wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-rea-rso-2026-08-26,2026-10-09T18:23:46Z,2026-08-26T19:00:00Z,0.705,2026-08-19T22:21:43Z,5203081.16,1,2026-08-26T22:21:43Z
+polymarket:3595745,polymarket,Will Manchester City FC win on 2026-08-28?,"In the upcoming game, scheduled for August 28, 2026
+If Manchester City FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/epl-cry-mac-2026-08-28,2026-10-09T18:23:46Z,2026-08-28T19:00:00Z,0.62,2026-08-21T21:24:00Z,4170146.52,1,2026-08-28T21:24:00Z
+polymarket:3599360,polymarket,Will Real Racing Club win on 2026-08-28?,"In the upcoming game, scheduled for August 28, 2026
+If Real Racing Club wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-rrc-elc-2026-08-28,2026-10-09T18:23:46Z,2026-08-28T17:00:00Z,0.355,2026-08-22T00:09:31Z,2500372.65,1,2026-08-29T00:09:31Z
+polymarket:3621917,polymarket,Will Liverpool FC win on 2026-08-29?,"In the upcoming game, scheduled for August 29, 2026
+If Liverpool FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/epl-liv-not-2026-08-29,2026-10-09T18:23:46Z,2026-08-29T11:30:00Z,0.655,2026-08-22T13:44:33Z,2860770.51,0,2026-08-29T13:44:33Z
+polymarket:3649697,polymarket,Will SSC Napoli win on 2026-08-30?,"In the upcoming game, scheduled for August 30, 2026
+If SSC Napoli wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/sea-nap-com-2026-08-30,2026-10-09T18:23:46Z,2026-08-30T16:30:00Z,0.385,2026-08-23T18:52:34Z,2544234.91,0,2026-08-30T18:52:34Z
+polymarket:3653961,polymarket,Will Chelsea FC win on 2026-08-30?,"In the upcoming game, scheduled for August 30, 2026
+If Chelsea FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/epl-che-bri-2026-08-30,2026-10-09T18:23:46Z,2026-08-30T13:00:00Z,0.485,2026-08-23T19:42:49Z,6054195.38,1,2026-08-30T19:42:49Z
+polymarket:3653997,polymarket,Will Sunderland AFC win on 2026-08-30?,"In the upcoming game, scheduled for August 30, 2026
+If Sunderland AFC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/epl-sun-ful-2026-08-30,2026-10-09T18:23:46Z,2026-08-30T13:00:00Z,0.365,2026-08-23T19:42:49Z,3246540.25,1,2026-08-30T19:42:49Z
+polymarket:3691284,polymarket,Will FC Barcelona win on 2026-08-31?,"In the upcoming game, scheduled for August 31, 2026
+If FC Barcelona wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-bar-ray-2026-08-31,2026-10-09T18:23:46Z,2026-08-31T19:30:00Z,0.805,2026-08-24T21:48:01Z,2040187.2,1,2026-08-31T21:48:01Z
+polymarket:3775011,polymarket,Will Real Madrid CF win on 2026-09-04?,"In the upcoming game, scheduled for September 4, 2026
+If Real Madrid CF wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-bet-rea-2026-09-04,2026-10-09T18:23:46Z,2026-09-04T19:00:00Z,0.7,2026-08-28T21:25:01Z,2313751.02,0,2026-09-04T21:25:01Z
+polymarket:3792010,polymarket,Will Manchester City FC win on 2026-09-05?,"In the upcoming game, scheduled for September 5, 2026
+If Manchester City FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/epl-mac-cov-2026-09-05,2026-10-09T18:23:46Z,2026-09-05T14:00:00Z,0.82,2026-08-29T16:30:19Z,2084879.29,1,2026-09-05T16:30:19Z
+polymarket:3829899,polymarket,Will Manchester United FC win on 2026-09-06?,"In the upcoming game, scheduled for September 6, 2026
+If Manchester United FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/epl-eve-mun-2026-09-06,2026-10-09T18:23:46Z,2026-09-06T13:00:00Z,0.405,2026-08-30T15:15:19Z,8513198.77,0,2026-09-06T15:15:19Z
+polymarket:3965717,polymarket,Will Stade Rennais FC 1901 win on 2026-09-11?,"In the upcoming game, scheduled for September 11, 2026
+If Stade Rennais FC 1901 wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/fl1-ren-olm-2026-09-11,2026-10-09T18:23:46Z,2026-09-11T18:45:00Z,0.395,2026-09-04T20:57:45Z,3156796.32,1,2026-09-11T20:57:45Z
+polymarket:3977510,polymarket,Will Club Brugge KV win on 2026-09-08?,"In the upcoming game, scheduled for September 8, 2026
+If Club Brugge KV wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/ucl-bru-ast-2026-09-08,2026-10-09T18:23:46Z,2026-09-08T16:45:00Z,0.36,2026-09-01T18:58:49Z,3918344.01,0,2026-09-08T18:58:49Z
+polymarket:3977534,polymarket,Will Feyenoord Rotterdam win on 2026-09-09?,"In the upcoming game, scheduled for September 9, 2026
+If Feyenoord Rotterdam wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/ucl-fcb-fey-2026-09-09,2026-10-09T18:23:46Z,2026-09-09T16:45:00Z,0.0435,2026-09-02T18:57:46Z,2400305.68,0,2026-09-09T18:57:46Z
+polymarket:3977536,polymarket,Will VfB Stuttgart win on 2026-09-09?,"In the upcoming game, scheduled for September 9, 2026
+If VfB Stuttgart wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/ucl-stu-vf-2026-09-09,2026-10-09T18:23:46Z,2026-09-09T16:45:00Z,0.78,2026-09-02T18:54:34Z,4211050.33,1,2026-09-09T18:54:34Z
+polymarket:3977543,polymarket,Will Sporting CP win on 2026-09-09?,"In the upcoming game, scheduled for September 9, 2026
+If Sporting CP wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/ucl-spo-gal-2026-09-09,2026-10-09T18:23:46Z,2026-09-09T19:00:00Z,0.5,2026-09-02T21:16:16Z,6539720.44,1,2026-09-09T21:16:16Z
+polymarket:3977548,polymarket,Will Arsenal FC win on 2026-09-09?,"In the upcoming game, scheduled for September 9, 2026
+If Arsenal FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/ucl-nap-ars-2026-09-09,2026-10-09T18:23:46Z,2026-09-09T19:00:00Z,0.535,2026-09-02T21:13:13Z,4314907.34,1,2026-09-09T21:13:13Z
+polymarket:4046410,polymarket,Will AS Roma win on 2026-09-14?,"In the upcoming game, scheduled for September 14, 2026
+If AS Roma wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/sea-tor-rom-2026-09-14,2026-10-09T18:23:46Z,2026-09-14T16:30:00Z,0.615,2026-09-07T18:45:24Z,3676128.58,1,2026-09-14T18:45:24Z
+polymarket:4046416,polymarket,Will FC Internazionale Milano win on 2026-09-14?,"In the upcoming game, scheduled for September 14, 2026
+If FC Internazionale Milano wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/sea-int-udi-2026-09-14,2026-10-09T18:23:46Z,2026-09-14T18:45:00Z,0.765,2026-09-07T21:05:24Z,2785171.78,1,2026-09-14T21:05:24Z
+polymarket:4111371,polymarket,Will Deportivo Alavés win on 2026-09-15?,"In the upcoming game, scheduled for September 15, 2026
+If Deportivo Alavés wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-ala-val-2026-09-15,2026-10-09T18:23:46Z,2026-09-15T18:00:00Z,0.43,2026-09-08T20:13:45Z,4269975.09,0,2026-09-15T20:13:45Z
+polymarket:4111395,polymarket,Will Real Madrid CF win on 2026-09-15?,"In the upcoming game, scheduled for September 15, 2026
+If Real Madrid CF wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-elc-rea-2026-09-15,2026-10-09T18:23:46Z,2026-09-15T19:30:00Z,0.775,2026-09-08T21:45:54Z,3652973.03,1,2026-09-15T21:45:54Z
+polymarket:4174612,polymarket,Trump out as President by September 30?,"This market will resolve to “Yes” if Donald Trump resigns or is removed as President or otherwise ceases to be the President of the United States for any period of time between market creation and September 30, 2026, 11:59 PM ET. Otherwise, this market will resolve to “No”.
+
+An announcement of Donald Trump's resignation/removal before this market's end date will immediately resolve this market to ""Yes"", regardless of when the announced resignation/removal goes into effect.
+
+Only permanent removal from office will qualify. Temporary removal (e.g. temporary invocation of the 25th Amendment under Section 3 or a Section 4 invocation not sustained by both Houses of Congress) or impeachment without removal will not count.
+
+A sustained invocation of the Twenty-Fifth Amendment, Section 4 (i.e., if both Houses of Congress, by two-thirds vote, uphold the Vice President and Cabinet’s determination of presidential inability) will qualify for a ""Yes"" resolution. 
+
+The resolution source for this market will be a consensus of credible reporting.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/dtrump-out-as-president-by-september-30,2026-10-09T18:23:46Z,2026-10-01T03:59:00Z,0.0015,2026-09-24T06:03:59Z,1968445.87,0,2026-10-01T06:03:59Z
+polymarket:4182981,polymarket,Will FC Barcelona win on 2026-09-16?,"In the upcoming game, scheduled for September 16, 2026
+If FC Barcelona wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-bar-rrc-2026-09-16,2026-10-09T18:23:46Z,2026-09-16T19:30:00Z,0.9,2026-09-09T21:51:42Z,2931151.34,1,2026-09-16T21:51:42Z
+polymarket:4192756,polymarket,Will AC Milan win on 2026-09-16?,"In the upcoming game, scheduled for September 16, 2026
+If AC Milan wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/uel-mil1-ben-2026-09-16,2026-10-09T18:23:46Z,2026-09-16T19:00:00Z,0.46,2026-09-09T23:02:28Z,5812247.5,0,2026-09-16T23:02:28Z
+polymarket:4205711,polymarket,Will Manchester City FC win on 2026-09-17?,"In the upcoming game, scheduled for September 17, 2026
+If Manchester City FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/efl-mnc-nor-2026-09-17,2026-10-09T18:23:46Z,2026-09-17T18:30:00Z,0.865,2026-09-10T22:20:45Z,1993165.67,1,2026-09-17T22:20:45Z
+polymarket:4237425,polymarket,Will Chelsea FC win on 2026-09-18?,"In the upcoming game, scheduled for September 18, 2026
+If Chelsea FC wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/epl-bre-che-2026-09-18,2026-10-09T18:23:46Z,2026-09-18T19:00:00Z,0.415,2026-09-11T21:13:27Z,6678023.13,0,2026-09-18T21:13:27Z
+polymarket:4277533,polymarket,Will FC Barcelona win on 2026-09-19?,"In the upcoming game, scheduled for September 19, 2026
+If FC Barcelona wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/lal-sev-bar-2026-09-19,2026-10-09T18:23:46Z,2026-09-19T19:00:00Z,0.795,2026-09-12T21:26:41Z,2718140.48,1,2026-09-19T21:26:41Z
+polymarket:4354848,polymarket,"Will Elon Musk post 180-199 tweets from September 11 to September 18, 2026?","This market will resolve according to the number of times Elon Musk (@elonmusk), posts on X from September 11 12:00 PM ET to September 18, 2026 12:00 PM ET.
+
+For the purposes of this market, only main feed posts, quote posts and reposts will count.
+
+Replies will NOT count towards the total - however, replies on the main feed such as https://x.com/elonmusk/status/1786073478711353576 will be counted by the tracker.
+
+Deleted posts will count as long as they remain available long enough to be captured by the tracker (~5 minutes).
+
+Community reposts which are not counted by the tracker not count toward the total.
+
+The resolution source for this market is the 'Post Counter' figure for posts found at https://xtracker.polymarket.com. Individual posts can be viewed by clicking ""Export Data"". If the tracker does not update correctly in accordance with the rules, X itself may be used as a secondary resolution source.",binary,"[""Yes"", ""No""]",settled,Culture,https://polymarket.com/event/elon-musk-of-tweets-september-11-september-18-2026,2026-10-09T18:23:46Z,2026-09-18T16:00:00Z,0.49,2026-09-11T16:52:22Z,533403.31,0,2026-09-18T16:52:22Z
+polymarket:4521486,polymarket,Will Faroe Islands win on 2026-09-26?,"In the upcoming game, scheduled for September 26, 2026
+If Faroe Islands wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/unl-far-kaz-2026-09-26,2026-10-09T18:23:46Z,2026-09-26T16:00:00Z,0.46,2026-09-19T20:01:35Z,3001867.19,0,2026-09-26T20:01:35Z
+polymarket:4521506,polymarket,Will Spain win on 2026-09-26?,"In the upcoming game, scheduled for September 26, 2026
+If Spain wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/unl-eng-esp-2026-09-26,2026-10-09T18:23:46Z,2026-09-26T18:45:00Z,0.385,2026-09-19T22:52:08Z,3895371.59,1,2026-09-26T22:52:08Z
+polymarket:4678642,polymarket,Will Portugal win on 2026-10-01?,"In the upcoming game, scheduled for October 1, 2026
+If Portugal wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/unl-den-prt-2026-10-01,2026-10-09T18:23:46Z,2026-10-01T18:45:00Z,0.5,2026-09-24T22:53:30Z,5173513.87,1,2026-10-01T22:53:30Z
+polymarket:4720686,polymarket,Will Belgium win on 2026-10-02?,"In the upcoming game, scheduled for October 2, 2026
+If Belgium wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/unl-bel-tur-2026-10-02,2026-10-09T18:23:46Z,2026-10-02T18:45:00Z,0.555,2026-09-25T22:46:00Z,5008033.68,1,2026-10-02T22:46:00Z
+polymarket:4785943,polymarket,Will Portugal win on 2026-10-04?,"In the upcoming game, scheduled for October 4, 2026
+If Portugal wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/unl-prt-nor-2026-10-04,2026-10-09T18:23:46Z,2026-10-04T18:45:00Z,0.5,2026-09-27T22:48:16Z,3515079.78,1,2026-10-04T22:48:16Z
+polymarket:4835355,polymarket,Will Sweden win on 2026-10-05?,"In the upcoming game, scheduled for October 5, 2026
+If Sweden wins, this market will resolve to ""Yes"".
+Otherwise, this market will resolve to ""No"".
+If the game is postponed, this market will remain open until the game has been completed.
+If the game is canceled entirely, with no make-up game, this market will resolve ""No"".
+This market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.
+
+The primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to ""Draw"" where applicable.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/unl-rom-swe-2026-10-05,2026-10-09T18:23:46Z,2026-10-05T18:45:00Z,0.55,2026-09-28T22:44:31Z,6058351.42,1,2026-10-05T22:44:31Z
+polymarket:540816,polymarket,Russia-Ukraine Ceasefire before GTA VI?,"This market will resolve to ""Yes"" if  if there is an official ceasefire agreement, defined as a publicly announced and mutually agreed halt in military engagement, between Russia and Ukraine before Grand Theft Auto VI is officially released in the US. Otherwise, this market will resolve to ""No"".
+
+If neither occurs by July 31, 2026, 11:59 PM ET, this market will resolve to 50-50.
+
+For the purposes of this market, ""release"" refers to the game becoming publicly available for purchase or download in the US. Early access, beta versions, other forms of pre-release availability, or leaks will not count as an official release. If the release is only for certain consoles (e.g. Xbox Series X/S) it will count.
+
+The resolution source for the release of GTA VI is official information from Rockstar Games or its parent company, Take-Two Interactive.
+
+Only ceasefires which constitute a general pause in the conflict will qualify. Ceasefires which only apply to energy infrastructure, the Black Sea, or other similar agreements will not qualify.
+
+Any form of informal agreement will not be considered an official ceasefire. Humanitarian pauses will not count toward the resolution of this market.
+
+The resolution for a ceasefire will be based on official announcements from both Russia and Ukraine; however, a wide consensus of credible media reporting stating an official ceasefire agreement between Russia and Ukraine has been reached will suffice.",binary,"[""Yes"", ""No""]",settled,Culture,https://polymarket.com/event/what-will-happen-before-gta-vi,2026-10-09T18:23:46Z,2026-07-31T12:00:00Z,0.56,2026-05-02T04:29:49Z,1676301.75,1,2026-05-09T04:29:49Z
+polymarket:549621,polymarket,Will the Party for Freedom win the most seats in the 2025 Netherlands parliamentary election?,"The ruling coalition of the Netherlands collapsed on June 3, 2025. New parliamentary elections are expected to be scheduled soon.
+
+This market will resolve to the political party that wins the greatest number of seats in the Netherlands House of Representatives (Tweede Kamer der Staten-Generaal) as a result of this election.
+
+If voting in the Netherlands election for the House does not occur by July 31, 2026, this market will resolve to ""Other"".
+
+In the case of a tie between this party and any other for the most seats won, this market will resolve in favor of the party whose listed abbreviation comes first in alphabetical order.
+
+This market's resolution will be based solely on the number of seats won by the named party or coalition.
+
+This market will resolve based on the result of the election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Electoral Council (Kiesraad) (https://www.kiesraad.nl/).
+
+Note: If the GL/PvdA alliance splits and announce they will not run a joint list, this market will refer to the Labor Party (PvdA).",binary,"[""Yes"", ""No""]",settled,Elections,https://polymarket.com/event/netherlands-parliamentary-election,2026-10-09T18:23:46Z,2026-07-31T00:00:00Z,0.76,2025-10-26T16:26:01Z,10147546.75,0,2025-11-02T16:26:01Z
+polymarket:553866,polymarket,Will the San Antonio Spurs win the 2026 NBA Finals?,"This market will resolve to “Yes” if the San Antonio Spurs win the 2026 NBA Finals. Otherwise, this market will resolve to “No”.
+
+This market will resolve to “No” if it becomes impossible for this team to win the 2026 NBA Finals based off the rules of the NBA.
+
+The resolution source for this market will be information from the NBA.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/2026-nba-champion,2026-10-09T18:23:46Z,2026-07-01T00:00:00Z,0.2195,2026-06-07T06:36:06Z,42740007.48,0,2026-06-14T06:36:06Z
+polymarket:558938,polymarket,Will Argentina win the 2026 FIFA World Cup?,"This market will resolve according to the national team that wins the 2026 FIFA World Cup.
+
+If at any point it becomes impossible for this team to win the FIFA World Cup based on the rules of FIFA (e.g., they are eliminated in the knockout stage), this market will resolve immediately to “No”.
+
+If the 2026 FIFA World Cup is permanently canceled or has not been completed by October 13, 2026, 11:59 PM this market will resolve to “Other”.
+
+The primary resolution source will be official information from FIFA, however, a consensus of credible reporting may also be used.",binary,"[""Yes"", ""No""]",settled,Sports,https://polymarket.com/event/world-cup-winner,2026-10-09T18:23:46Z,2026-07-20T00:00:00Z,0.1815,2026-07-13T01:24:43Z,174315688.26,0,2026-07-20T01:24:43Z
+polymarket:599305,polymarket,Will Abdul El-Sayed win the 2026 Michigan Democratic Primary?,"This market will resolve according to the winner of the Democratic Primary for United States Senator from Michigan.
+
+If no 2026 Michigan Democratic Senate Primary takes place, this market will resolve to ""Other"".
+
+The resolution source for this market will be the first announcement of the results from the Michigan Democratic party, however an overwhelming consensus of credible reporting may suffice.",binary,"[""Yes"", ""No""]",settled,Elections,https://polymarket.com/event/michigan-democratic-senate-primary-winner,2026-10-09T18:23:46Z,2026-08-04T00:00:00Z,0.835,2026-07-29T17:16:20Z,2455198.11,1,2026-08-05T17:16:20Z
+polymarket:601922,polymarket,Will Luiz Inácio Lula da Silva qualify for Brazil's presidential runoff?,"General elections are scheduled to take place in Brazil on October 4, 2026. If no candidate wins outright in the first round, the top two candidates proceed to a runoff.
+
+This market will resolve to ""Yes"" if the listed candidate advances to Brazil's presidential runoff election or otherwise wins outright in the first round. Otherwise, this market will resolve to ""No"".
+
+If the president is decided in the first round of the election but the listed candidate is not the winner or the result of this election isn't known definitively by June 30, 2027, 11:59 PM ET, the market will resolve to ""No"".
+
+This market will resolve based on the result of the election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Brazilian government, specifically the Superior Electoral Court (Tribunal Superior Eleitoral, TSE) (e.g., https://dadosabertos.tse.jus.br/).",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/which-candidates-will-advance-to-brazils-presidential-runoff,2026-10-09T18:23:46Z,2026-10-05T03:59:00Z,0.964,2026-09-28T03:33:56Z,897632.21,1,2026-10-05T03:33:56Z
+polymarket:811720,polymarket,Will the Sweden Democrats (SD) win the most seats in the 2026 Swedish parliamentary election?,"Parliamentary elections are scheduled to be held in Sweden on September 13, 2026.
+
+This market will resolve according to the political party that wins the greatest number of seats in the Swedish Parliament (Riksdag) in this election.
+
+If voting in the Swedish parliamentary election does not occur by December 31, 2026, 11:59 PM ET, this market will resolve to ""Other"".
+
+In the event of a tie between multiple parties for the most seats won, this market will resolve in favor of the party or coalition which received a greater number of valid votes. In the event that results in a tie, this market will resolve in favor of the party or coalition whose listed abbreviation appears first in alphabetical order.
+
+This market's resolution will be based solely on the number of seats won by the named party or coalition in the Swedish Parliament. 
+
+This market will resolve based on the results of this election as indicated by a consensus of credible reporting. If there is ambiguity, this market will resolve based solely on the official results as reported by the Swedish government, specifically the Swedish Election Authority (Valmyndigheten) (https://www.val.se/).",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/sweden-parliamentary-election-winner,2026-10-09T18:23:46Z,2026-09-13T00:00:00Z,0.0155,2026-09-07T05:44:52Z,723630.01,0,2026-09-14T05:44:52Z
+polymarket:907513,polymarket,Will Francesca Hong win the 2026 Wisconsin Governor Democratic primary election?,"This market will resolve according to the winner of the Democratic Primary for Governor of Wisconsin, scheduled to take place on August 11, 2026. Resolution will be based on the overall winner of the primary, including any potential second round or run-off.
+
+If no 2026 Wisconsin Gubernatorial Democratic Primary takes place, this market will resolve to “Other.”
+
+The resolution source for this market will be the first official announcement of the results from the Wisconsin Democratic Party; however, an overwhelming consensus of credible reporting may suffice.",binary,"[""Yes"", ""No""]",settled,Politics,https://polymarket.com/event/wisconsin-governor-democratic-primary-winner,2026-10-09T18:23:46Z,2026-08-11T00:00:00Z,0.9015,2026-08-05T20:12:27Z,1835669.32,0,2026-08-12T20:12:27Z
