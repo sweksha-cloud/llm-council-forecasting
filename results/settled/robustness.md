@@ -1,6 +1,6 @@
 # Robustness: settled
 
-Each cut splits the 362 scored questions into groups and re-scores inside each. Paired rows: council minus reference on the questions both answered (negative = council better), 95% bootstrap interval; groups under 30 questions get no interval. Topics with fewer than 30 questions are grouped as Other.
+Each cut splits the 359 scored questions into groups and re-scores inside each. Paired rows: council minus reference on the questions both answered (negative = council better), 95% bootstrap interval; groups under 30 questions get no interval. Topics with fewer than 30 questions are grouped as Other.
 
 ## Council vs references, by group
 
@@ -12,38 +12,38 @@ _none_
 | cut | group | setup | n | brier | accuracy | skill_vs_market |
 |---|---|---|---|---|---|---|
 | source | kalshi | baseline:always_no | 200 | 0.45 | 0.55 | -2.3365 |
-| source | kalshi | baseline:base_rate | 200 | 0.2483 | 0.55 | -0.8409 |
+| source | kalshi | baseline:base_rate | 200 | 0.2481 | 0.55 | -0.8392 |
 | source | kalshi | market | 200 | 0.1349 | 0.805 |  |
-| source | polymarket | baseline:always_no | 162 | 0.5123 | 0.4877 | -2.2431 |
-| source | polymarket | baseline:base_rate | 162 | 0.251 | 0.4877 | -0.6064 |
-| source | polymarket | market | 160 | 0.1561 | 0.7656 |  |
-| topic | Elections | baseline:always_no | 72 | 0.375 | 0.625 | -1.9584 |
-| topic | Elections | baseline:base_rate | 72 | 0.245 | 0.625 | -0.9325 |
-| topic | Elections | market | 72 | 0.1268 | 0.8472 |  |
-| topic | Other | baseline:always_no | 74 | 0.3919 | 0.6081 | -1.4169 |
-| topic | Other | baseline:base_rate | 74 | 0.2457 | 0.6081 | -0.5459 |
-| topic | Other | market | 73 | 0.1587 | 0.7945 |  |
-| topic | Politics | baseline:always_no | 67 | 0.3881 | 0.6119 | -3.0384 |
-| topic | Politics | baseline:base_rate | 67 | 0.2455 | 0.6119 | -1.6135 |
-| topic | Politics | market | 66 | 0.0938 | 0.8485 |  |
-| topic | Sports | baseline:always_no | 149 | 0.6107 | 0.3893 | -2.633 |
-| topic | Sports | baseline:base_rate | 149 | 0.2554 | 0.3893 | -0.5192 |
-| topic | Sports | market | 149 | 0.1681 | 0.7282 |  |
-| horizon | 8-30 days | baseline:always_no | 4 | 0.25 | 0.75 |  |
-| horizon | 8-30 days | baseline:base_rate | 4 | 0.2394 | 0.75 |  |
-| horizon | 8-30 days | market | 4 | 0.179 | 0.75 |  |
-| horizon | <=7 days | baseline:always_no | 355 | 0.4789 | 0.5211 | -2.3189 |
-| horizon | <=7 days | baseline:base_rate | 355 | 0.2496 | 0.5211 | -0.7296 |
-| horizon | <=7 days | market | 355 | 0.1443 | 0.7873 |  |
+| source | polymarket | baseline:always_no | 159 | 0.5031 | 0.4969 | -2.1347 |
+| source | polymarket | baseline:base_rate | 159 | 0.2509 | 0.4969 | -0.5629 |
+| source | polymarket | market | 159 | 0.1605 | 0.7579 |  |
+| topic | Elections | baseline:always_no | 72 | 0.375 | 0.625 | -1.9281 |
+| topic | Elections | baseline:base_rate | 72 | 0.2441 | 0.625 | -0.9059 |
+| topic | Elections | market | 72 | 0.1281 | 0.8472 |  |
+| topic | Other | baseline:always_no | 73 | 0.3836 | 0.6164 | -1.3041 |
+| topic | Other | baseline:base_rate | 73 | 0.2445 | 0.6164 | -0.4689 |
+| topic | Other | market | 73 | 0.1665 | 0.7808 |  |
+| topic | Politics | baseline:always_no | 66 | 0.3788 | 0.6212 | -2.947 |
+| topic | Politics | baseline:base_rate | 66 | 0.2443 | 0.6212 | -1.5455 |
+| topic | Politics | market | 66 | 0.096 | 0.8636 |  |
+| topic | Sports | baseline:always_no | 148 | 0.6081 | 0.3919 | -2.6308 |
+| topic | Sports | baseline:base_rate | 148 | 0.2564 | 0.3919 | -0.531 |
+| topic | Sports | market | 148 | 0.1675 | 0.7196 |  |
+| horizon | 8-30 days | baseline:always_no | 130 | 0.5154 | 0.4846 | -2.2907 |
+| horizon | 8-30 days | baseline:base_rate | 130 | 0.2515 | 0.4846 | -0.6059 |
+| horizon | 8-30 days | market | 130 | 0.1566 | 0.7577 |  |
+| horizon | <=7 days | baseline:always_no | 228 | 0.4518 | 0.5482 | -2.2066 |
+| horizon | <=7 days | baseline:base_rate | 228 | 0.2481 | 0.5482 | -0.7613 |
+| horizon | <=7 days | market | 228 | 0.1409 | 0.7982 |  |
 | horizon | >30 days | baseline:always_no | 1 | 0.0 | 1.0 |  |
-| horizon | >30 days | baseline:base_rate | 1 | 0.2284 | 1.0 |  |
+| horizon | >30 days | baseline:base_rate | 1 | 0.2242 | 1.0 |  |
 | horizon | >30 days | market | 1 | 0.0132 | 1.0 |  |
-| extremity | leaning | baseline:always_no | 89 | 0.4494 | 0.5506 | -2.6511 |
-| extremity | leaning | baseline:base_rate | 89 | 0.2483 | 0.5506 | -1.0167 |
-| extremity | leaning | market | 89 | 0.1231 | 0.8652 |  |
-| extremity | near-certain | baseline:always_no | 107 | 0.2523 | 0.7477 | -5.8919 |
-| extremity | near-certain | baseline:base_rate | 107 | 0.2395 | 0.7477 | -5.5424 |
-| extremity | near-certain | market | 107 | 0.0366 | 0.9626 |  |
-| extremity | uncertain | baseline:always_no | 164 | 0.6341 | 0.3659 | -1.805 |
-| extremity | uncertain | baseline:base_rate | 164 | 0.2564 | 0.3659 | -0.1342 |
-| extremity | uncertain | market | 164 | 0.2261 | 0.6311 |  |
+| extremity | leaning | baseline:always_no | 91 | 0.4725 | 0.5275 | -2.9552 |
+| extremity | leaning | baseline:base_rate | 91 | 0.2492 | 0.5275 | -1.0863 |
+| extremity | leaning | market | 91 | 0.1195 | 0.8681 |  |
+| extremity | near-certain | baseline:always_no | 105 | 0.2571 | 0.7429 | -4.5606 |
+| extremity | near-certain | baseline:base_rate | 105 | 0.2378 | 0.7429 | -4.1433 |
+| extremity | near-certain | market | 105 | 0.0462 | 0.9524 |  |
+| extremity | uncertain | baseline:always_no | 163 | 0.6135 | 0.3865 | -1.7198 |
+| extremity | uncertain | baseline:base_rate | 163 | 0.2567 | 0.3865 | -0.138 |
+| extremity | uncertain | market | 163 | 0.2256 | 0.6288 |  |

@@ -133,10 +133,10 @@ def main() -> None:
         print(f"| {label} | {sd:.3f} | {mde(sd, n):.3f} | {mde(sd, n, 1.5):.3f} | "
               f"{n_needed(sd, 0.01):,} | {n_needed(sd, 0.02):,} | {n_needed(sd, 0.05):,} |")
 
-    # Contamination split: two independent groups (153 older vs n settled questions).
+    # Contamination split: two independent groups (the priced contamination questions vs n settled).
     # Raw Brier per question, or Brier minus the market's on the same question (the excess_gap
     # design: removes question difficulty, so the spread is smaller).
-    n_old = 153
+    n_old = len(settled_market(("contamination",))[0])
     print()
     for sigma in (0.5, 1.0, 1.5, 2.0):
         rng = random.Random(1)

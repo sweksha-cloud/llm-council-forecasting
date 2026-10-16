@@ -171,3 +171,30 @@ def test_polymarket_market_dates_must_fall_in_the_window():
         market("late", "2026-12-31T00:00:00Z", "2026-12-31 00:00:00+00")]}   # closes after the window
     rows = polymarket_event_rows(ev, 0, set(), utc(2025, 7, 1), utc(2026, 6, 30, 23, 59, 59))
     assert [r["question_id"] for r in rows] == ["polymarket:in"]
+
+
+def test_priced_too_late_uses_earlier_of_close_and_resolution():
+    from datetime import timedelta
+    from collect.collect_settled import priced_too_late
+    q = {"set": "settled", "resolution_date": "2026-07-31T23:59:00Z", "resolved_at": "2026-08-07T09:37:27Z"}
+    week = timedelta(days=7)
+    assert priced_too_late({**q, "price_time": "2026-07-31T09:37:27Z"}, week)       # hours before close
+    assert priced_too_late({**q, "price_time": "2026-07-25T02:00:00Z"}, week)       # 2 h past the 7-day mark
+    assert not priced_too_late({**q, "price_time": "2026-07-24T23:59:00Z"}, week)   # exactly 7 days
+    assert not priced_too_late({**q, "set": "live", "price_time": "2026-07-31T09:37:27Z"}, week)
+    early = {**q, "resolved_at": "2026-07-20T00:00:00Z"}                            # resolved before close
+    assert priced_too_late({**early, "price_time": "2026-07-14T00:00:00Z"}, week)
+    assert not priced_too_late({**early, "price_time": "2026-07-13T00:00:00Z"}, week)
+
+
+def test_drop_stale_removes_only_forecasts_made_with_an_old_price():
+    from forecast.drop_stale import split
+    questions = [{"question_id": "a", "set": "settled", "market_price": "0.4"},
+                 {"question_id": "b", "set": "settled", "market_price": "0.2"},     # repriced from 0.3
+                 {"question_id": "c", "set": "dropped", "market_price": ""},
+                 {"question_id": "d", "set": "live", "market_price": "0.5"}]
+    rows = [{"question_id": q, "market_price_at_forecast": p, "locked": l}
+            for q, p, l in (("a", "0.4", "False"), ("b", "0.3", "False"), ("c", "0.1", "False"), ("d", "0.9", "True"))]
+    kept, stale = split(rows, questions)
+    assert [r["question_id"] for r in kept] == ["a", "d"]
+    assert [r["question_id"] for r in stale] == ["b", "c"]

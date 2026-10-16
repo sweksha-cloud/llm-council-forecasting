@@ -11,8 +11,8 @@ already in the file are kept unchanged.
 The price is taken N days before the scheduled close, or before the resolution if
 that came first, so the "as of" date given to the models is always before the event.
 
-`--reprice-late` fixes questions already in the file whose price date is on or after
-their scheduled close (collected before that rule; Polymarket only).
+`--reprice-late` fixes questions already in the file whose price was taken later than N days
+before the earlier of close and resolution (collected before that rule; Polymarket only).
 
 Usage (run from the repo root):
   python3 -m collect.collect_settled                         # resolved 2026-07-01 → yesterday, 200 per source
@@ -242,30 +242,45 @@ def add_prices(candidates: List[Dict[str, Any]], horizon: timedelta, want: int,
     return pick_top(with_price, want, max_per_event, max_topic_share)
 
 
+def priced_too_late(r: Dict[str, str], horizon: timedelta) -> bool:
+    """True if a backtest question's price was taken later than `horizon` before the earlier of its
+    scheduled close and its resolution (1 hour of slack for timestamp rounding)."""
+    close, priced = parse_dt(r.get("resolution_date")), parse_dt(r.get("price_time"))
+    resolved = parse_dt(r.get("resolved_at")) or close
+    if r.get("set") == "live" or not close or not priced:
+        return False
+    return priced > min(close, resolved) - horizon + timedelta(hours=1)
+
+
 def reprice_late(path: Path, horizon: timedelta, dry_run: bool) -> None:
-    """Re-take the price `horizon` before the scheduled close for settled questions priced too late."""
+    """Re-take the price `horizon` before the earlier of close and resolution, for backtest questions
+    priced later than that (collected under the old rule, which anchored on the resolution only).
+    Where there was no trade at the new date, the price is cleared and the question is skipped."""
     rows = load_existing(path)
-    fixed = 0
+    fixed, cleared = 0, 0
     for r in rows:
-        close, priced = parse_dt(r.get("resolution_date")), parse_dt(r.get("price_time"))
-        if r.get("set") == "live" or not close or not priced or priced < close:
+        if not priced_too_late(r, horizon):
             continue
+        close = parse_dt(r.get("resolution_date"))
+        resolved = parse_dt(r.get("resolved_at")) or close
         if not r["question_id"].startswith("polymarket:"):
             print(f"  ! {r['question_id']}: only Polymarket can be repriced; drop it or fix by hand")
             continue
         market = get_json(POLYMARKET_MARKET_URL.format(id=r["question_id"].split(":", 1)[1]), {})
         tokens = parse_json_list(market.get("clobTokenIds"))
-        at = close - horizon
+        at = min(close, resolved) - horizon
         price = polymarket_price_at(tokens[0], at) if tokens else None
         print(f"  {r['question_id']}: {r['price_time']} p={r['market_price']} → {iso(at)} p={price}"
               f"  {r['question_text'][:60]}")
         if price is None:
-            print("    no price at the new date; drop this question or fix by hand")
+            print("    no trade at the new date: price cleared, the question will be skipped")
+            r["market_price"], r["price_time"] = "", ""
+            cleared += 1
             continue
         r["market_price"], r["price_time"] = price, iso(at)
         fixed += 1
-    print(f"Repriced {fixed} questions")
-    if fixed and not dry_run:
+    print(f"Repriced {fixed} questions, cleared {cleared}")
+    if (fixed or cleared) and not dry_run:
         write_rows(path, rows)
         print(f"Saved to {path}")
 
@@ -286,7 +301,7 @@ def main() -> None:
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--reprice-late", action="store_true",
-                    help="only fix existing questions whose price date is on/after their scheduled close")
+                    help="only fix existing questions priced later than N days before close/resolution")
     args = ap.parse_args()
     if args.reprice_late:
         reprice_late(Path(args.out), timedelta(days=args.horizon_days), args.dry_run)

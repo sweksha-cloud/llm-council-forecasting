@@ -1,2 +1,2 @@
 setup,n,brier_raw,brier_extremized,brier_platt,extremized_minus_raw,extremized_ci_low,extremized_ci_high,platt_minus_raw,platt_ci_low,platt_ci_high,a_half0,a_half1,platt_alpha_beta_half0,platt_alpha_beta_half1
-market,1040,0.1684,0.1659,0.1619,-0.0025,-0.0056,0.0005,-0.0066,-0.0116,-0.0021,0.552,0.753,"0.427, 0.672","0.288, 0.765"
+market,1039,0.1691,0.1666,0.1626,-0.0025,-0.0056,0.0006,-0.0065,-0.0111,-0.0018,0.55,0.752,"0.408, 0.666","0.283, 0.758"
