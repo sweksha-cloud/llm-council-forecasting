@@ -15,7 +15,7 @@ Level 1 should match exactly. Level 2 regenerates the forecasts, which can diffe
 git clone https://github.com/sweksha-cloud/llm-council-forecasting.git
 cd llm-council-forecasting
 make setup        # .venv with the pinned packages in requirements.txt
-make reproduce    # tests, re-import, every results table, the dashboard
+make reproduce    # tests, re-import, every results table, the dashboard and the site
 ```
 
 `make reproduce` ends with `git diff --exit-code` over `data/imported/` and `results/`. If it prints **"Reproduced: every committed result matches."**, every committed number was rebuilt from scratch and came out identical. If anything differs, it shows the diff and exits with an error.
@@ -30,6 +30,7 @@ python3 -m scoring.report --questions data/imported/aye-2026/questions.csv \
 python3 -m scoring.report --questions data/imported/aye-2026/questions.csv \
     --forecasts data/imported/aye-2026/forecasts.csv --id-prefix aye-old: --out results/aye-2026-old
 python3 -m dashboard.build                 # dashboard/index.html; open it in a browser
+python3 site/build.py                      # site/index.html, the leaderboard page
 ```
 
 `make results` also scores the settled and contamination sets (`results/settled`, `results/contamination`) and both together (`results/backtest`, which adds the contamination split). Until the spark runs are merged they hold only the market and the always-No/base-rate baselines.
@@ -60,6 +61,7 @@ Live-set tables, once enough questions have resolved: `python3 -m scoring.report
 | `results/variance/` | `analysis/variance.py` | The pre-registered comparisons on the fixed 200-question subset, per seed (temperature 0.7) next to the temperature-0 run |
 | `results/ablation/` | `analysis/ablation.py` | Chair ablations (numbers only, reasoning only, each member as chair) vs the full council and the pools of the same members, pooled and per source |
 | `dashboard/index.html` | `dashboard/build.py`, `dashboard/metrics.js` | Leaderboard, calibration and questions are recomputed in the page so filters work (`tests/test_dashboard.py` checks they match `scoring/report.py`). The pre-registered comparisons (pooled and per source), contamination split, robustness, recalibration and variance are computed by the same Python code as `results/` and embedded as tables. |
+| `site/index.html` | `site/build.py`, `site/site.js`, `dashboard/metrics.js` | The leaderboard page: ranked bars per metric, trade-off scatters (Brier vs seconds per question and vs model size, calibration vs sharpness, coverage vs Brier) and a detail view per setup. Same data and metric code as the dashboard; `tests/test_site.py` checks its numbers match `scoring/report.py`. |
 
 Metric definitions are in the docstrings of `scoring/` and on the dashboard under "How it's scored". Choices that affect the numbers (grading rules, abstentions, baselines) are logged with their reasons in [`decisions.md`](decisions.md).
 

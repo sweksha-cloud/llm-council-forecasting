@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LLM Council Leaderboard</title>
+<meta name="description" content="Forecasting setups compared: councils of language models, single models, pooled baselines and the prediction market, scored on how real questions resolved.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+/* Built by site/build.py from site/template.html. Layout follows a model-leaderboard page: a section
+   index on the left, then highlight tiles and cards that each have a tab strip, a serif title, a
+   legend and one chart. Setup types keep one colour and one marker shape everywhere. */
+:root {
+  color-scheme: light;
+  --bg: #fafaf9; --card: #ffffff; --tabbar: #f4f4f1; --hover: #efefeb;
+  --ink: #111110; --muted: #5d5c58; --faint: #8a8984;
+  --line: #e4e3de; --grid: #ecebe6; --axis: #c3c2b7;
+  --council: #2a78d6; --single: #eb6834; --baseline: #1baf7a; --market: #2e2d2a;
+  --quadrant: rgba(12, 163, 12, 0.09); --quadrant-line: rgba(12, 163, 12, 0.35);
+  --good: #006300; --warn-bg: #fdf4e3;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0f0f0e; --card: #1a1a19; --tabbar: #222220; --hover: #2a2a28;
+    --ink: #f0efec; --muted: #b9b8af; --faint: #898781;
+    --line: #2f2f2c; --grid: #262624; --axis: #44443f;
+    --council: #3987e5; --single: #d95926; --baseline: #199e70; --market: #e6e4dc;
+    --quadrant: rgba(12, 163, 12, 0.14); --quadrant-line: rgba(12, 163, 12, 0.5);
+    --good: #0ca30c; --warn-bg: #2d2615;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f0f0e; --card: #1a1a19; --tabbar: #222220; --hover: #2a2a28;
+  --ink: #f0efec; --muted: #b9b8af; --faint: #898781;
+  --line: #2f2f2c; --grid: #262624; --axis: #44443f;
+  --council: #3987e5; --single: #d95926; --baseline: #199e70; --market: #e6e4dc;
+  --quadrant: rgba(12, 163, 12, 0.14); --quadrant-line: rgba(12, 163, 12, 0.5);
+  --good: #0ca30c; --warn-bg: #2d2615;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14.5px/1.55 var(--sans); -webkit-text-size-adjust: 100%; }
+a { color: inherit; }
+button, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--council); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Top bar */
+.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 1320px; margin: 0 auto; height: 56px; display: flex; align-items: center; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.brand svg { flex: none; }
+.brand small { font-weight: 400; color: var(--muted); font-size: 13.5px; }
+.top nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+.top nav a { text-decoration: none; color: var(--muted); padding: 6px 10px; border-radius: 6px; white-space: nowrap; font-size: 13.5px; }
+.top nav a:hover { background: var(--hover); color: var(--ink); }
+.icon-btn { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 8px; background: var(--card); cursor: pointer; }
+.icon-btn:hover { background: var(--hover); }
+@media (max-width: 720px) { .top nav, .brand small { display: none; } .icon-btn { margin-left: auto; } }
+
+/* Page: section index on the left, content on the right */
+.layout { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 36px; padding-top: 28px; padding-bottom: 72px; }
+.side { position: sticky; top: 84px; align-self: start; display: grid; gap: 2px; font-size: 13.5px; }
+.side .label { font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); margin: 0 0 8px 10px; }
+.side a { text-decoration: none; color: var(--muted); padding: 6px 10px; border-radius: 6px; }
+.side a:hover { color: var(--ink); background: var(--hover); }
+.side a.on { color: var(--ink); font-weight: 500; background: var(--hover); }
+@media (max-width: 1000px) { .layout { grid-template-columns: minmax(0, 1fr); } .side { display: none; } }
+main { display: grid; gap: 28px; min-width: 0; }
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; margin: 0; letter-spacing: -0.005em; text-wrap: balance; }
+h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.15; }
+h2 { font-size: clamp(19px, 2.4vw, 23px); line-height: 1.25; }
+h3 { font-size: 17px; }
+p { margin: 0; }
+.lede { color: var(--muted); max-width: 78ch; margin-top: 10px; font-size: 15px; }
+.lede b { color: var(--ink); font-weight: 600; }
+
+/* Controls */
+.controls { position: sticky; top: 56px; z-index: 10; display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: end;
+  padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; }
+.field { display: grid; gap: 5px; min-width: 0; }
+.field > span { font-size: 11.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--faint); }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 3px; background: var(--tabbar); border-radius: 8px; }
+.seg button { border: 0; background: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; color: var(--muted); font-size: 13.5px; white-space: nowrap; }
+.seg button:hover { color: var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); font-weight: 500; box-shadow: 0 0 0 1px var(--line); }
+select { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px 28px 6px 10px; font-size: 13.5px; max-width: 220px;
+  appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 15px) 52%, calc(100% - 10px) 52%; background-size: 5px 5px; background-repeat: no-repeat; }
+@media (max-width: 720px) { .controls { position: static; } .field.set { flex-basis: 100%; } }
+.status { display: flex; flex-wrap: wrap; gap: 4px 20px; color: var(--muted); font-size: 13.5px; margin-top: -14px; }
+.status b { color: var(--ink); font-weight: 600; }
+.notice { padding: 10px 14px; border-radius: 10px; background: var(--warn-bg); border: 1px solid var(--line); font-size: 13.5px; margin-top: -14px; }
+
+/* Highlights */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.tile { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
+.tile h3 { font-size: 16px; }
+.tile .cap { font-size: 12px; color: var(--faint); margin-top: -6px; }
+.tile ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.tile li { display: grid; grid-template-columns: 14px 14px minmax(0, 1fr) auto; gap: 6px; align-items: center; font-size: 13.5px; }
+.tile li .rk { color: var(--faint); font-size: 12px; }
+.tile li .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tile li .nm button { all: unset; cursor: pointer; }
+.tile li .nm button:hover { text-decoration: underline; }
+.tile li .nm button:focus-visible { outline: 2px solid var(--council); }
+.tile li .v { font-weight: 600; }
+.tile .empty { color: var(--muted); font-size: 13px; }
+
+/* Cards */
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; min-width: 0; }
+.tabs { display: flex; gap: 4px; padding: 8px; background: var(--tabbar); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: thin; }
+.tabs button { border: 0; background: none; padding: 7px 12px; border-radius: 7px; cursor: pointer; white-space: nowrap; color: var(--muted); font-size: 13.5px; }
+.tabs button:hover { color: var(--ink); background: var(--hover); }
+.tabs button[aria-selected="true"] { background: var(--card); color: var(--ink); font-weight: 600; box-shadow: 0 0 0 1px var(--line); }
+.card-body { padding: 18px 20px 8px; display: grid; gap: 12px; }
+@media (max-width: 600px) { .card-body { padding: 14px 12px 6px; } }
+.card-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 20px; align-items: start; }
+.desc { color: var(--muted); font-size: 13px; max-width: 72ch; }
+.card-head .desc { margin-top: 4px; }
+.toolbar { display: flex; gap: 6px; align-items: center; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--muted); align-items: center; }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.legend svg { flex: none; overflow: visible; }
+.chart { position: relative; min-height: 120px; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { fill: var(--muted); font: 11.5px var(--sans); }
+.chart .val { fill: #fff; font-weight: 600; }
+.chart .val.out { fill: var(--ink); }
+.chart .val.on-market { fill: var(--card); }
+.chart .lbl { fill: var(--ink); font-size: 12px; }
+.chart .axis-title { fill: var(--muted); font-size: 12px; font-weight: 500; }
+.chart .grid { stroke: var(--grid); }
+.chart .base { stroke: var(--axis); }
+.chart .hit { cursor: pointer; }
+.chart .hit:hover .mark { filter: brightness(1.1); }
+.chart .hit:focus { outline: none; }
+.chart .hit:focus-visible .mark { stroke: var(--ink); stroke-width: 2; }
+.k-council { fill: var(--council); color: var(--council); }
+.k-single { fill: var(--single); color: var(--single); }
+.k-baseline { fill: var(--baseline); color: var(--baseline); }
+.k-market { fill: var(--market); color: var(--market); }
+.empty-chart { padding: 36px 8px; color: var(--muted); text-align: center; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--ink); color: var(--card); font-size: 12.5px; line-height: 1.45;
+  padding: 7px 10px; border-radius: 8px; max-width: 280px; box-shadow: 0 6px 20px rgba(0,0,0,.18); }
+.tip b { font-weight: 600; }
+.foot { border-top: 1px solid var(--line); margin: 6px -20px 0; }
+@media (max-width: 600px) { .foot { margin: 6px -12px 0; } }
+details { border-bottom: 1px solid var(--line); }
+details:last-child { border-bottom: 0; }
+summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; padding: 10px 20px; font-size: 13px; color: var(--muted); }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-size: 16px; line-height: 1; color: var(--faint); }
+details[open] summary::after { content: "−"; }
+details > div { padding: 0 20px 14px; font-size: 13.5px; color: var(--muted); max-width: 90ch; }
+@media (max-width: 600px) { summary, details > div { padding-left: 12px; padding-right: 12px; } }
+
+/* Table view */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+th:first-child, td:first-child { text-align: left; }
+th { font-weight: 600; font-size: 12px; color: var(--muted); background: var(--tabbar); }
+tbody tr:last-child td { border-bottom: 0; }
+tr.pick { cursor: pointer; }
+tr.pick:hover td { background: var(--hover); }
+td.best { font-weight: 700; }
+.chip { display: inline-flex; align-items: center; gap: 6px; }
+.btn { border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 5px 10px; cursor: pointer; font-size: 13px; }
+.btn:hover { background: var(--hover); }
+.btn[aria-pressed="true"] { background: var(--tabbar); font-weight: 600; }
+
+/* Setup detail */
+.detail-head { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+.badge { font-size: 11.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+  border: 1px solid var(--line); display: inline-flex; gap: 6px; align-items: center; color: var(--ink); }
+.stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.stat { padding: 10px 12px; display: grid; gap: 2px; align-content: start; box-shadow: 1px 0 0 var(--line), 0 1px 0 var(--line); }
+.stat .k { font-size: 12px; color: var(--muted); }
+.stat .v { font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.stat .r { font-size: 11.5px; color: var(--faint); }
+.detail-grid { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 24px; align-items: start; }
+.detail-grid > * { min-width: 0; }
+@media (max-width: 860px) { .detail-grid { grid-template-columns: minmax(0, 1fr); } }
+.members { display: flex; flex-wrap: wrap; gap: 6px; }
+.members button { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 3px 10px; font-size: 12.5px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.members button:hover { background: var(--hover); }
+
+/* Methodology */
+.about { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px 28px; font-size: 13.5px; color: var(--muted); margin: 0; }
+.about dt { color: var(--ink); font-weight: 600; }
+.about dd { margin: 2px 0 0; }
+code { font: 12.5px ui-monospace, "SF Mono", Menlo, monospace; background: var(--tabbar); padding: 1px 5px; border-radius: 4px; color: var(--ink); }
+footer { color: var(--faint); font-size: 12.5px; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in gutter">
+    <a class="brand" href="#top" aria-label="LLM Council Leaderboard, back to top">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="11" width="5" height="10" rx="1.5" class="k-single"/><rect x="8.5" y="5" width="5" height="16" rx="1.5" class="k-council"/><rect x="16" y="14" width="5" height="7" rx="1.5" class="k-baseline"/></svg>
+      LLM Council <small>Forecasting leaderboard</small>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#highlights">Highlights</a><a href="#leaderboard">Leaderboard</a><a href="#tradeoffs">Trade-offs</a><a href="#setup">Setup detail</a><a href="#method">Methodology</a>
+    </nav>
+    <button class="icon-btn" id="theme" type="button" aria-label="Switch between light and dark"></button>
+  </div>
+</header>
+
+<div class="layout gutter" id="top">
+  <aside class="side" aria-label="On this page">
+    <p class="label">On this page</p>
+    <a href="#highlights">Highlights</a>
+    <a href="#leaderboard">Leaderboard</a>
+    <a href="#tradeoffs">Trade-offs</a>
+    <a href="#setup">Setup detail</a>
+    <a href="#method">Methodology</a>
+  </aside>
+
+  <main>
+    <div>
+      <h1>Forecasting setups compared: accuracy, calibration and cost</h1>
+      <p class="lede">Does a <b>council</b> of small language models forecast real events better than the <b>single models</b> it's built from, simple <b>baselines</b>, or the prediction <b>market</b>? Every setup is scored against how the question actually resolved. Pick a question set, filter it, and switch the metric.</p>
+    </div>
+
+    <div class="controls" role="group" aria-label="Question set and filters">
+      <div class="field set"><span>Question set</span><div class="seg" id="ds"></div></div>
+      <label class="field"><span>Market</span><select id="f-source"></select></label>
+      <label class="field"><span>Topic</span><select id="f-topic"></select></label>
+      <label class="field"><span>Closes</span><select id="f-month"></select></label>
+      <div class="field"><span>Score each setup on</span>
+        <div class="seg" id="mode">
+          <button type="button" data-mode="answered">Questions it answered</button>
+          <button type="button" data-mode="common">Questions all answered</button>
+        </div>
+      </div>
+    </div>
+    <div class="status" id="status"></div>
+    <p class="notice" id="notice" hidden></p>
+
+    <section id="highlights" aria-labelledby="h-hi">
+      <h2 id="h-hi" style="margin-bottom:12px">Highlights</h2>
+      <div class="tiles" id="tiles"></div>
+    </section>
+
+    <section class="card" id="leaderboard" aria-labelledby="h-board">
+      <div class="tabs" role="tablist" aria-label="Metric" id="metric-tabs"></div>
+      <div class="card-body">
+        <div class="card-head">
+          <div><h2 id="h-board"></h2><p class="desc" id="board-desc"></p></div>
+          <div class="toolbar" role="group" aria-label="View">
+            <button class="btn" type="button" id="v-chart" aria-pressed="true">Chart</button>
+            <button class="btn" type="button" id="v-table" aria-pressed="false">Table</button>
+          </div>
+        </div>
+        <div class="legend" id="board-legend"></div>
+        <div class="chart" id="bars"></div>
+        <div class="table-wrap" id="board-table" hidden></div>
+        <div class="foot">
+          <details><summary id="metric-sum"></summary><div id="metric-more"></div></details>
+          <details><summary>Setup types</summary><div>A <b>council</b> asks several models, shows each the others' answers, and a chairman model gives the final probability. A <b>single model</b> answers alone. <b>Baselines</b> need no extra model: the mean and median of the council members' answers, and saying 0% to everything. The <b>market</b> is the Polymarket or Kalshi Yes price when the forecast was made.</div></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="tradeoffs" aria-labelledby="h-trade">
+      <div class="tabs" role="tablist" aria-label="Trade-off" id="trade-tabs"></div>
+      <div class="card-body">
+        <div class="card-head"><div><h2 id="h-trade"></h2><p class="desc" id="trade-desc"></p></div></div>
+        <div class="legend" id="trade-legend"></div>
+        <div class="chart" id="scatter"></div>
+        <div class="foot"><details><summary>How to read this chart</summary><div id="trade-more"></div></details></div>
+      </div>
+    </section>
+
+    <section class="card" id="setup" aria-labelledby="h-setup">
+      <div class="card-body" style="padding-top:18px">
+        <div class="card-head">
+          <div class="detail-head"><h2 id="h-setup"></h2><span id="setup-badge"></span></div>
+          <label class="field"><span>Setup</span><select id="setup-pick"></select></label>
+        </div>
+        <p class="desc" id="setup-desc"></p>
+        <div class="stats" id="stats"></div>
+        <div class="detail-grid">
+          <div>
+            <h3 style="margin-bottom:4px">Calibration</h3>
+            <p class="desc" style="margin-bottom:8px">When it says 70%, does it happen 70% of the time? Points on the dashed diagonal are well calibrated; bigger points hold more forecasts.</p>
+            <div class="legend" id="cal-legend" style="margin-bottom:6px"></div>
+            <div class="chart" id="cal"></div>
+          </div>
+          <div style="display:grid;gap:16px;min-width:0">
+            <div id="members-wrap"><h3 style="margin-bottom:8px">Members</h3><div class="members" id="members"></div></div>
+            <div><h3 style="margin-bottom:8px">Forecasts by bin</h3><div class="table-wrap" id="bins"></div></div>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+      </div>
+    </section>
+
+    <section id="method" aria-labelledby="h-method">
+      <h2 id="h-method" style="margin-bottom:14px">Methodology</h2>
+      <dl class="about" id="about"></dl>
+    </section>
+
+    <footer>Built from the committed data by <code>make site</code>, with the same question files and the same scoring code (<code>dashboard/metrics.js</code>) as the dashboard; <code>tests/test_site.py</code> checks every number against <code>scoring/report.py</code>.</footer>
+  </main>
+</div>
+
+<script>
+/*METRICS_JS*/
+</script>
+<script>
+/*SITE_JS*/
+</script>
+<script>
+const DATA = /*DATA_JSON*/;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+const f3 = (x) => (x == null || Number.isNaN(x) ? "–" : x.toFixed(3));
+const pct = (x) => (x == null ? "–" : (x * 100).toFixed(1) + "%");
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthLabel = (m) => `${MONTHS[+m.slice(5, 7) - 1]} ${m.slice(0, 4)}`;
+const MIN_N = Metrics.MIN_N;
+
+const KINDS = {
+  council: { label: "Council", shape: "circle" },
+  single: { label: "Single model", shape: "square" },
+  baseline: { label: "Baseline", shape: "diamond" },
+  market: { label: "Market", shape: "triangle" },
+};
+
+// Metric tabs. dir: which way is better (null: neither). fmt: how values print.
+const METRICS = [
+  { key: "brier", label: "Brier score", dir: "min", fmt: f3,
+    desc: "Mean of (probability − outcome)², on the questions each setup answered.",
+    more: "0 is perfect; always saying 50% scores 0.25. The headline metric: it rewards being right and being appropriately confident." },
+  { key: "brierFill", label: "Brier, abstain = 50%", dir: "min", fmt: f3,
+    desc: "Brier score with every abstention counted as a 50% forecast, over all resolved questions.",
+    more: "Abstentions are never turned into numbers silently; this shows what they would cost. It matters most for Aye's free-text sets, where many answers abstain." },
+  { key: "log", label: "Log score", dir: "min", fmt: f3,
+    desc: "−ln of the probability given to what happened.", more: "Confident misses cost the most. 0 is perfect; always saying 50% scores 0.693." },
+  { key: "accuracy", label: "Accuracy", dir: "max", fmt: pct,
+    desc: "Share of forecasts on the right side of 50%; exactly 50% counts half.",
+    more: "Most questions resolve No, so compare against the Always No baseline: that is the bar to clear." },
+  { key: "ece", label: "Calibration error (ECE)", tab: "Calibration (ECE)", dir: "min", fmt: f3,
+    desc: "Count-weighted gap between forecast and observed frequency, over ten equal bins.",
+    more: "0 is perfectly calibrated. Read it with sharpness: a setup that says about 55% to everything can look calibrated while telling you nothing." },
+  { key: "sharpness", label: "Sharpness", dir: null, fmt: f3,
+    desc: "Mean distance of the forecasts from 50%, from 0 (always 50%) to 0.5 (always 0% or 100%).",
+    more: "Neither high nor low is better on its own: sharp and calibrated is the goal. See the calibration vs sharpness trade-off below." },
+  { key: "auroc", label: "AUROC", dir: "max", fmt: f3,
+    desc: "Chance a question that resolved Yes got a higher forecast than one that resolved No.",
+    more: "0.5 is chance, 1 is perfect ranking. It ignores calibration." },
+  { key: "balancedAccuracy", label: "Balanced accuracy", dir: "max", fmt: pct,
+    desc: "Mean of the share of Yes events called Yes and No events called No (a call is above or below 50%).",
+    more: "Always saying No scores 50%, however lopsided the outcomes are." },
+  { key: "mcc", label: "MCC", dir: "max", fmt: f3,
+    desc: "Matthews correlation between the Yes/No calls and what happened.", more: "0 is no better than chance, 1 is every call right." },
+  { key: "skill", label: "Skill vs market", dir: "max", fmt: f3,
+    desc: "1 − Brier ÷ market Brier, on the questions where both answered. Above 0 beats the market.",
+    more: `Not reported below ${MIN_N} shared questions: on a few questions the ratio is noise.` },
+];
+
+// Trade-off scatters. x/y read a board row; good: which corner is the attractive one.
+const TRADES = [
+  { key: "time", tab: "Brier vs time per question", title: "Brier score vs seconds per question",
+    x: { key: "seconds", label: "Seconds per question (median)", fmt: (v) => v.toFixed(0) + " s" }, y: { key: "brier", label: "Brier score (lower is better)", fmt: f3 },
+    good: { x: "min", y: "min" },
+    desc: "What each setup costs to run, against how well it forecasts.",
+    more: "Time comes from the forecast timestamps: the runner asks every setup in turn, one question at a time, so a forecast took the gap since the one before it. A council reuses its members' answers, so its time is its members' time plus the chairman's call; the mean and median pools cost their members' time. Aye's files record dates only, so her sets have no timing.",
+    missing: "This question set has no forecast timestamps with a time of day (Aye's files record dates only). Switch to the live or settled set." },
+  { key: "size", tab: "Brier vs model size", title: "Brier score vs model size",
+    x: { key: "params", label: "Parameters (billions)", fmt: (v) => v + "B" }, y: { key: "brier", label: "Brier score (lower is better)", fmt: f3 },
+    good: { x: "min", y: "min" },
+    desc: "Bigger is not automatically better: does adding models to a council buy accuracy?",
+    more: "A single model's size is its parameter count. A council and the pooled baselines need all their members, so their size is the members' sizes added up.",
+    missing: "No setup in this view has a known model size." },
+  { key: "calib", tab: "Calibration vs sharpness", title: "Calibration error vs sharpness",
+    x: { key: "sharpness", label: "Sharpness (further from 50% →)", fmt: f3 }, y: { key: "ece", label: "Calibration error, ECE (lower is better)", fmt: f3 },
+    good: { x: "max", y: "min" },
+    desc: "The goal is sharp and calibrated: confident forecasts that come true as often as they claim.",
+    more: "A setup that hedges near 50% sits on the left and can look calibrated without saying much. A setup on the right commits; if it is also low, its confidence is earned." },
+  { key: "coverage", tab: "Coverage vs Brier", title: "Brier score vs coverage",
+    x: { key: "coverage", label: "Coverage (share of resolved questions answered)", fmt: pct }, y: { key: "brier", label: "Brier score (lower is better)", fmt: f3 },
+    good: { x: "max", y: "min" },
+    desc: "A setup can score well by answering only the easy questions. This shows how much each one abstained.",
+    more: "Coverage matters most in Aye's sets, where free-text answers that aren't an explicit Yes or No abstain. In this project's own sets every setup answers nearly every question." },
+];
+
+const params = new URLSearchParams(location.hash.slice(1));
+const resolvedCount = (d) => d.questions.filter((q) => q.y != null).length;
+const state = {
+  // A link or remembered choice wins; otherwise open the set with the most resolved questions.
+  ds: [params.get("set"), store.get("site.ds")].find((k) => DATA.datasets.some((d) => d.key === k))
+    || [...DATA.datasets].sort((a, b) => resolvedCount(b) - resolvedCount(a))[0].key,
+  source: "all", topic: "all", month: "all",
+  mode: params.get("mode") === "common" ? "common" : "answered",
+  metric: METRICS.some((m) => m.key === params.get("metric")) ? params.get("metric") : "brier",
+  trade: TRADES.some((t) => t.key === params.get("trade")) ? params.get("trade") : "time",
+  setup: params.get("setup"),
+};
+const MODELS = new Map();
+const modelFor = (ds) => { if (!MODELS.has(ds.key)) MODELS.set(ds.key, Site.model(ds)); return MODELS.get(ds.key); };
+const current = () => DATA.datasets.find((d) => d.key === state.ds);
+let M = null, BOARD = [];
+
+function syncHash() {
+  const p = new URLSearchParams({ set: state.ds, metric: state.metric, trade: state.trade });
+  if (state.mode === "common") p.set("mode", "common");
+  if (state.setup) p.set("setup", state.setup);
+  history.replaceState(null, "", "#" + p.toString());
+}
+
+// ── Marker shapes: each setup type keeps its colour and its shape ──
+function shape(kind, cx, cy, r, extra = "") {
+  const s = KINDS[kind].shape;
+  if (s === "square") return `<rect class="mark k-${kind}" x="${cx - r * 0.88}" y="${cy - r * 0.88}" width="${r * 1.76}" height="${r * 1.76}" rx="1.5" ${extra}/>`;
+  if (s === "diamond") return `<path class="mark k-${kind}" d="M${cx} ${cy - r * 1.2}L${cx + r * 1.2} ${cy}L${cx} ${cy + r * 1.2}L${cx - r * 1.2} ${cy}Z" ${extra}/>`;
+  if (s === "triangle") return `<path class="mark k-${kind}" d="M${cx} ${cy - r * 1.15}L${cx + r * 1.1} ${cy + r * 0.8}L${cx - r * 1.1} ${cy + r * 0.8}Z" ${extra}/>`;
+  return `<circle class="mark k-${kind}" cx="${cx}" cy="${cy}" r="${r}" ${extra}/>`;
+}
+const glyph = (kind, size = 12) => `<svg width="${size}" height="${size}" viewBox="0 0 12 12" aria-hidden="true">${shape(kind, 6, 6, 4.6)}</svg>`;
+const kindLegend = (rows) => Object.keys(KINDS).filter((k) => rows.some((b) => b.setup.kind === k))
+  .map((k) => `<span>${glyph(k)}${KINDS[k].label}</span>`).join("");
+const HATCH = `<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2.2" height="5" fill="var(--card)" opacity=".5"/></pattern>`;
+const HATCH_SWATCH = `<svg width="14" height="12" aria-hidden="true"><defs>${HATCH.replace('id="hatch"', 'id="hatch-key"')}</defs><rect width="14" height="12" rx="2" fill="var(--faint)"/><rect width="14" height="12" rx="2" fill="url(#hatch-key)"/></svg>`;
+
+// ── Scales ──
+function niceTicks(lo, hi, count = 5) {
+  if (lo === hi) { lo -= 0.5; hi += 0.5; }
+  const raw = (hi - lo) / count, mag = 10 ** Math.floor(Math.log10(raw)), f = raw / mag;
+  const step = (f >= 5 ? 10 : f >= 2 ? 5 : f >= 1 ? 2 : 1) * mag;
+  const start = Math.floor(lo / step + 1e-9) * step, end = Math.ceil(hi / step - 1e-9) * step;
+  const ticks = [];
+  for (let v = start; v <= end + step / 2; v += step) ticks.push(+v.toFixed(10));
+  return { ticks, lo: start, hi: end, step };
+}
+const linear = (d0, d1, r0, r1) => (v) => r0 + ((v - d0) / (d1 - d0 || 1)) * (r1 - r0);
+const tickFmt = (step) => (v) => (step >= 1 ? v.toFixed(0) : v.toFixed(Math.min(3, -Math.floor(Math.log10(step) + 1e-9))));
+const median = (v) => { const s = [...v].sort((a, b) => a - b), k = s.length >> 1; return s.length % 2 ? s[k] : (s[k - 1] + s[k]) / 2; };
+const clip = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
+
+// ── Tooltips: hover, focus, and select (click / Enter) on every mark ──
+function bindTips(container, content, onPick) {
+  const tip = document.createElement("div");
+  tip.className = "tip"; tip.hidden = true; container.appendChild(tip);
+  const show = (el, ev) => {
+    tip.innerHTML = content(el.dataset.id); tip.hidden = false;
+    const box = container.getBoundingClientRect(), r = el.getBoundingClientRect();
+    const x = ev ? ev.clientX - box.left : r.left + r.width / 2 - box.left;
+    const y = (ev ? ev.clientY : r.top) - box.top;
+    tip.style.left = Math.max(0, Math.min(box.width - tip.offsetWidth, x - tip.offsetWidth / 2)) + "px";
+    tip.style.top = (y - tip.offsetHeight - 14 < 0 ? y + 18 : y - tip.offsetHeight - 14) + "px";
+  };
+  container.querySelectorAll(".hit").forEach((el) => {
+    el.addEventListener("pointermove", (ev) => show(el, ev));
+    el.addEventListener("pointerleave", () => { tip.hidden = true; });
+    el.addEventListener("focus", () => show(el));
+    el.addEventListener("blur", () => { tip.hidden = true; });
+    if (onPick) {
+      el.addEventListener("click", () => onPick(el.dataset.id));
+      el.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onPick(el.dataset.id); } });
+    }
+  });
+}
+const rowById = (id) => BOARD.find((b) => b.setup.id === id);
+function tipFor(id, lines) {
+  const b = rowById(id);
+  return `<b>${esc(b.setup.label)}</b><br>${lines(b).join("<br>")}<br><span style="opacity:.7">${b.answered} answered of ${b.total} · select for details</span>`;
+}
+function pickSetup(id) {
+  state.setup = id; syncHash(); renderDetail();
+  $("setup").scrollIntoView({ block: "start" });
+}
+
+// ── Controls and status ──
+function renderControls() {
+  $("ds").innerHTML = DATA.datasets.map((d) =>
+    `<button type="button" data-ds="${d.key}" aria-pressed="${d.key === state.ds}">${esc(d.label)}</button>`).join("");
+  const ds = current();
+  const uniq = (xs) => [...new Set(xs)].filter(Boolean).sort();
+  const opts = (vals, all, fmt = (x) => x) => `<option value="all">${all}</option>` + vals.map((v) => `<option value="${esc(v)}">${esc(fmt(v))}</option>`).join("");
+  const name = { polymarket: "Polymarket", kalshi: "Kalshi" };
+  const sources = uniq(ds.questions.map((q) => q.source));
+  $("f-source").innerHTML = opts(sources, sources.length > 1 ? "Both" : "All", (s) => name[s] || s);
+  $("f-topic").innerHTML = opts(uniq(ds.questions.map((q) => q.topic)), "All topics");
+  $("f-month").innerHTML = opts(uniq(ds.questions.map((q) => q.close.slice(0, 7))), "Any month", monthLabel);
+  $("f-source").value = state.source; $("f-topic").value = state.topic; $("f-month").value = state.month;
+  document.querySelectorAll("#mode button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.mode === state.mode));
+  $("metric-tabs").innerHTML = METRICS.map((m) =>
+    `<button type="button" role="tab" data-metric="${m.key}" aria-selected="${m.key === state.metric}" tabindex="${m.key === state.metric ? 0 : -1}">${esc(m.tab || m.label)}</button>`).join("");
+  $("trade-tabs").innerHTML = TRADES.map((t) =>
+    `<button type="button" role="tab" data-trade="${t.key}" aria-selected="${t.key === state.trade}" tabindex="${t.key === state.trade ? 0 : -1}">${esc(t.tab)}</button>`).join("");
+}
+
+function renderStatus(rows) {
+  const ds = current();
+  const resolved = rows.filter((r) => r.y != null), open = rows.length - resolved.length;
+  const scored = Site.scored(M, rows, state.mode);
+  const base = resolved.length ? resolved.filter((r) => r.y === 1).length / resolved.length : null;
+  $("status").innerHTML = [
+    `<span>${esc(ds.who)}</span>`,
+    `<span><b class="num">${resolved.length}</b> resolved${open ? `, <b class="num">${open}</b> still open` : ""}</span>`,
+    base != null ? `<span>Resolved Yes: <b class="num">${pct(base)}</b></span>` : "",
+    state.mode === "common" ? `<span>Answered by every setup: <b class="num">${scored.length}</b></span>` : "",
+  ].join("");
+  const notes = [ds.note];
+  const most = Math.max(0, ...BOARD.filter((b) => b.setup.kind === "council" || b.setup.kind === "single").map((b) => b.answered));
+  if (resolved.length && most < MIN_N && scored.length >= MIN_N) notes.push(`So far no model has answered more than ${most} of the resolved questions, under the ${MIN_N} needed to rank setups (hatched bars), so treat the order as provisional.`);
+  else if (resolved.length && scored.length < MIN_N) notes.push(`Only ${scored.length} resolved questions are scored here, under the ${MIN_N} needed to rank setups, so treat the order as provisional.`);
+  if (!resolved.length) notes.push("None of these questions have resolved yet.");
+  $("notice").hidden = false;
+  $("notice").textContent = notes.join(" ");
+}
+
+// ── Highlights ──
+function ranked(key, dir, rows = BOARD) {
+  return rows.filter((b) => b[key] != null && (key === "seconds" || b.answered >= MIN_N))
+    .sort((a, b) => (dir === "min" ? a[key] - b[key] : b[key] - a[key]));
+}
+function renderTiles() {
+  const tiles = [
+    { title: "Brier score", cap: "Lower is better", key: "brier", dir: "min", fmt: f3 },
+    { title: "Calibration error", cap: "ECE · lower is better", key: "ece", dir: "min", fmt: f3 },
+    { title: "Discrimination", cap: "AUROC · higher is better", key: "auroc", dir: "max", fmt: f3 },
+    BOARD.some((b) => b.seconds != null)
+      ? { title: "Speed", cap: "Median seconds per question · lower is faster", key: "seconds", dir: "min", fmt: (v) => v.toFixed(0) + " s" }
+      : { title: "Coverage", cap: "Share of resolved questions answered", key: "coverage", dir: "max", fmt: pct },
+  ];
+  $("tiles").innerHTML = tiles.map((t) => {
+    const top = ranked(t.key, t.dir).slice(0, 3);
+    const list = top.length
+      ? `<ol>${top.map((b, i) => `<li><span class="rk num">${i + 1}</span>${glyph(b.setup.kind)}<span class="nm"><button type="button" data-pick="${esc(b.setup.id)}">${esc(b.setup.label)}</button></span><span class="v num">${t.fmt(b[t.key])}</span></li>`).join("")}</ol>`
+      : `<p class="empty">Too few resolved questions to rank: no setup has ${MIN_N} or more.</p>`;
+    return `<div class="tile"><h3>${t.title}</h3><p class="cap">${t.cap}</p>${list}</div>`;
+  }).join("");
+}
+
+// ── Leaderboard: ranked bars of the chosen metric ──
+function renderBoard() {
+  const m = METRICS.find((x) => x.key === state.metric);
+  $("h-board").textContent = `${m.label} by setup`;
+  $("board-desc").textContent = m.desc + (m.dir ? (m.dir === "min" ? " Lower is better." : " Higher is better.") : "");
+  $("metric-sum").textContent = m.label;
+  $("metric-more").textContent = m.more;
+  const rows = BOARD.filter((b) => b[m.key] != null)
+    .sort((a, b) => (m.dir === "max" ? b[m.key] - a[m.key] : a[m.key] - b[m.key]) || a.setup.label.localeCompare(b.setup.label));
+  const market = rows.find((b) => b.setup.id === "market");
+  $("board-legend").innerHTML = kindLegend(rows)
+    + (rows.some((b) => b.answered < MIN_N) ? `<span>${HATCH_SWATCH}Fewer than ${MIN_N} answered: too few to rank</span>` : "")
+    + (market ? `<span><svg width="18" height="8" aria-hidden="true"><line x1="0" y1="4" x2="18" y2="4" stroke="var(--market)" stroke-width="1.5" stroke-dasharray="4 3"/></svg>Market level</span>` : "");
+  const missing = BOARD.filter((b) => b[m.key] == null && b.answered > 0).map((b) => b.setup.label);
+  const box = $("bars");
+  renderBoardTable(rows);
+  if (!rows.length) { box.innerHTML = `<p class="empty-chart">No setup has a value for this metric on these questions.</p>`; return; }
+  const width = Math.max(300, box.clientWidth || 800);
+  box.innerHTML = (width < 640 ? hbars(rows, m, width) : vbars(rows, m, width))
+    + (missing.length ? `<p class="desc" style="color:var(--faint);font-size:12.5px;margin-top:6px">No value on these questions: ${missing.map(esc).join(", ")}.</p>` : "");
+  bindTips(box, (id) => tipFor(id, (b) => [`${m.label}: <b>${m.fmt(b[m.key])}</b>`]), pickSetup);
+}
+const axisFmt = (m, step) => (m.fmt === pct ? (v) => (v * 100).toFixed(0) + "%" : tickFmt(step));
+// A bar path rounded on its data end only.
+function barPath(x, y, w, h, end) {
+  const r = Math.min(4, w / 2, h / 2);
+  if (end === "top") return `M${x} ${y + h}V${y + r}Q${x} ${y} ${x + r} ${y}H${x + w - r}Q${x + w} ${y} ${x + w} ${y + r}V${y + h}Z`;
+  if (end === "bottom") return `M${x} ${y}V${y + h - r}Q${x} ${y + h} ${x + r} ${y + h}H${x + w - r}Q${x + w} ${y + h} ${x + w} ${y + h - r}V${y}Z`;
+  if (end === "right") return `M${x} ${y}H${x + w - r}Q${x + w} ${y} ${x + w} ${y + r}V${y + h - r}Q${x + w} ${y + h} ${x + w - r} ${y + h}H${x}Z`;
+  return `M${x + w} ${y}H${x + r}Q${x} ${y} ${x} ${y + r}V${y + h - r}Q${x} ${y + h} ${x + r} ${y + h}H${x + w}Z`;
+}
+function vbars(rows, m, W) {
+  const H = 390, ml = 44, mr = 62, mt = 18, mb = 124;
+  const vals = rows.map((b) => b[m.key]);
+  const { ticks, lo, hi, step } = niceTicks(Math.min(0, ...vals), Math.max(0, ...vals), 5);
+  const y = linear(lo, hi, H - mb, mt), tf = axisFmt(m, step);
+  const band = (W - ml - mr) / rows.length, bw = Math.min(54, band - 2);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.label)} for each setup, best first"><defs>${HATCH}</defs>`;
+  ticks.forEach((t) => { s += `<line class="${t === 0 ? "base" : "grid"}" x1="${ml}" x2="${W - mr}" y1="${y(t)}" y2="${y(t)}"/><text x="${ml - 8}" y="${y(t) + 4}" text-anchor="end">${tf(t)}</text>`; });
+  rows.forEach((b, i) => {
+    const v = b[m.key], cx = ml + band * (i + 0.5), x = cx - bw / 2;
+    const top = Math.min(y(v), y(0)), h = Math.max(1, Math.abs(y(v) - y(0)));
+    const d = barPath(x, top, bw, h, v >= 0 ? "top" : "bottom");
+    const inside = h > 26 && bw > 34;
+    const vy = inside ? (v >= 0 ? top + 17 : top + h - 8) : (v >= 0 ? top - 6 : top + h + 14);
+    s += `<g class="hit" tabindex="0" role="button" data-id="${esc(b.setup.id)}" aria-label="${esc(b.setup.label)}: ${esc(m.fmt(v))}">
+      <rect x="${cx - band / 2}" y="${mt}" width="${band}" height="${H - mt - mb + 30}" fill="transparent"/>
+      <path class="mark k-${b.setup.kind}" d="${d}"/>${b.answered < MIN_N ? `<path d="${d}" fill="url(#hatch)" pointer-events="none"/>` : ""}
+      <text class="val ${inside ? (b.setup.kind === "market" ? "on-market" : "") : "out"}" x="${cx}" y="${vy}" text-anchor="middle">${esc(m.fmt(v))}</text>
+      ${shape(b.setup.kind, cx, H - mb + 14, 4.5)}
+      <text class="lbl" transform="translate(${cx + 4},${H - mb + 30}) rotate(-40)" text-anchor="end">${esc(clip(b.setup.label, 28))}</text></g>`;
+  });
+  const market = rows.find((b) => b.setup.id === "market");
+  if (market) {
+    const my = y(market[m.key]);
+    s += `<line x1="${ml}" x2="${W - mr}" y1="${my}" y2="${my}" stroke="var(--market)" stroke-width="1.5" stroke-dasharray="5 4" opacity=".7" pointer-events="none"/>
+      <text x="${W - mr + 6}" y="${my + 4}" style="fill:var(--ink);font-weight:600">Market</text>`;
+  }
+  return s + "</svg>";
+}
+function hbars(rows, m, W) {
+  const rh = 30, mt = 6, ml = Math.min(150, Math.round(W * 0.42)), mr = 54, H = mt + rows.length * rh + 28;
+  const vals = rows.map((b) => b[m.key]);
+  const { ticks, lo, hi, step } = niceTicks(Math.min(0, ...vals), Math.max(0, ...vals), 3);
+  const x = linear(lo, hi, ml, W - mr), tf = axisFmt(m, step);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.label)} for each setup, best first"><defs>${HATCH}</defs>`;
+  ticks.forEach((t) => { s += `<line class="${t === 0 ? "base" : "grid"}" y1="${mt}" y2="${H - 22}" x1="${x(t)}" x2="${x(t)}"/><text x="${x(t)}" y="${H - 6}" text-anchor="middle">${tf(t)}</text>`; });
+  const maxChars = Math.floor((ml - 24) / 6.3);
+  rows.forEach((b, i) => {
+    const v = b[m.key], cy = mt + rh * (i + 0.5), bh = 18, left = Math.min(x(v), x(0)), w = Math.max(1, Math.abs(x(v) - x(0)));
+    const d = barPath(left, cy - bh / 2, w, bh, v >= 0 ? "right" : "left");
+    s += `<g class="hit" tabindex="0" role="button" data-id="${esc(b.setup.id)}" aria-label="${esc(b.setup.label)}: ${esc(m.fmt(v))}">
+      <rect x="0" y="${cy - rh / 2}" width="${W}" height="${rh}" fill="transparent"/>
+      ${shape(b.setup.kind, 6, cy, 4.2)}<text class="lbl" x="16" y="${cy + 4}">${esc(clip(b.setup.label, maxChars))}</text>
+      <path class="mark k-${b.setup.kind}" d="${d}"/>${b.answered < MIN_N ? `<path d="${d}" fill="url(#hatch)" pointer-events="none"/>` : ""}
+      <text class="val out" x="${v >= 0 ? left + w + 5 : left - 5}" y="${cy + 4}" text-anchor="${v >= 0 ? "start" : "end"}">${esc(m.fmt(v))}</text></g>`;
+  });
+  const market = rows.find((b) => b.setup.id === "market");
+  if (market) s += `<line y1="${mt}" y2="${H - 22}" x1="${x(market[m.key])}" x2="${x(market[m.key])}" stroke="var(--market)" stroke-width="1.5" stroke-dasharray="5 4" opacity=".7" pointer-events="none"/>`;
+  return s + "</svg>";
+}
+const TABLE_COLS = [
+  { key: "answered", label: "Answered", fmt: (v, b) => `${v} <span style="color:var(--faint)">${pct(b.coverage)}</span>` },
+  ...METRICS.map((m) => ({ key: m.key, label: m.tab || m.label, fmt: m.fmt, dir: m.dir })),
+  { key: "seconds", label: "Seconds / question", fmt: (v) => v.toFixed(0) },
+  { key: "params", label: "Size (B)", fmt: (v) => v },
+  { key: "judge", label: "LLM-judge (1–5)", fmt: (v) => v.toFixed(2), optional: true },
+];
+function renderBoardTable(rows) {
+  const all = [...rows, ...BOARD.filter((b) => !rows.includes(b) && b.answered > 0)];
+  const cols = TABLE_COLS.filter((c) => !c.optional || all.some((b) => b[c.key] != null));
+  const best = {};
+  cols.filter((c) => c.dir).forEach((c) => {
+    const v = all.filter((b) => b.answered >= MIN_N && b[c.key] != null).map((b) => b[c.key]);
+    if (v.length > 1) best[c.key] = c.dir === "min" ? Math.min(...v) : Math.max(...v);
+  });
+  $("board-table").innerHTML = `<table><caption class="desc" style="caption-side:bottom;text-align:left;padding:8px 10px">Bold: best among setups with ${MIN_N} or more answered. Select a row for its details.</caption><thead><tr><th scope="col">Setup</th>${cols.map((c) => `<th scope="col">${esc(c.label)}</th>`).join("")}</tr></thead><tbody>${all.map((b) =>
+    `<tr class="pick" data-id="${esc(b.setup.id)}" tabindex="0"><td><span class="chip">${glyph(b.setup.kind)}${esc(b.setup.label)}</span></td>${cols.map((c) =>
+      `<td class="${best[c.key] != null && b[c.key] === best[c.key] ? "best" : ""}">${b[c.key] == null ? "–" : c.fmt(b[c.key], b)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+  $("board-table").querySelectorAll("tr[data-id]").forEach((tr) => {
+    tr.addEventListener("click", () => pickSetup(tr.dataset.id));
+    tr.addEventListener("keydown", (ev) => { if (ev.key === "Enter") pickSetup(tr.dataset.id); });
+  });
+}
+
+// ── Trade-off scatter ──
+function pareto(pts, good) {
+  // Points that no other point beats on both axes, in x order.
+  const atLeast = (a, b, ax) => (good[ax] === "min" ? a[ax] <= b[ax] : a[ax] >= b[ax]);
+  return pts.filter((p) => !pts.some((q) => q !== p && atLeast(q, p, "x") && atLeast(q, p, "y") && (q.x !== p.x || q.y !== p.y)))
+    .sort((a, b) => a.x - b.x);
+}
+function renderScatter() {
+  const t = TRADES.find((x) => x.key === state.trade);
+  $("h-trade").textContent = t.title;
+  $("trade-desc").textContent = t.desc;
+  $("trade-more").textContent = t.more + " The shaded area is better than the median setup on both axes; the dotted line joins the setups that no other setup beats on both.";
+  const rows = BOARD.filter((b) => b[t.x.key] != null && b[t.y.key] != null && b.answered > 0);
+  const box = $("scatter");
+  $("trade-legend").innerHTML = rows.length >= 2
+    ? `<span><svg width="14" height="12" aria-hidden="true"><rect width="14" height="12" rx="2" fill="var(--quadrant)" stroke="var(--quadrant-line)"/></svg>Most attractive quadrant</span><span><svg width="20" height="8" aria-hidden="true"><line x1="1" y1="4" x2="19" y2="4" stroke="var(--muted)" stroke-width="2" stroke-dasharray="1 4" stroke-linecap="round"/></svg>Pareto frontier</span>`
+      + kindLegend(rows) + (rows.some((b) => b.answered < MIN_N) ? `<span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="4.2" fill="none" stroke="var(--muted)" stroke-width="1.6"/></svg>Hollow: fewer than ${MIN_N} answered</span>` : "")
+    : "";
+  if (rows.length < 2) { box.innerHTML = `<p class="empty-chart">${esc(t.missing || "Not enough setups have both values on these questions.")}</p>`; return; }
+  const W = Math.max(300, box.clientWidth || 800), narrow = W < 600;
+  const H = Math.round(Math.min(480, Math.max(320, W * 0.55)));
+  const ml = 58, mr = 18, mt = 14, mb = 48;
+  const pts = rows.map((b) => ({ b, x: b[t.x.key], y: b[t.y.key] }));
+  const xs = pts.map((p) => p.x), ys = pts.map((p) => p.y);
+  const pad = (lo, hi) => { const d = (hi - lo) || Math.abs(hi) || 1; return [lo - d * 0.1, hi + d * 0.1]; };
+  const [x0, x1] = pad(Math.min(...xs), Math.max(...xs)), [y0, y1] = pad(Math.min(...ys), Math.max(...ys));
+  const xt = niceTicks(Math.max(0, x0), t.x.key === "coverage" ? Math.min(1, x1) : x1, narrow ? 4 : 6);
+  const yt = niceTicks(Math.max(0, y0), y1, 5);
+  const X = linear(xt.lo, xt.hi, ml, W - mr), Y = linear(yt.lo, yt.hi, H - mb, mt);
+  const xf = t.x.key === "coverage" ? (v) => (v * 100).toFixed(0) + "%" : tickFmt(xt.step), yf = tickFmt(yt.step);
+  const mx = X(median(xs)), my = Y(median(ys));
+  const qx = t.good.x === "min" ? [ml, mx] : [mx, W - mr], qy = t.good.y === "min" ? [my, H - mb] : [mt, my];
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t.title)}">`;
+  s += `<rect x="${qx[0]}" y="${qy[0]}" width="${Math.max(0, qx[1] - qx[0])}" height="${Math.max(0, qy[1] - qy[0])}" fill="var(--quadrant)"/>`;
+  xt.ticks.forEach((v) => { s += `<line class="grid" x1="${X(v)}" x2="${X(v)}" y1="${mt}" y2="${H - mb}"/><text x="${X(v)}" y="${H - mb + 17}" text-anchor="middle">${xf(v)}</text>`; });
+  yt.ticks.forEach((v) => { s += `<line class="grid" x1="${ml}" x2="${W - mr}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${ml - 8}" y="${Y(v) + 4}" text-anchor="end">${yf(v)}</text>`; });
+  s += `<line class="base" x1="${ml}" x2="${W - mr}" y1="${H - mb}" y2="${H - mb}"/>`;
+  s += `<text class="axis-title" x="${(ml + W - mr) / 2}" y="${H - 8}" text-anchor="middle">${esc(t.x.label)}</text>`;
+  s += `<text class="axis-title" transform="translate(13,${(mt + H - mb) / 2}) rotate(-90)" text-anchor="middle">${esc(narrow ? t.y.label.split(" (")[0] : t.y.label)}</text>`;
+  const front = pareto(pts, t.good);
+  if (front.length > 1) s += `<polyline points="${front.map((p) => `${X(p.x)},${Y(p.y)}`).join(" ")}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="1 5" stroke-linecap="round"/>`;
+  // Direct labels, placed greedily so none collide; one that can't fit is left to the tooltip.
+  const taken = pts.map((p) => ({ x: X(p.x) - 8, y: Y(p.y) - 8, w: 16, h: 16 }));
+  const blocked = (a) => a.x < ml - 4 || a.x + a.w > W || a.y < 0 || a.y + a.h > H - mb
+    || taken.some((o) => a.x < o.x + o.w && o.x < a.x + a.w && a.y < o.y + o.h && o.y < a.y + a.h);
+  const order = [...pts].sort((a, b) => (front.includes(b) - front.includes(a)) || ((a.b.setup.kind === "council") ? -1 : 1));
+  const labels = [];
+  order.forEach((p) => {
+    const text = clip(p.b.setup.label, narrow ? 22 : 30), w = text.length * 6.4, cx = X(p.x), cy = Y(p.y);
+    for (const [dx, dy, anchor] of [[11, 4, "start"], [-11, 4, "end"], [0, -13, "middle"], [0, 22, "middle"]]) {
+      const bx = anchor === "start" ? cx + dx : anchor === "end" ? cx + dx - w : cx - w / 2;
+      const cand = { x: bx, y: cy + dy - 11, w, h: 14 };
+      if (!blocked(cand)) { taken.push(cand); labels.push(`<text class="lbl" x="${cx + dx}" y="${cy + dy}" text-anchor="${anchor}" pointer-events="none">${esc(text)}</text>`); break; }
+    }
+  });
+  pts.forEach((p) => {
+    const hollow = p.b.answered < MIN_N;
+    s += `<g class="hit" tabindex="0" role="button" data-id="${esc(p.b.setup.id)}" aria-label="${esc(p.b.setup.label)}: ${esc(t.x.fmt(p.x))}, ${esc(t.y.fmt(p.y))}">
+      <circle cx="${X(p.x)}" cy="${Y(p.y)}" r="14" fill="transparent"/>
+      ${shape(p.b.setup.kind, X(p.x), Y(p.y), 6, hollow ? `style="fill:var(--card);stroke:currentColor;stroke-width:2"` : `stroke="var(--card)" stroke-width="2"`)}</g>`;
+  });
+  box.innerHTML = s + labels.join("") + "</svg>";
+  bindTips(box, (id) => tipFor(id, (b) => [`${t.x.label.split(" (")[0]}: <b>${t.x.fmt(b[t.x.key])}</b>`, `${t.y.label.split(" (")[0]}: <b>${t.y.fmt(b[t.y.key])}</b>`]), pickSetup);
+}
+
+// ── Setup detail ──
+const KIND_TEXT = {
+  council: (b) => `A council of ${b.setup.members?.length || "several"} models: each answers, sees the others' answers, and the chairman gives the final probability.`,
+  single: () => "One model answering on its own.",
+  baseline: (b) => (b.setup.id === "baseline:always_no" ? "Says 0% to every question. Most questions resolve No, so its accuracy is the bar to clear."
+    : `The ${b.setup.id === "baseline:mean" ? "mean" : "median"} of the council members' probabilities on each question: a council without the discussion.`),
+  market: () => "The Polymarket or Kalshi Yes price when the forecast was made, used as a forecast.",
+};
+function renderDetail() {
+  const pickable = BOARD.filter((b) => b.answered > 0);
+  if (!pickable.length) {
+    $("h-setup").textContent = "Setup detail"; $("setup-badge").innerHTML = $("stats").innerHTML = $("bins").innerHTML = $("setup-pick").innerHTML = $("cal-legend").innerHTML = "";
+    $("setup-desc").textContent = ""; $("members-wrap").hidden = true;
+    $("cal").innerHTML = `<p class="empty-chart">No resolved forecasts in this view.</p>`; return;
+  }
+  if (!pickable.some((b) => b.setup.id === state.setup))
+    state.setup = (ranked("brier", "min", pickable.filter((b) => b.setup.kind === "council"))[0] || pickable.find((b) => b.setup.kind === "council") || pickable[0]).setup.id;
+  const b = rowById(state.setup);
+  $("setup-pick").innerHTML = Object.keys(KINDS).map((k) => {
+    const opts = pickable.filter((x) => x.setup.kind === k);
+    return opts.length ? `<optgroup label="${KINDS[k].label}">${opts.map((x) => `<option value="${esc(x.setup.id)}"${x === b ? " selected" : ""}>${esc(x.setup.label)}</option>`).join("")}</optgroup>` : "";
+  }).join("");
+  $("h-setup").textContent = b.setup.label;
+  $("setup-badge").innerHTML = `<span class="badge">${glyph(b.setup.kind, 10)}${KINDS[b.setup.kind].label}</span>`;
+  $("setup-desc").innerHTML = `${esc(KIND_TEXT[b.setup.kind](b))} <code>${esc(b.setup.id)}</code>`;
+  const rank = (key, dir) => {
+    if (!dir || b[key] == null) return "";
+    const r = ranked(key, dir), i = r.indexOf(b);
+    return i >= 0 ? `#${i + 1} of ${r.length}` : key !== "seconds" && b.answered < MIN_N ? `unranked: under ${MIN_N} answered` : "";
+  };
+  const stats = [
+    { k: "Answered", v: `${b.answered}<span style="font-size:13px;color:var(--faint);font-weight:400"> of ${b.total}</span>`, r: `coverage ${pct(b.coverage)}` },
+    ...METRICS.map((m) => ({ k: m.label, v: b[m.key] == null ? "–" : m.fmt(b[m.key]), r: rank(m.key, m.dir) })),
+    { k: "Seconds per question", v: b.seconds == null ? "–" : b.seconds.toFixed(0) + " s", r: b.seconds == null ? "no timestamps" : rank("seconds", "min") },
+    { k: "Model size", v: b.params == null ? "–" : b.params + "B", r: b.params == null ? "" : b.setup.kind === "single" ? "parameters" : "members added up" },
+    ...(b.judge != null ? [{ k: "LLM-judge (1–5)", v: b.judge.toFixed(2), r: "contrast only, not a forecast metric" }] : []),
+  ];
+  $("stats").innerHTML = stats.map((x) => `<div class="stat"><span class="k">${esc(x.k)}</span><span class="v">${x.v}</span><span class="r">${esc(x.r) || "&nbsp;"}</span></div>`).join("");
+  const members = (b.setup.members || []).map((i) => M.setups[i]).filter(Boolean);
+  $("members-wrap").hidden = !members.length;
+  $("members").innerHTML = members.map((s) => `<button type="button" data-pick="${esc(s.id)}">${glyph(s.kind, 10)}${esc(s.label)}</button>`).join("");
+  renderCalibration(b);
+}
+function renderCalibration(b) {
+  const market = b.setup.id !== "market" ? rowById("market") : null;
+  const series = [{ b, main: true }, ...(market && market.answered ? [{ b: market, main: false }] : [])];
+  $("cal-legend").innerHTML = series.map((x) => `<span>${glyph(x.b.setup.kind)}${esc(x.b.setup.label)}${x.main ? "" : " (for comparison)"}</span>`).join("")
+    + `<span><svg width="18" height="8" aria-hidden="true"><line x1="0" y1="4" x2="18" y2="4" stroke="var(--axis)" stroke-width="1.5" stroke-dasharray="4 3"/></svg>Perfect calibration</span>`;
+  const W = Math.min(440, Math.max(280, $("cal").clientWidth || 440)), H = W, ml = 46, mr = 12, mt = 10, mb = 42;
+  const X = linear(0, 1, ml, W - mr), Y = linear(0, 1, H - mb, mt);
+  const maxN = Math.max(1, ...series.flatMap((x) => x.b.bins.map((g) => g.count)));
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Calibration of ${esc(b.setup.label)}">`;
+  [0, 0.2, 0.4, 0.6, 0.8, 1].forEach((v) => {
+    s += `<line class="grid" x1="${X(v)}" x2="${X(v)}" y1="${mt}" y2="${H - mb}"/><line class="grid" x1="${ml}" x2="${W - mr}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+    s += `<text x="${X(v)}" y="${H - mb + 17}" text-anchor="middle">${Math.round(v * 100)}%</text><text x="${ml - 8}" y="${Y(v) + 4}" text-anchor="end">${Math.round(v * 100)}%</text>`;
+  });
+  s += `<line x1="${X(0)}" y1="${Y(0)}" x2="${X(1)}" y2="${Y(1)}" stroke="var(--axis)" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  s += `<text class="axis-title" x="${(ml + W - mr) / 2}" y="${H - 6}" text-anchor="middle">Forecast probability</text>`;
+  s += `<text class="axis-title" transform="translate(12,${(mt + H - mb) / 2}) rotate(-90)" text-anchor="middle">Share that happened</text>`;
+  series.slice().reverse().forEach((x) => {
+    const op = x.main ? 1 : 0.45;
+    s += `<polyline points="${x.b.bins.map((g) => `${X(g.meanForecast)},${Y(g.observedRate)}`).join(" ")}" class="k-${x.b.setup.kind}" style="stroke:currentColor;fill:none;opacity:${op}" stroke-width="2"/>`;
+    x.b.bins.forEach((g) => {
+      const r = 3.5 + 7 * Math.sqrt(g.count / maxN);
+      s += `<g class="hit" tabindex="0" data-id="${esc(x.b.setup.id)}|${g.lower}" aria-label="${esc(x.b.setup.label)}, forecasts ${Math.round(g.lower * 100)} to ${Math.round(g.upper * 100)}%: ${g.count}, happened ${pct(g.observedRate)}">
+        ${shape(x.b.setup.kind, X(g.meanForecast), Y(g.observedRate), x.main ? r : Math.max(3, r * 0.7), `stroke="var(--card)" stroke-width="2" style="opacity:${x.main ? 1 : 0.55}"`)}</g>`;
+    });
+  });
+  $("cal").innerHTML = s + "</svg>";
+  bindTips($("cal"), (key) => {
+    const [id, lower] = key.split("|"), r = rowById(id), g = r.bins.find((x) => String(x.lower) === lower);
+    return `<b>${esc(r.setup.label)}</b><br>Forecasts ${Math.round(g.lower * 100)}–${Math.round(g.upper * 100)}%: <b>${g.count}</b><br>Mean forecast ${pct(g.meanForecast)} · happened ${pct(g.observedRate)}`;
+  }, null);
+  const gap = (g) => { const d = (g.observedRate - g.meanForecast) * 100; return `${d >= 0 ? "+" : "−"}${Math.abs(d).toFixed(1)} pts`; };
+  $("bins").innerHTML = b.bins.length ? `<table><thead><tr><th scope="col">Forecast</th><th scope="col">Forecasts</th><th scope="col">Mean forecast</th><th scope="col">Happened</th><th scope="col">Gap</th></tr></thead><tbody>${b.bins.map((g) =>
+    `<tr><td>${Math.round(g.lower * 100)}–${Math.round(g.upper * 100)}%</td><td>${g.count}</td><td>${pct(g.meanForecast)}</td><td>${pct(g.observedRate)}</td><td>${gap(g)}</td></tr>`).join("")}</tbody></table>` : "";
+}
+
+function renderAbout() {
+  const items = [
+    ...METRICS.map((m) => [m.label, `${m.desc} ${m.more}`]),
+    ["Seconds per question", TRADES[0].more],
+    ["Model size", TRADES[1].more],
+    ["Abstentions", "Never turned into numbers silently. Each setup is scored on the questions it answered; coverage and “Brier, abstain = 50%” show what abstaining costs. “Questions all answered” scores every setup on the same questions."],
+    ["Imported results", "Aye's free-text answers are graded strictly into 0 or 1 (an explicit Yes or No; anything else abstains), so calibration and AUROC say little for them. Her LLM-judge scores are shown for contrast only."],
+    ["Rebuild", "Everything here comes from the committed data files: make site rebuilds this page, and make dashboard builds the dashboard from the same data."],
+  ];
+  $("about").innerHTML = items.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+}
+
+// ── Wiring ──
+function render() {
+  M = modelFor(current());
+  const rows = Site.filter(M.rows, state);
+  BOARD = Site.board(M, rows, state.mode);
+  // Without timestamps (Aye's sets) open the trade-offs on model size, unless a link chose a tab.
+  if (state.trade === "time" && !params.get("trade") && !BOARD.some((b) => b.seconds != null)) state.trade = "size";
+  renderControls(); renderStatus(rows); renderTiles(); renderBoard(); renderScatter(); renderDetail();
+  syncHash();
+}
+document.addEventListener("click", (ev) => {
+  const t = ev.target.closest("button");
+  if (!t) return;
+  if (t.dataset.ds) { state.ds = t.dataset.ds; state.source = state.topic = state.month = "all"; store.set("site.ds", state.ds); render(); }
+  else if (t.dataset.mode) { state.mode = t.dataset.mode; render(); }
+  else if (t.dataset.metric) { state.metric = t.dataset.metric; renderControls(); renderBoard(); syncHash(); }
+  else if (t.dataset.trade) { state.trade = t.dataset.trade; renderControls(); renderScatter(); syncHash(); }
+  else if (t.dataset.pick) pickSetup(t.dataset.pick);
+});
+$("f-source").addEventListener("change", (e) => { state.source = e.target.value; render(); });
+$("f-topic").addEventListener("change", (e) => { state.topic = e.target.value; render(); });
+$("f-month").addEventListener("change", (e) => { state.month = e.target.value; render(); });
+$("setup-pick").addEventListener("change", (e) => { state.setup = e.target.value; syncHash(); renderDetail(); });
+function setView(v) {
+  $("v-chart").setAttribute("aria-pressed", v === "chart"); $("v-table").setAttribute("aria-pressed", v === "table");
+  $("bars").hidden = v !== "chart"; $("board-table").hidden = v !== "table";
+  if (v === "chart") renderBoard();
+}
+$("v-chart").addEventListener("click", () => setView("chart"));
+$("v-table").addEventListener("click", () => setView("table"));
+// Arrow keys move between tabs, as in any tablist.
+document.querySelectorAll('[role="tablist"]').forEach((list) => list.addEventListener("keydown", (ev) => {
+  if (ev.key !== "ArrowRight" && ev.key !== "ArrowLeft") return;
+  const tabs = [...list.querySelectorAll('[role="tab"]')], i = tabs.indexOf(document.activeElement);
+  if (i < 0) return;
+  const next = tabs[(i + (ev.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+  const attr = next.dataset.metric ? "metric" : "trade", val = next.dataset[attr];
+  next.click();
+  list.querySelector(`[data-${attr}="${val}"]`)?.focus();
+}));
+
+// Theme: follows the system until the viewer picks one.
+const SUN = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`;
+const MOON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>`;
+const darkQuery = matchMedia("(prefers-color-scheme: dark)");
+const isDark = () => (document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : darkQuery.matches);
+const paintThemeButton = () => { $("theme").innerHTML = isDark() ? SUN : MOON; $("theme").setAttribute("aria-label", isDark() ? "Switch to light mode" : "Switch to dark mode"); };
+const savedTheme = store.get("site.theme");
+if (savedTheme === "light" || savedTheme === "dark") document.documentElement.dataset.theme = savedTheme;
+$("theme").addEventListener("click", () => { const t = isDark() ? "light" : "dark"; document.documentElement.dataset.theme = t; store.set("site.theme", t); paintThemeButton(); });
+darkQuery.addEventListener?.("change", paintThemeButton);
+paintThemeButton();
+
+// The section index follows the scroll.
+const sideLinks = [...document.querySelectorAll(".side a")];
+if ("IntersectionObserver" in window) {
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) sideLinks.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id));
+  }), { rootMargin: "-30% 0px -60% 0px" });
+  ["highlights", "leaderboard", "tradeoffs", "setup", "method"].forEach((id) => io.observe($(id)));
+}
+// Section links scroll without replacing the shareable state in the address.
+document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener("click", (ev) => {
+  const target = $(a.getAttribute("href").slice(1));
+  if (target) { ev.preventDefault(); target.scrollIntoView({ block: "start" }); }
+}));
+// Redraw the charts when their width changes (rotation, resizing).
+let lastW = 0, timer = null;
+new ResizeObserver(() => {
+  const w = document.querySelector("main").clientWidth;
+  if (Math.abs(w - lastW) < 8) return;
+  lastW = w; clearTimeout(timer); timer = setTimeout(() => { renderBoard(); renderScatter(); renderDetail(); }, 80);
+}).observe(document.querySelector("main"));
+
+renderAbout();
+render();
+</script>
+</body>
+</html>
