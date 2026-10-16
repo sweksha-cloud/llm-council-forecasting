@@ -37,6 +37,20 @@ Each run's command and the exact model builds are appended to `logs/cmds_spark.l
 
 deepseek-r1:8b (the Qwen3-based build on spark) ignores `think=false` and reasons past any reasonable limit at temperature 0, so it isn't in the main runs. See `docs/decisions.md`.
 
+## Backtest queue (settled, contamination, settled-ext, DeepSeek)
+
+1. From the laptop, on an up-to-date `main`, send the code and questions up (same rsync as above; it leaves spark's `data/forecasts.csv` alone):
+   ```bash
+   rsync -az --exclude .venv --exclude logs --exclude data/forecasts.csv --exclude .git --exclude .notes --exclude .claude ./ <username>@100.110.180.56:llm-council-forecasting/
+   ```
+2. On spark, refill live outcomes (rsync replaced spark's `questions.csv`, which the cron job keeps current) and check the code:
+   ```bash
+   cd ~/llm-council-forecasting && python3 -m collect.update_outcomes
+   python3 -m forecast.run_forecasts --backend fake --set settled-ext --limit 2 --models a b --chairmen a --out /tmp/check.csv  # no models used; should print 2 questions
+   ```
+3. Start the queue (order and estimates in the script): `tmux new -s queue "bash scripts/queue_spark.sh"`
+4. After it, the variance runs: `tmux new -s variance "bash scripts/queue_variance.sh"` (waits for the queue session to end).
+
 ## Outcome updates
 
 A cron job on spark runs `python3 -m collect.update_outcomes` every Monday and Thursday at 9am (log: `logs/outcomes_cron.log`). That makes spark's `data/questions.csv` the up-to-date copy: copy it back before committing outcomes. Remove the job with `crontab -e`.

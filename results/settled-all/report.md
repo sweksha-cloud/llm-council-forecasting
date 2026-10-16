@@ -1,6 +1,6 @@
 # Results: settled-all
 
-Resolved questions scored: **362** (set: settled + settled-ext). Lower Brier/log score is better.
+Resolved questions scored: **1042** (set: settled + settled-ext). Lower Brier/log score is better.
 
 ## Scores
 
@@ -8,24 +8,24 @@ Resolved questions scored: **362** (set: settled + settled-ext). Lower Brier/log
 
 | setup | questions | answered | coverage | brier | log_score | accuracy | ece | sharpness | auroc | balanced_accuracy | mcc | brier_abstain_0.5 | common_n | brier_common | log_common | accuracy_common | auroc_common | skill_vs_market | n_vs_market | skill_vs_market_paired | skill_ci_low | skill_ci_high |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| baseline:always_no | 362 | 362 | 1.0 | 0.4779 | 6.6024 | 0.5221 | 0.4779 | 0.5 | 0.5 | 0.5 | 0.0 | 0.4779 | 360 | 0.475 | 6.5624 | 0.525 | 0.5 | -2.2916 | 360 | -2.2916 | -2.9038 | -1.7961 |
-| baseline:base_rate | 362 | 362 | 1.0 | 0.2495 | 0.6922 | 0.5221 | 0.0 | 0.0221 | 0.5 | 0.5 | 0.0 | 0.2495 | 360 | 0.2494 | 0.6919 | 0.525 | 0.5 | -0.7283 | 360 | -0.7281 | -1.034 | -0.4987 |
-| market | 362 | 360 | 0.994 | 0.1443 | 0.4506 | 0.7875 | 0.0744 | 0.2992 | 0.878 | 0.7867 | 0.5784 | 0.1449 | 360 | 0.1443 | 0.4506 | 0.7875 | 0.878 |  |  |  |  |  |
+| baseline:always_no | 1042 | 1042 | 1.0 | 0.4367 | 6.0327 | 0.5633 | 0.4367 | 0.5 | 0.5 | 0.5 | 0.0 | 0.4367 | 1040 | 0.4356 | 6.0177 | 0.5644 | 0.5 | -1.5866 | 1040 | -1.5865 | -1.8272 | -1.3553 |
+| baseline:base_rate | 1042 | 1042 | 1.0 | 0.246 | 0.6851 | 0.5633 | 0.0 | 0.0633 | 0.5 | 0.5 | 0.0 | 0.246 | 1040 | 0.2459 | 0.6848 | 0.5644 | 0.5 | -0.4602 | 1040 | -0.4599 | -0.5839 | -0.346 |
+| market | 1042 | 1040 | 0.998 | 0.1684 | 0.5088 | 0.7394 | 0.0707 | 0.2952 | 0.8408 | 0.7303 | 0.4681 | 0.1686 | 1040 | 0.1684 | 0.5088 | 0.7394 | 0.8408 |  |  |  |  |  |
 
 - `baseline:always_no` = 0% on every question; the accuracy any setup gets just by saying No
 
-- `baseline:base_rate` = 0.478 (share resolved Yes) on every question; uses the outcomes, so it's slightly optimistic
+- `baseline:base_rate` = 0.437 (share resolved Yes) on every question; uses the outcomes, so it's slightly optimistic
 
 
-## Ground truth (each forecast as a Yes/No call; 47.8% of questions resolved Yes)
+## Ground truth (each forecast as a Yes/No call; 43.7% of questions resolved Yes)
 
 Above 0.5 is a Yes call, below a No call, exactly 0.5 no call. `precision`: share of Yes calls that happened. `recall`: share of events that happened called Yes. `balanced_accuracy`: mean of Yes and No recall, 0.5 for always saying No. `mcc`: correlation between calls and outcomes, 0 = chance.
 
 | setup | answered | yes_calls | no_calls | no_call_0.5 | tp | fp | tn | fn | precision | recall | f1 | balanced_accuracy | mcc |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| baseline:always_no | 362 | 0 | 362 | 0 | 0 | 0 | 189 | 173 |  | 0.0 | 0.0 | 0.5 | 0.0 |
-| baseline:base_rate | 362 | 0 | 362 | 0 | 0 | 0 | 189 | 173 |  | 0.0 | 0.0 | 0.5 | 0.0 |
-| market | 360 | 153 | 204 | 3 | 123 | 30 | 159 | 45 | 0.8039 | 0.7321 | 0.7664 | 0.7867 | 0.5784 |
+| baseline:always_no | 1042 | 0 | 1042 | 0 | 0 | 0 | 587 | 455 |  | 0.0 | 0.0 | 0.5 | 0.0 |
+| baseline:base_rate | 1042 | 0 | 1042 | 0 | 0 | 0 | 587 | 455 |  | 0.0 | 0.0 | 0.5 | 0.0 |
+| market | 1040 | 403 | 631 | 6 | 292 | 111 | 474 | 157 | 0.7246 | 0.6503 | 0.6854 | 0.7303 | 0.4681 |
 
 
 ## Council vs baselines (paired Brier difference, negative = council better)
@@ -41,9 +41,9 @@ Each row uses the questions that setup answered (see `n`), so rows with differen
 
 | setup | n | reliability | resolution | uncertainty | brier |
 |---|---|---|---|---|---|
-| baseline:always_no | 362 | 0.2284 | 0.0 | 0.2495 | 0.4779 |
-| baseline:base_rate | 362 | 0.0 | 0.0 | 0.2495 | 0.2495 |
-| market | 360 | 0.0105 | 0.1138 | 0.2494 | 0.1443 |
+| baseline:always_no | 1042 | 0.1907 | 0.0 | 0.246 | 0.4367 |
+| baseline:base_rate | 1042 | 0.0 | 0.0 | 0.246 | 0.246 |
+| market | 1040 | 0.0084 | 0.0836 | 0.2458 | 0.1684 |
 
 
 ## Does member disagreement predict council error?

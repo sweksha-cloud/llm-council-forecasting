@@ -55,3 +55,22 @@ The full table, with every Aye comparison and σ = 0.5, is in the script output.
 - **Where they'd come from:** questions must resolve after every model's cutoff (Qwen3, Apr 2025) to stay contamination-free. Widen the window with `python3 -m collect.collect_settled --from 2025-07-01 --to 2026-06-30 --per-source 350`. The current set covers Jul–Oct 2026. That is a choice of time range, and it's yours to make, because it mixes in an earlier period.
 
 If the paper only needs council vs market and the descriptive comparisons, 360 is enough and no more collection is needed.
+
+## Update 2026-10-16: the full settled sample (n = 1,040)
+
+`python3 -m analysis.power --set settled settled-ext`. The extension is 680 Polymarket questions (Jul 2025–Jun 2026), so the combined market Brier is 0.168 and 43.6% resolved Yes. A new row, **council vs the pool of its own members** (simulated with noise correlation 0.85), is the pre-registered main comparison.
+
+Minimum detectable Brier difference at 80% power, α = 0.05, paired, at σ = 2.0 (simulated forecaster Brier ≈ 0.23, typical of 8B models):
+
+| Comparison | n = 360 | **n = 1,040** | n = 1,040, design effect 1.5 |
+|---|---|---|---|
+| Council vs market | 0.037 | **0.022** | 0.027 |
+| Council vs a member | 0.030 | **0.018** | 0.022 |
+| Council vs pool of its members | 0.022 | **0.013** | 0.016 |
+| Contamination split, Brier minus market (153 older vs the rest) | 0.063 | 0.060 | — |
+
+**What 1,040 can and can't detect:**
+- **Council vs market:** any gap above about 0.02–0.03. Expected gaps are far larger.
+- **Council vs pool / member:** differences of about 0.013–0.02. That covers the upper half of published aggregation gains (0.005–0.02), so a null result rules out a meaningful gain. It does not rule out gains around 0.005–0.01, which need 3,000+ questions.
+- **Contamination:** only large recall effects (about 0.06). This is limited by the 153 older questions, not by the settled count.
+- **Per source:** Kalshi is 200 questions, so per-source council comparisons on Kalshi detect only about 0.04. The pooled result uses a source-stratified bootstrap and is always shown next to the per-source ones (pre-registration in `docs/decisions.md`).
