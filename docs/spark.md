@@ -48,8 +48,12 @@ deepseek-r1:8b (the Qwen3-based build on spark) ignores `think=false` and reason
    cd ~/llm-council-forecasting && python3 -m collect.update_outcomes
    python3 -m forecast.run_forecasts --backend fake --set settled-ext --limit 2 --models a b --chairmen a --out /tmp/check.csv  # no models used; should print 2 questions
    ```
-3. Start the queue (order and estimates in the script): `tmux new -s queue "bash scripts/queue_spark.sh"`
-4. After it, the variance runs: `tmux new -s variance "bash scripts/queue_variance.sh"` (waits for the queue session to end).
+3. Remove forecasts made with a price that has since changed (after any repricing; harmless otherwise, keeps a backup):
+   ```bash
+   python3 -m forecast.drop_stale
+   ```
+4. Start the queue (order and estimates in the script): `tmux new -s queue "bash scripts/queue_spark.sh"`
+5. After it, the variance runs: `tmux new -s variance "bash scripts/queue_variance.sh"` (waits for the queue session to end).
 
 ## Outcome updates
 

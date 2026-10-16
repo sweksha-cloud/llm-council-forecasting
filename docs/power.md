@@ -74,3 +74,5 @@ Minimum detectable Brier difference at 80% power, α = 0.05, paired, at σ = 2.0
 - **Council vs pool / member:** differences of about 0.013–0.02. That covers the upper half of published aggregation gains (0.005–0.02), so a null result rules out a meaningful gain. It does not rule out gains around 0.005–0.01, which need 3,000+ questions.
 - **Contamination:** only large recall effects (about 0.06). This is limited by the 153 older questions, not by the settled count.
 - **Per source:** Kalshi is 200 questions, so per-source council comparisons on Kalshi detect only about 0.04. The pooled result uses a source-stratified bootstrap and is always shown next to the per-source ones (pre-registration in `docs/decisions.md`).
+
+**2026-10-17, after repricing** (`docs/decisions.md`): settled-all is 1,039 questions (market Brier 0.169, 43.5% Yes) and contamination 146. The minimum detectable differences are unchanged to three decimals (council vs market 0.022, vs a member 0.018, vs its pool 0.013 at σ = 2). The contamination split, now 146 vs 1,039, detects about 0.06 on Brier minus market.
