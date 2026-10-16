@@ -67,8 +67,10 @@ const Metrics = (() => {
   }
 
   // Brier skill vs a reference on paired [p, ref, y] rows: 1 - Brier / reference Brier. > 0 = better.
+  // Not reported below MIN_N pairs (as in scoring/report.py): on a few questions the ratio is noise.
+  const MIN_N = 30;
   function skill(pairs) {
-    if (pairs.length < 2) return null;
+    if (pairs.length < MIN_N) return null;
     const ref = pairs.reduce((s, [, r, y]) => s + brier(r, y), 0);
     return ref ? 1 - pairs.reduce((s, [p, , y]) => s + brier(p, y), 0) / ref : null;
   }
@@ -112,7 +114,7 @@ const Metrics = (() => {
     return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
   };
 
-  return { brier, logScore, hit, bins, ece, auroc, confusion, balancedAccuracy, mcc, skill, score, pairedDiff, meanPool, medianPool };
+  return { MIN_N, brier, logScore, hit, bins, ece, auroc, confusion, balancedAccuracy, mcc, skill, score, pairedDiff, meanPool, medianPool };
 })();
 
 if (typeof module !== "undefined") module.exports = Metrics;

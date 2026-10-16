@@ -6,21 +6,20 @@ Resolved questions scored: **890** (set: all). Lower Brier/log score is better.
 
 `brier`/`log_score`: answered questions only. `*_common`: the questions every setup answered, the fair comparison. `skill_vs_market` > 0 means better than the market. `accuracy`: share on the right side of 0.5 (exactly 0.5 counts half), so the `market` row is the market-baseline accuracy. `ece`: expected calibration error, 0 = perfectly calibrated. `sharpness`: mean |p − 0.5|, how far forecasts commit away from 50% (0 to 0.5, higher = sharper); read with `ece`, since a setup that always says about 50% can have low ECE and still be useless. `auroc`: how well the setup ranks Yes questions above No ones, 0.5 = chance, ignores calibration. `balanced_accuracy`/`mcc`: see Ground truth below. `skill_vs_market_paired`: 1 − Brier / market Brier on the `n_vs_market` questions both the setup and the market answered, with a 95% bootstrap interval (`skill_ci_low`..`skill_ci_high`); > 0 means better than the market. For 0/1 answers (imported free-text results) ECE and AUROC carry little information.
 
-| setup | questions | answered | coverage | brier | log_score | accuracy | ece | sharpness | auroc | balanced_accuracy | mcc | brier_abstain_0.5 | common_n | brier_common | log_common | accuracy_common | auroc_common | skill_vs_market | n_vs_market | skill_vs_market_paired | skill_ci_low | skill_ci_high |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| single:llama3.1:latest | 890 | 2 | 0.002 | 0.5 | 6.9078 | 0.5 | 0.5 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2506 | 1 | 0.0 | 0.0 | 1.0 |  | 1.0 | 2 | -2.2739 | -6.5061 | 1.0 |
-| single:mistral:latest | 890 | 7 | 0.008 | 0.4286 | 5.9209 | 0.5714 | 0.4286 | 0.5 | 0.75 | 0.75 | 0.3536 | 0.2514 | 1 | 0.0 | 0.0 | 1.0 |  | 1.0 | 7 | -3.4609 | -13.9247 | 0.2242 |
-| single:qwen3:8b | 890 | 9 | 0.01 | 0.8889 | 12.2805 | 0.1111 | 0.8889 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2565 | 1 | 0.0 | 0.0 | 1.0 |  | 1.0 | 7 | -11.3525 | -50.74 | -3.8384 |
-| baseline:always_no | 890 | 890 | 1.0 | 0.3798 | 5.2468 | 0.6202 | 0.3798 | 0.5 | 0.5 | 0.5 | 0.0 | 0.3798 | 1 | 1.0 | 13.8155 | 0.0 |  | -4.8064 | 832 | -1.056 | -1.2132 | -0.8866 |
-| baseline:base_rate | 890 | 890 | 1.0 | 0.2355 | 0.664 | 0.6202 | 0.0 | 0.1202 | 0.5 | 0.5 | 0.0 | 0.2355 | 1 | 0.3847 | 0.9682 | 0.0 |  | -1.2337 | 832 | -0.2397 | -0.3 | -0.1805 |
-| baseline:best_single | 890 | 7 | 0.008 | 0.4286 | 5.9209 | 0.5714 | 0.4286 | 0.5 | 0.75 | 0.75 | 0.3536 | 0.2514 | 1 | 0.0 | 0.0 | 1.0 |  | 1.0 | 7 | -3.4609 | -13.9247 | 0.2242 |
-| baseline:extremized(a=2) | 890 | 4 | 0.004 | 0.75 | 10.3616 | 0.25 | 0.75 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2522 | 1 | 0.0 | 0.0 | 1.0 |  | 1.0 | 4 | -5.8838 | -28.5217 | -0.5473 |
-| baseline:logit_pool | 890 | 4 | 0.004 | 0.75 | 10.3616 | 0.25 | 0.75 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2522 | 1 | 0.0 | 0.0 | 1.0 |  | 1.0 | 4 | -5.8838 | -28.5216 | -0.5473 |
-| baseline:mean | 890 | 4 | 0.004 | 0.75 | 10.3616 | 0.25 | 0.75 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2522 | 1 | 0.0 | 0.0 | 1.0 |  | 1.0 | 4 | -5.8838 | -28.5217 | -0.5473 |
-| baseline:median | 890 | 4 | 0.004 | 0.75 | 10.3616 | 0.25 | 0.75 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2522 | 1 | 0.0 | 0.0 | 1.0 |  | 1.0 | 4 | -5.8838 | -28.5217 | -0.5473 |
-| market | 890 | 832 | 0.935 | 0.1935 | 0.5534 | 0.6689 | 0.0232 | 0.1638 | 0.7384 | 0.6316 | 0.2892 | 0.1972 | 1 | 0.1722 | 0.5361 | 1.0 |  |  |  |  |  |  |
+| setup | questions | answered | coverage | brier | log_score | accuracy | ece | sharpness | auroc | balanced_accuracy | mcc | brier_abstain_0.5 | common_n | brier_common | log_common | accuracy_common | auroc_common | n_vs_market | skill_vs_market_paired | skill_ci_low | skill_ci_high |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| single:llama3.1:latest | 890 | 2 | 0.002 | 0.5 | 6.9078 | 0.5 | 0.5 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2506 | 1 | 0.0 | 0.0 | 1.0 |  |  |  |  |  |
+| single:mistral:latest | 890 | 7 | 0.008 | 0.4286 | 5.9209 | 0.5714 | 0.4286 | 0.5 | 0.75 | 0.75 | 0.3536 | 0.2514 | 1 | 0.0 | 0.0 | 1.0 |  |  |  |  |  |
+| single:qwen3:8b | 890 | 9 | 0.01 | 0.8889 | 12.2805 | 0.1111 | 0.8889 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2565 | 1 | 0.0 | 0.0 | 1.0 |  |  |  |  |  |
+| baseline:always_no | 890 | 890 | 1.0 | 0.3798 | 5.2468 | 0.6202 | 0.3798 | 0.5 | 0.5 | 0.5 | 0.0 | 0.3798 | 1 | 1.0 | 13.8155 | 0.0 |  | 832 | -1.056 | -1.2132 | -0.8866 |
+| baseline:base_rate | 890 | 890 | 1.0 | 0.2355 | 0.664 | 0.6202 | 0.0 | 0.1202 | 0.5 | 0.5 | 0.0 | 0.2355 | 1 | 0.3847 | 0.9682 | 0.0 |  | 832 | -0.2397 | -0.3 | -0.1805 |
+| baseline:extremized(a=2) | 890 | 4 | 0.004 | 0.75 | 10.3616 | 0.25 | 0.75 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2522 | 1 | 0.0 | 0.0 | 1.0 |  |  |  |  |  |
+| baseline:logit_pool | 890 | 4 | 0.004 | 0.75 | 10.3616 | 0.25 | 0.75 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2522 | 1 | 0.0 | 0.0 | 1.0 |  |  |  |  |  |
+| baseline:mean | 890 | 4 | 0.004 | 0.75 | 10.3616 | 0.25 | 0.75 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2522 | 1 | 0.0 | 0.0 | 1.0 |  |  |  |  |  |
+| baseline:median | 890 | 4 | 0.004 | 0.75 | 10.3616 | 0.25 | 0.75 | 0.5 | 0.5 | 0.5 | 0.0 | 0.2522 | 1 | 0.0 | 0.0 | 1.0 |  |  |  |  |  |
+| market | 890 | 832 | 0.935 | 0.1935 | 0.5534 | 0.6689 | 0.0232 | 0.1638 | 0.7384 | 0.6316 | 0.2892 | 0.1972 | 1 | 0.1722 | 0.5361 | 1.0 |  |  |  |  |  |
 
-- `baseline:best_single` = single:mistral:latest (lowest Brier on these same questions, so it's chosen in-sample and slightly optimistic)
+- `baseline:best_single` not reported: no single model answered 30 or more questions
 
 - `baseline:always_no` = 0% on every question; the accuracy any setup gets just by saying No
 
@@ -38,7 +37,6 @@ Above 0.5 is a Yes call, below a No call, exactly 0.5 no call. `precision`: shar
 | single:qwen3:8b | 9 | 9 | 0 | 0 | 1 | 8 | 0 | 0 | 0.1111 | 1.0 | 0.2 | 0.5 | 0.0 |
 | baseline:always_no | 890 | 0 | 890 | 0 | 0 | 0 | 552 | 338 |  | 0.0 | 0.0 | 0.5 | 0.0 |
 | baseline:base_rate | 890 | 0 | 890 | 0 | 0 | 0 | 552 | 338 |  | 0.0 | 0.0 | 0.5 | 0.0 |
-| baseline:best_single | 7 | 4 | 3 | 0 | 1 | 3 | 3 | 0 | 0.25 | 1.0 | 0.4 | 0.75 | 0.3536 |
 | baseline:extremized(a=2) | 4 | 4 | 0 | 0 | 1 | 3 | 0 | 0 | 0.25 | 1.0 | 0.4 | 0.5 | 0.0 |
 | baseline:logit_pool | 4 | 4 | 0 | 0 | 1 | 3 | 0 | 0 | 0.25 | 1.0 | 0.4 | 0.5 | 0.0 |
 | baseline:mean | 4 | 4 | 0 | 0 | 1 | 3 | 0 | 0 | 0.25 | 1.0 | 0.4 | 0.5 | 0.0 |
@@ -73,7 +71,6 @@ Each row uses the questions that setup answered (see `n`), so rows with differen
 | single:qwen3:8b | 9 | 0.7901 | 0.0 | 0.0988 | 0.8889 |
 | baseline:always_no | 890 | 0.1442 | 0.0 | 0.2355 | 0.3798 |
 | baseline:base_rate | 890 | 0.0 | 0.0 | 0.2355 | 0.2355 |
-| baseline:best_single | 7 | 0.3214 | 0.0153 | 0.1224 | 0.4286 |
 | baseline:extremized(a=2) | 4 | 0.5625 | 0.0 | 0.1875 | 0.75 |
 | baseline:logit_pool | 4 | 0.5625 | 0.0 | 0.1875 | 0.75 |
 | baseline:mean | 4 | 0.5625 | 0.0 | 0.1875 | 0.75 |

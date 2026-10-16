@@ -387,7 +387,7 @@ function renderBoard(rows) {
   lastBoard = board;
   const bestVal = {};
   cols.filter((c) => c.best).forEach((c) => {
-    const vals = board.filter((b) => b.answered >= 10).map((b) => b[c.key]).filter((v) => v != null);
+    const vals = board.filter((b) => b.answered >= Metrics.MIN_N).map((b) => b[c.key]).filter((v) => v != null);
     if (vals.length > 1) bestVal[c.key] = c.best === "min" ? Math.min(...vals) : Math.max(...vals);
   });
   const maxBrier = Math.max(0.0001, ...board.map((b) => b.brier ?? 0));
@@ -398,7 +398,7 @@ function renderBoard(rows) {
     if (c.key === "answered") return `<td class="r num">${b.answered}${state.mode === "answered" ? ` <span class="cov">${pct(b.coverage)}</span>` : ""}</td>`;
     const v = b[c.key];
     const txt = c.key === "accuracy" || c.key === "balancedAccuracy" ? pct(v) : c.key === "judge" ? (v == null ? "–" : v.toFixed(2)) : f3(v);
-    const best = bestVal[c.key] != null && v === bestVal[c.key] && b.answered >= 10 ? " best" : "";
+    const best = bestVal[c.key] != null && v === bestVal[c.key] && b.answered >= Metrics.MIN_N ? " best" : "";
     const bar = c.key === "brier" && v != null ? `<span class="bar" style="width:${Math.round(48 * v / maxBrier)}px"></span>` : "";
     return `<td class="r num${best}">${txt}${bar}</td>`;
   }).join("")}</tr>`).join("");
@@ -417,7 +417,7 @@ function renderVs(rows) {
     let best = null, bestB = Infinity;
     for (const m of members) {
       const ans = resolved.filter((r) => m.get(r) != null);
-      if (ans.length < 10) continue;
+      if (ans.length < Metrics.MIN_N) continue;
       const b = Metrics.score(ans.map(m.get), ans.map((r) => r.y)).brier;
       if (b < bestB) { bestB = b; best = m; }
     }
@@ -441,7 +441,7 @@ function defaultPicked() {
   const withAns = lastBoard.filter((b) => b.answered >= 2).map((b) => b.setup.id);
   const pick = [];
   const firstCouncil = lastBoard.find((b) => b.setup.kind === "council" && b.answered >= 2);
-  const bestSingle = [...lastBoard].filter((b) => b.setup.kind === "single" && b.answered >= 10).sort((a, b) => a.brier - b.brier)[0];
+  const bestSingle = [...lastBoard].filter((b) => b.setup.kind === "single" && b.answered >= Metrics.MIN_N).sort((a, b) => a.brier - b.brier)[0];
   if (firstCouncil) pick.push(firstCouncil.setup.id);
   if (bestSingle) pick.push(bestSingle.setup.id);
   if (withAns.includes("market")) pick.push("market");
