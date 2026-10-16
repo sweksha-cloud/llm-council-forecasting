@@ -1,0 +1,30 @@
+# Runs the test suite on every pull request and every push to main.
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/setup-node@v4   # tests/test_dashboard.py checks dashboard/metrics.js against the Python scores
+        with:
+          node-version: "20"
+      - run: pip install -r requirements.txt
+      - name: Tests (the Kalshi real-API test is opt-in and stays skipped)
+        run: python -m pytest -q
