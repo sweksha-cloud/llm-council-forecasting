@@ -6,7 +6,7 @@ CS180 Individual Studies, San Jose State University, Fall 2026: Sweksha Shaw, ad
 
 In an LLM council, several language models answer the same question and a chairman model combines their answers into one. This project tests whether the council actually beats the models it's built from. The test bed is prediction-market questions from **Polymarket** and **Kalshi**, which resolve to a real outcome and have a market price to compare against.
 
-Every model, and the council, gives a **probability** that the event happens. Forecasts are scored with proper scoring rules (Brier and log score), accuracy, calibration (ECE, reliability diagrams), discrimination (AUROC), and a set of baselines that ends with the market price.
+Every model, and the council, gives a **probability** that the event happens. Forecasts are scored with proper scoring rules (Brier and log score), accuracy, calibration and sharpness (ECE, reliability diagrams, mean distance from 50%), discrimination (AUROC), ground-truth Yes/No call metrics (balanced accuracy, MCC, precision/recall), and a set of baselines that ends with the market price.
 
 **Results dashboard:** `make dashboard` builds `dashboard/index.html` from the committed data. **Reproducing everything:** `make setup && make reproduce`; see [`docs/reproduce.md`](docs/reproduce.md).
 
@@ -23,7 +23,7 @@ Her results are imported read-only from a pinned commit of that repo (see `impor
 |---|---|
 | `collect/` | Collect questions, market prices and resolution dates from Polymarket and Kalshi |
 | `forecast/` | Run each model alone and as a council, with identical prompts, asking for a probability |
-| `scoring/` | Brier, log score, accuracy, ECE, AUROC, decomposition, aggregation baselines: plain functions |
+| `scoring/` | Brier, log score, accuracy, ECE, AUROC, balanced accuracy, MCC, decomposition, aggregation baselines: plain functions |
 | `dashboard/` | Builds the results dashboard (one self-contained HTML page) from the data files |
 | `tests/` | Scoring checked against hand-computed values |
 | `importers/` | Convert earlier students' results into the shared record format |

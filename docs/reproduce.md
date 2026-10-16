@@ -41,14 +41,17 @@ Live-set tables, once enough questions have resolved: `python3 -m scoring.report
 | `data/questions.csv` | Our questions, market prices at collection, outcomes | Committed. Outcomes are added by `collect.update_outcomes` and committed. |
 | `data/forecasts.csv` | Our model and council forecasts, with full raw responses | Committed. Live rows are `locked` and never edited. |
 | `data/imported/aye-2026/` | Aye's results in our format, re-graded | Rebuilt by `import_aye` from her repo at commit `b77bdd9` (pinned in the code) |
+| `data/imported/aye-2026/market_prices.csv` | Polymarket Yes price for each of her questions at 00:00 UTC on her collection date (her files have none) | Fetched once by `python3 -m importers.aye_market_prices` (`make aye-prices`, needs internet, about 10 minutes) and committed; `import_aye` merges it offline |
 | `data/imported/aye-2026/source/new_council_detailed.xlsx` | Her council answers, which aren't in her repo | Copied from spark; the importer checks its sha256 |
 
 ### What each script computes
 
 | Output | Code | Metrics |
 |---|---|---|
-| `results/*/scores.csv` | `scoring/report.py` | Brier, log score, accuracy, ECE, AUROC, coverage, Brier skill vs market |
-| `results/*/comparisons.csv` | `scoring/report.py` | Council minus market / best single / mean, paired, 95% bootstrap (seed 0) |
+| `results/*/scores.csv` | `scoring/report.py` | Brier, log score, accuracy, ECE, sharpness, AUROC, balanced accuracy, MCC, coverage, Brier skill vs market (common set, and paired per setup with a 95% bootstrap, seed 0) |
+| `results/*/ground_truth.csv` | `scoring/classification.py` | Forecasts as Yes/No calls vs outcomes: confusion matrix, precision, recall, F1, balanced accuracy, MCC |
+| `results/*/judge_vs_truth.csv` | `scoring/report.py` | Imported results: mean LLM-judge score for right vs wrong answers, judge AUROC for being right |
+| `results/*/comparisons.csv` | `scoring/report.py` | Council minus market / best single / mean / always No, paired, 95% bootstrap (seed 0) |
 | `results/*/decomposition.csv`, `reliability.csv` | `scoring/calibration.py` | Murphy decomposition, reliability bins (10 equal bins) |
 | `results/*/disagreement.csv` | `scoring/report.py` | Spearman of member spread vs council error |
 | `dashboard/index.html` | `dashboard/build.py`, `dashboard/metrics.js` | The same metrics, recomputed in the page so filters work. `tests/test_dashboard.py` checks they match `scoring/report.py`. |

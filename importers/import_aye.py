@@ -19,6 +19,10 @@ isn't in her repo; it was copied from spark (/data/swekshashaw/, dated 2026-07-2
 into data/imported/aye-2026/source/ and is checked against COUNCIL_SHA256.
 Council rows that failed with a connection error are dropped.
 
+Her files have no market prices. `python3 -m importers.aye_market_prices` looks up the
+Polymarket price on each collection date into market_prices.csv (committed); this script
+merges it into questions.csv, so the market can be scored as a baseline.
+
 Usage (run from the repo root; needs openpyxl):
   python3 -m importers.import_aye
 """
@@ -221,6 +225,20 @@ def write_csv(path: Path, rows: List[Dict], columns: List[str]) -> None:
             w.writerow({c: ("" if r.get(c) is None else r.get(c)) for c in columns})
 
 
+def add_market_prices(questions: List[Dict]) -> int:
+    """Fills market_price/price_time from market_prices.csv, if it's been fetched. Returns how many."""
+    path = OUT / "market_prices.csv"
+    if not path.exists():
+        return 0
+    with path.open(newline="", encoding="utf-8") as f:
+        prices = {r["question_id"]: r for r in csv.DictReader(f) if r["market_price"]}
+    for q in questions:
+        if q["question_id"] in prices:
+            q["market_price"] = prices[q["question_id"]]["market_price"]
+            q["price_time"] = prices[q["question_id"]]["price_time"]
+    return sum(q["question_id"] in prices for q in questions)
+
+
 def main() -> None:
     all_q, all_f, summary = [], [], []
     for name in DATASETS:
@@ -230,6 +248,7 @@ def main() -> None:
         all_q += qs
         all_f += fs
         summary += summarise(name, fs)
+    print(f"Market prices for {add_market_prices(all_q)} of {len(all_q)} questions")
     write_csv(OUT / "questions.csv", all_q, QUESTION_COLUMNS)
     write_csv(OUT / "forecasts.csv", all_f, FORECAST_COLUMNS)
     cols = list(summary[0].keys())

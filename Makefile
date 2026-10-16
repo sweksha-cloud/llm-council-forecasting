@@ -4,7 +4,7 @@
 
 PY ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 
-.PHONY: setup test import results dashboard reproduce clean
+.PHONY: setup test aye-prices import results dashboard reproduce clean
 
 setup:            ## create .venv and install pinned dependencies
 	python3 -m venv .venv
@@ -12,6 +12,9 @@ setup:            ## create .venv and install pinned dependencies
 
 test:             ## scoring checked against hand-computed values; dashboard checked against the report
 	$(PY) -m pytest -q
+
+aye-prices:       ## look up Polymarket prices for Aye's questions (internet, ~10 min; result is committed)
+	$(PY) -m importers.aye_market_prices
 
 import:           ## re-import Aye's results from her pinned commit (needs internet the first time)
 	$(PY) -m importers.import_aye

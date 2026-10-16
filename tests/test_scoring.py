@@ -175,3 +175,34 @@ def test_auroc_hand_computed_with_tie():
 
 def test_auroc_undefined_with_one_outcome():
     assert auroc([0.2, 0.7], [1, 1]) is None
+
+
+# ── Ground truth (Yes/No calls) ───────────────────────────────────────────────
+
+from scoring.classification import balanced_accuracy, confusion, f1, mcc, precision, recall
+
+
+def test_confusion_and_rates():
+    # calls: Yes, Yes, No, No, none, Yes ; outcomes 1, 0, 0, 1, 1, 1
+    c = confusion([0.9, 0.6, 0.2, 0.4, 0.5, 0.7], [1, 0, 0, 1, 1, 1])
+    assert (c.tp, c.fp, c.tn, c.fn, c.no_call) == (2, 1, 1, 1, 1)
+    assert precision(c) == approx(2 / 3)            # 2 / (2 + 1)
+    assert recall(c) == approx(2 / 3)               # 2 / (2 + 1)
+    assert f1(c) == approx(2 / 3)                   # 4 / (4 + 1 + 1)
+    assert balanced_accuracy(c) == approx(7 / 12)   # (2/3 + 1/2) / 2
+    # (2*1 - 1*1) / sqrt(3 * 3 * 2 * 2) = 1/6
+    assert mcc(c) == approx(1 / 6)
+
+
+def test_always_no_gets_no_credit_from_balanced_accuracy_or_mcc():
+    c = confusion([0.0] * 4, [0, 0, 0, 1])   # 75% accurate by always saying No
+    assert balanced_accuracy(c) == approx(0.5)
+    assert mcc(c) == 0.0
+    assert precision(c) is None and recall(c) == approx(0.0)
+
+
+def test_sharpness():
+    from scoring.calibration import sharpness
+    assert sharpness([0.5, 0.5]) == approx(0.0)            # never commits
+    assert sharpness([0.0, 1.0]) == approx(0.5)            # always certain
+    assert sharpness([0.55, 0.45, 0.9]) == approx(0.5 / 3)   # (0.05 + 0.05 + 0.4) / 3

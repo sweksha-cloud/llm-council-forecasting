@@ -7,6 +7,10 @@ Calibration and Murphy decomposition of the Brier score.
   resolution   - does the forecaster move away from the base rate in the right direction? (higher is better)
   uncertainty  - depends only on the questions, not the forecaster: base_rate * (1 - base_rate)
 
+Sharpness is how far forecasts move away from 50%: the mean of |p - 0.5|, from 0 (always 50%)
+to 0.5 (always 0% or 100%). ECE alone can look fine for a model that never commits, so the two
+are read together: be calibrated, and as sharp as possible. Sharpness ignores outcomes.
+
 Expected calibration error (ECE) summarises the reliability diagram in one number: the average
 gap between forecast and observed frequency, weighted by how many forecasts fall in each bin.
 
@@ -66,6 +70,13 @@ def murphy_decomposition(ps: Sequence[float], ys: Sequence[int], n_bins: int = 1
     res = sum(b.count * (b.observed_rate - base_rate) ** 2 for b in bins) / n
     unc = base_rate * (1 - base_rate)
     return Decomposition(rel, res, unc, mean_brier(ps, ys), bins)
+
+
+def sharpness(ps: Sequence[float]) -> float:
+    """Mean distance from 50%. 0 = never commits; 0.5 = always says 0% or 100%. Higher is sharper."""
+    if not ps:
+        raise ValueError("no forecasts")
+    return sum(abs(p - 0.5) for p in ps) / len(ps)
 
 
 def expected_calibration_error(ps: Sequence[float], ys: Sequence[int], n_bins: int = 10) -> float:

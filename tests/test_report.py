@@ -112,3 +112,37 @@ def test_best_single_ignores_models_that_barely_answered():
     }
     notes = add_baselines(probs, outcomes)
     assert "single:many" in notes["baseline:best_single"]
+
+
+def test_reference_baselines_and_ground_truth(data):
+    from scoring.report import add_reference_baselines, ground_truth_table
+    outcomes, probs, _, _ = data
+    add_reference_baselines(probs, outcomes)
+    assert probs["baseline:always_no"] == {"q0": 0.0, "q1": 0.0, "q2": 0.0}
+    assert probs["baseline:base_rate"]["q0"] == approx(2 / 3)
+    rows = {r["setup"]: r for r in ground_truth_table(probs, outcomes)}
+    # single:a calls Yes, No, Yes on outcomes 1, 0, 1: all right
+    assert (rows["single:a"]["tp"], rows["single:a"]["tn"], rows["single:a"]["mcc"]) == (2, 1, 1.0)
+    assert rows["baseline:always_no"]["balanced_accuracy"] == 0.5
+
+
+def test_market_skill_paired(data):
+    from scoring.report import market_skill
+    outcomes, probs, _, _ = data
+    # single:b answered q0, q1. Brier b: 0.16, 0.16 ; market (0.6, 0.3): 0.16, 0.09
+    # skill = 1 - 0.32 / 0.25 = -0.28
+    res = market_skill(probs["single:b"], probs["market"], outcomes, n_boot=200)
+    assert res["n_vs_market"] == 2
+    assert res["skill_vs_market_paired"] == approx(-0.28)
+    assert res["skill_ci_low"] <= res["skill_vs_market_paired"] <= res["skill_ci_high"]
+
+
+def test_judge_table():
+    from scoring.report import judge_table
+    outcomes = {"q0": 1, "q1": 0, "q2": 1}
+    probs = {"single:a": {"q0": 1.0, "q1": 1.0, "q2": 0.0}}   # right, wrong, wrong
+    judges = {("single:a", "q0"): 5, ("single:a", "q1"): 4, ("single:a", "q2"): 5}
+    row = judge_table(probs, judges, outcomes)[0]
+    assert (row["right"], row["wrong"]) == (1, 2)
+    assert row["judge_mean_right"] == 5 and row["judge_mean_wrong"] == 4.5
+    assert row["judge_auroc_for_right"] == approx(0.75)   # 5 vs 4 wins, 5 vs 5 ties: (1 + 0.5) / 2

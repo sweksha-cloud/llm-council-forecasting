@@ -63,7 +63,8 @@ def test_dashboard_matches_report(tmp_path, ds_key, prefix):
         want = report[setup]
         assert got["n"] == want["answered"], setup
         for js_key, py_key in (("brier", "brier"), ("log", "log_score"), ("accuracy", "accuracy"),
-                               ("ece", "ece"), ("auroc", "auroc")):
+                               ("ece", "ece"), ("sharpness", "sharpness"), ("auroc", "auroc"), ("balancedAccuracy", "balanced_accuracy"),
+                               ("mcc", "mcc")):
             if want[py_key] == "":
                 assert got[js_key] is None, (setup, js_key)
             else:
@@ -74,10 +75,14 @@ def test_dashboard_matches_report(tmp_path, ds_key, prefix):
 def test_metrics_js_hand_values(tmp_path):
     # same hand-computed cases as tests/test_scoring.py
     js = js_scores(tmp_path, {"a": [[0.1, 0.1, 0.8, 0.8], [0, 1, 1, 1]], "b": [[0.8, 0.4, 0.6, 0.4], [1, 1, 0, 0]],
-                              "c": [[0.7, 0.2, 0.6, 0.5], [1, 0, 0, 1]]})
+                              "c": [[0.7, 0.2, 0.6, 0.5], [1, 0, 0, 1]],
+                              "d": [[0.9, 0.6, 0.2, 0.4, 0.5, 0.7], [1, 0, 0, 1, 1, 1]]})
     assert js["a"]["ece"] == pytest.approx(0.3)
     assert js["b"]["auroc"] == pytest.approx(0.625)
     assert js["c"]["accuracy"] == pytest.approx(0.625)
+    assert js["d"]["balancedAccuracy"] == pytest.approx(7 / 12)
+    assert js["d"]["mcc"] == pytest.approx(1 / 6)
+    assert js["d"]["sharpness"] == pytest.approx(1.1 / 6)   # (0.4 + 0.1 + 0.3 + 0.1 + 0 + 0.2) / 6
 
 
 def test_build_writes_self_contained_page(tmp_path):

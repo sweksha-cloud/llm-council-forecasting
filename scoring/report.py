@@ -7,9 +7,13 @@ For every setup (each single model, each council) and for the baselines built
 from the single models (mean, median, logit pool, extremized pool, best
 single) plus the market price, it reports:
 
-  scores.csv          Brier and log score, accuracy, ECE and AUROC; coverage (share
+  scores.csv          Brier and log score, accuracy, ECE, sharpness and AUROC; coverage (share
                       answered); scores on the common set of questions every setup
-                      answered; skill vs market
+                      answered; skill vs market (on the common set, and paired on each
+                      setup's own answered questions with a 95% bootstrap interval)
+  ground_truth.csv    each forecast as a Yes/No call vs the outcome: confusion matrix,
+                      precision, recall, F1, balanced accuracy, MCC
+  judge_vs_truth.csv  imported results only: does the LLM-judge score track being right?
   comparisons.csv     paired Brier differences (council vs market / best single / mean)
                       with 95% bootstrap intervals
   decomposition.csv   Murphy decomposition (reliability, resolution, uncertainty)
@@ -37,7 +41,8 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from scoring.aggregation import extremized_pool, logit_pool, mean_pool, median_pool
-from scoring.calibration import expected_calibration_error, murphy_decomposition
+from scoring.calibration import expected_calibration_error, murphy_decomposition, sharpness
+from scoring.classification import balanced_accuracy, confusion, f1, mcc, precision, recall
 from scoring.discrimination import average_ranks, auroc
 from scoring.proper import accuracy, brier, fill_abstentions, log_score, mean_brier, mean_log_score
 
@@ -98,7 +103,33 @@ def load(question_files, forecast_files, which_set="all", prompt_id=None, id_pre
     return outcomes, dict(probs), members, market
 
 
+def load_judge_scores(forecast_files, outcomes, prompt_id=None) -> Dict[Tuple[str, str], float]:
+    """(setup, question_id) -> LLM-judge score, for imported results that have one (first forecast wins)."""
+    judges, seen = {}, set()
+    for f in _read(forecast_files):
+        key = (f["setup"], f["question_id"])
+        if key[1] not in outcomes or (prompt_id and f.get("prompt_id") != prompt_id) or key in seen:
+            continue
+        seen.add(key)
+        j = _float(f.get("judge_score"))
+        if j is not None:
+            judges[key] = j
+    return judges
+
+
 # ── Baselines ─────────────────────────────────────────────────────────────────
+
+def add_reference_baselines(probs: Probs, outcomes: Dict[str, int]) -> Dict[str, str]:
+    """Forecasts that know nothing about the question: always No, and the base rate."""
+    if not outcomes:
+        return {}
+    rate = sum(outcomes.values()) / len(outcomes)
+    probs["baseline:always_no"] = {q: 0.0 for q in outcomes}
+    probs["baseline:base_rate"] = {q: rate for q in outcomes}
+    return {"baseline:always_no": "= 0% on every question; the accuracy any setup gets just by saying No",
+            "baseline:base_rate": (f"= {rate:.3f} (share resolved Yes) on every question; uses the outcomes, "
+                                   "so it's slightly optimistic")}
+
 
 def add_baselines(probs: Probs, outcomes: Dict[str, int], a: float = 2.0) -> Dict[str, str]:
     """Adds baseline:* setups built from the single models. Returns notes about them."""
@@ -146,7 +177,31 @@ def _round(x: Optional[float], digits: int = 4):
     return "" if x is None else round(x, digits)
 
 
-def score_table(probs: Probs, outcomes: Dict[str, int], n_bins: int = 10) -> List[Dict]:
+def market_skill(ps: Dict[str, Optional[float]], market: Dict[str, Optional[float]], outcomes: Dict[str, int],
+                 n_boot: int = 1000, seed: int = 0) -> Optional[Dict]:
+    """Brier skill vs the market, 1 - Brier(setup) / Brier(market), on the questions both answered,
+    with a 95% paired bootstrap interval. Positive means better than the market."""
+    qs = [q for q in outcomes if ps.get(q) is not None and market.get(q) is not None]
+    if len(qs) < 2:
+        return None
+    pairs = [(brier(ps[q], outcomes[q]), brier(market[q], outcomes[q])) for q in qs]
+    ref = sum(m for _, m in pairs)
+    if ref == 0:
+        return None
+    rng = random.Random(seed)
+    boots = []
+    for _ in range(n_boot):
+        sample = rng.choices(pairs, k=len(pairs))
+        sample_ref = sum(m for _, m in sample)
+        if sample_ref:
+            boots.append(1 - sum(s for s, _ in sample) / sample_ref)
+    boots.sort()
+    return {"n_vs_market": len(qs), "skill_vs_market_paired": round(1 - sum(s for s, _ in pairs) / ref, 4),
+            "skill_ci_low": round(boots[int(0.025 * len(boots))], 4),
+            "skill_ci_high": round(boots[int(0.975 * len(boots)) - 1], 4)}
+
+
+def score_table(probs: Probs, outcomes: Dict[str, int], n_bins: int = 10, n_boot: int = 1000) -> List[Dict]:
     common = common_questions(probs, outcomes)
     market = probs.get("market", {})
     rows = []
@@ -161,7 +216,11 @@ def score_table(probs: Probs, outcomes: Dict[str, int], n_bins: int = 10) -> Lis
             row["log_score"] = round(mean_log_score(a_ps, a_ys), 4)
             row["accuracy"] = round(accuracy(a_ps, a_ys), 4)
             row["ece"] = round(expected_calibration_error(a_ps, a_ys, n_bins), 4)
+            row["sharpness"] = round(sharpness(a_ps), 4)
             row["auroc"] = _round(auroc(a_ps, a_ys))
+            c = confusion(a_ps, a_ys)
+            row["balanced_accuracy"] = _round(balanced_accuracy(c))
+            row["mcc"] = _round(mcc(c))
             all_ps = fill_abstentions([ps.get(q) for q in outcomes])
             row["brier_abstain_0.5"] = round(mean_brier(all_ps, [outcomes[q] for q in outcomes]), 4)
         if common:
@@ -174,6 +233,8 @@ def score_table(probs: Probs, outcomes: Dict[str, int], n_bins: int = 10) -> Lis
             if setup != "market" and market and all(market.get(q) is not None for q in common):
                 ref = mean_brier([market[q] for q in common], c_ys)
                 row["skill_vs_market"] = round(1 - row["brier_common"] / ref, 4) if ref else ""
+        if setup != "market" and market:
+            row.update(market_skill(ps, market, outcomes, n_boot) or {})
         rows.append(row)
     return rows
 
@@ -203,7 +264,7 @@ def paired_brier_diff(a: Dict[str, Optional[float]], b: Dict[str, Optional[float
 
 def comparison_table(probs: Probs, outcomes: Dict[str, int], n_boot: int) -> List[Dict]:
     councils = [s for s in probs if s.startswith("council:")]
-    refs = [r for r in ("market", "baseline:best_single", "baseline:mean") if r in probs]
+    refs = [r for r in ("market", "baseline:best_single", "baseline:mean", "baseline:always_no") if r in probs]
     rows = []
     for c in councils:
         for r in refs:
@@ -231,6 +292,42 @@ def calibration_tables(probs: Probs, outcomes: Dict[str, int], n_bins: int):
             bins.append({"setup": setup, "bin": f"{b.lower:.1f}-{b.upper:.1f}", "count": b.count,
                          "mean_forecast": round(b.mean_forecast, 4), "observed_rate": round(b.observed_rate, 4)})
     return decomp, bins
+
+
+# ── Ground truth ──────────────────────────────────────────────────────────────
+
+def ground_truth_table(probs: Probs, outcomes: Dict[str, int]) -> List[Dict]:
+    rows = []
+    for setup in sorted(probs, key=_setup_order):
+        answered = [q for q in outcomes if probs[setup].get(q) is not None]
+        if not answered:
+            continue
+        c = confusion([probs[setup][q] for q in answered], [outcomes[q] for q in answered])
+        rows.append({"setup": setup, "answered": len(answered), "yes_calls": c.tp + c.fp, "no_calls": c.tn + c.fn,
+                     "no_call_0.5": c.no_call, "tp": c.tp, "fp": c.fp, "tn": c.tn, "fn": c.fn,
+                     "precision": _round(precision(c)), "recall": _round(recall(c)), "f1": _round(f1(c)),
+                     "balanced_accuracy": _round(balanced_accuracy(c)), "mcc": _round(mcc(c))})
+    return rows
+
+
+def judge_table(probs: Probs, judges: Dict[Tuple[str, str], float], outcomes: Dict[str, int]) -> List[Dict]:
+    """Per setup: mean LLM-judge score when the answer was right vs wrong, and how well the judge
+    score separates right from wrong answers (AUROC, 0.5 = the judge can't tell them apart)."""
+    rows = []
+    for setup in sorted(probs, key=_setup_order):
+        right, wrong = [], []
+        for q in outcomes:
+            p, j = probs[setup].get(q), judges.get((setup, q))
+            if p is None or j is None or p == 0.5:
+                continue
+            (right if (p > 0.5) == (outcomes[q] == 1) else wrong).append(j)
+        if not right and not wrong:
+            continue
+        rows.append({"setup": setup, "n": len(right) + len(wrong), "right": len(right), "wrong": len(wrong),
+                     "judge_mean_right": _round(statistics.fmean(right) if right else None, 3),
+                     "judge_mean_wrong": _round(statistics.fmean(wrong) if wrong else None, 3),
+                     "judge_auroc_for_right": _round(auroc(right + wrong, [1] * len(right) + [0] * len(wrong)))})
+    return rows
 
 
 # ── Disagreement ──────────────────────────────────────────────────────────────
@@ -298,7 +395,10 @@ def run(args) -> None:
         print("No resolved questions to score yet.")
         return
     notes = add_baselines(probs, outcomes, args.extremize_a)
-    scores = score_table(probs, outcomes, args.bins)
+    notes.update(add_reference_baselines(probs, outcomes))
+    scores = score_table(probs, outcomes, args.bins, args.bootstrap)
+    truth = ground_truth_table(probs, outcomes)
+    judged = judge_table(probs, load_judge_scores(args.forecasts, outcomes, args.prompt_id), outcomes)
     comps = comparison_table(probs, outcomes, args.bootstrap)
     decomp, bins = calibration_tables(probs, outcomes, args.bins)
     disagree = disagreement_table(probs, members, outcomes)
@@ -306,8 +406,10 @@ def run(args) -> None:
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     for name, rows in (("scores", scores), ("comparisons", comps), ("decomposition", decomp),
-                       ("reliability", bins), ("disagreement", disagree)):
+                       ("reliability", bins), ("disagreement", disagree), ("ground_truth", truth)):
         write_csv(out / f"{name}.csv", rows)
+    if judged:
+        write_csv(out / "judge_vs_truth.csv", judged)
 
     md = [f"# Results: {out.name}\n",
           f"Resolved questions scored: **{len(outcomes)}** (set: {args.set}"
@@ -317,11 +419,27 @@ def run(args) -> None:
           "the fair comparison. `skill_vs_market` > 0 means better than the market. "
           "`accuracy`: share on the right side of 0.5 (exactly 0.5 counts half), so the `market` row is the "
           "market-baseline accuracy. `ece`: expected calibration error, 0 = perfectly calibrated. "
+          "`sharpness`: mean |p − 0.5|, how far forecasts commit away from 50% (0 to 0.5, higher = sharper); "
+          "read with `ece`, since a setup that always says about 50% can have low ECE and still be useless. "
           "`auroc`: how well the setup ranks Yes questions above No ones, 0.5 = chance, ignores calibration. "
+          "`balanced_accuracy`/`mcc`: see Ground truth below. `skill_vs_market_paired`: 1 − Brier / market Brier "
+          "on the `n_vs_market` questions both the setup and the market answered, with a 95% bootstrap interval "
+          "(`skill_ci_low`..`skill_ci_high`); > 0 means better than the market. "
           "For 0/1 answers (imported free-text results) ECE and AUROC carry little information.\n",
           md_table(scores)]
     for k, v in notes.items():
         md.append(f"- `{k}` {v}\n")
+    base = sum(outcomes.values()) / len(outcomes)
+    md += [f"\n## Ground truth (each forecast as a Yes/No call; {base:.1%} of questions resolved Yes)\n",
+           "Above 0.5 is a Yes call, below a No call, exactly 0.5 no call. `precision`: share of Yes calls that "
+           "happened. `recall`: share of events that happened called Yes. `balanced_accuracy`: mean of Yes and No "
+           "recall, 0.5 for always saying No. `mcc`: correlation between calls and outcomes, 0 = chance.\n",
+           md_table(truth)]
+    if judged:
+        md += ["\n## Does the LLM-judge score track the ground truth?\n",
+               "Mean judge score (1–5) for answers that turned out right vs wrong. `judge_auroc_for_right`: "
+               "chance a right answer got a higher judge score than a wrong one; 0.5 = the judge can't tell.\n",
+               md_table(judged)]
     md += ["\n## Council vs baselines (paired Brier difference, negative = council better)\n", md_table(comps),
            "\n## Murphy decomposition (Brier = reliability − resolution + uncertainty)\n",
            "Each row uses the questions that setup answered (see `n`), so rows with different `n` "

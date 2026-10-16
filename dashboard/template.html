@@ -223,6 +223,11 @@ code { font: 13px var(--mono); background: var(--sunken); padding: 1px 5px; bord
       <div><dt>Log score</dt><dd>−ln of the probability given to what happened. Confident misses cost the most.</dd></div>
       <div><dt>Accuracy</dt><dd>Share of forecasts on the right side of 50%. Exactly 50% counts half. The market row is the market-baseline accuracy.</dd></div>
       <div><dt>ECE</dt><dd>Expected calibration error over ten equal bins: the count-weighted gap between forecast and observed frequency. 0 is perfectly calibrated.</dd></div>
+      <div><dt>Sharpness</dt><dd>Mean distance of the forecasts from 50%, from 0 (always 50%) to 0.5 (always 0% or 100%). Read it with ECE: a model that says about 55% to everything can look calibrated while telling you nothing. Aim for low ECE and high sharpness.</dd></div>
+      <div><dt>Balanced accuracy</dt><dd>Ground truth: each forecast read as a Yes call (above 50%) or No call (below), then the mean of the share of Yes events called Yes and No events called No. Always saying No scores 50%, however many questions resolved No.</dd></div>
+      <div><dt>MCC</dt><dd>Matthews correlation between the Yes/No calls and what happened. 0 is no better than chance, 1 is every call right.</dd></div>
+      <div><dt>Skill vs market</dt><dd>1 − Brier ÷ market Brier, on the questions where both the setup and the market have a forecast. Above 0 beats the market.</dd></div>
+      <div><dt>Always No</dt><dd>A baseline that says 0% on every question. Most questions resolve No, so its accuracy is the bar to clear.</dd></div>
       <div><dt>AUROC</dt><dd>Chance a question that resolved Yes got a higher forecast than one that resolved No. 0.5 is chance. It ignores calibration.</dd></div>
       <div><dt>Abstentions</dt><dd>Never turned into numbers silently. Scores use answered questions; “Brier, abstain = 0.5” counts each abstention as 50%.</dd></div>
       <div><dt>Market</dt><dd>The Polymarket or Kalshi Yes price when the forecast was made, used as a forecast. Shown in ¢.</dd></div>
@@ -269,6 +274,7 @@ function model(ds) {
       extra["baseline:median"] = sp.length >= 2 ? Metrics.medianPool(sp) : null;
     }
     if (q.market != null) extra.market = q.market;
+    extra["baseline:always_no"] = 0;
     return { ...q, ps, extra };
   });
   const all = [...setups];
@@ -276,6 +282,7 @@ function model(ds) {
     all.push({ id: "baseline:mean", label: "Mean of single models", kind: "baseline" });
     all.push({ id: "baseline:median", label: "Median of single models", kind: "baseline" });
   }
+  all.push({ id: "baseline:always_no", label: "Always No", kind: "baseline" });
   if (rows.some((r) => r.market != null)) all.push({ id: "market", label: "Market price", kind: "market" });
   all.forEach((s) => { s.get = s.idx != null ? (r) => r.ps[s.idx] : (r) => r.extra[s.id]; });
   return { setups: all, rows };
@@ -299,6 +306,7 @@ function scoredSet(rows) {
 
 function scoreAll(rows) {
   const resolved = rows.filter((r) => r.y != null);
+  const market = M.setups.find((s) => s.id === "market");
   return M.setups.map((s) => {
     const ans = resolved.filter((r) => s.get(r) != null);
     const res = Metrics.score(ans.map(s.get), ans.map((r) => r.y));
@@ -309,6 +317,8 @@ function scoreAll(rows) {
       coverage: resolved.length ? ans.length / resolved.length : 0,
       ...(res || {}), brierFill: resolved.length ? Metrics.score(filled, resolved.map((r) => r.y)).brier : null,
       judge: judges.length ? judges.reduce((a, b) => a + b, 0) / judges.length : null,
+      skill: market && s !== market
+        ? Metrics.skill(ans.filter((r) => market.get(r) != null).map((r) => [s.get(r), market.get(r), r.y])) : null,
     };
   });
 }
@@ -356,7 +366,11 @@ const COLS = [
   { key: "log", label: "Log score", r: true, best: "min" },
   { key: "accuracy", label: "Accuracy", r: true, best: "max" },
   { key: "ece", label: "ECE", r: true, best: "min" },
+  { key: "sharpness", label: "Sharpness", r: true },
   { key: "auroc", label: "AUROC", r: true, best: "max" },
+  { key: "balancedAccuracy", label: "Balanced accuracy", r: true, best: "max" },
+  { key: "mcc", label: "MCC", r: true, best: "max" },
+  { key: "skill", label: "Skill vs market", r: true, best: "max" },
   { key: "judge", label: "LLM-judge (1–5)", r: true },
 ];
 
@@ -366,7 +380,8 @@ function renderBoard(rows) {
   let board = state.mode === "common" ? scoreAll(scored) : scoreAll(rows);
   board = board.filter((b) => b.answered > 0);
   const hasJudge = board.some((b) => b.judge != null);
-  const cols = COLS.filter((c) => c.key !== "judge" || hasJudge);
+  const hasSkill = board.some((b) => b.skill != null);
+  const cols = COLS.filter((c) => (c.key !== "judge" || hasJudge) && (c.key !== "skill" || hasSkill));
   const { key, dir } = state.sort;
   board.sort((a, b) => ((a[key] ?? Infinity) - (b[key] ?? Infinity)) * dir || a.setup.label.localeCompare(b.setup.label));
   lastBoard = board;
@@ -382,7 +397,7 @@ function renderBoard(rows) {
     if (c.key === "label") return `<td><span class="kind ${b.setup.kind}">${b.setup.kind}</span>${esc(b.setup.label)}</td>`;
     if (c.key === "answered") return `<td class="r num">${b.answered}${state.mode === "answered" ? ` <span class="cov">${pct(b.coverage)}</span>` : ""}</td>`;
     const v = b[c.key];
-    const txt = c.key === "accuracy" ? pct(v) : c.key === "judge" ? (v == null ? "–" : v.toFixed(2)) : f3(v);
+    const txt = c.key === "accuracy" || c.key === "balancedAccuracy" ? pct(v) : c.key === "judge" ? (v == null ? "–" : v.toFixed(2)) : f3(v);
     const best = bestVal[c.key] != null && v === bestVal[c.key] && b.answered >= 10 ? " best" : "";
     const bar = c.key === "brier" && v != null ? `<span class="bar" style="width:${Math.round(48 * v / maxBrier)}px"></span>` : "";
     return `<td class="r num${best}">${txt}${bar}</td>`;
@@ -547,7 +562,7 @@ for (const [id, key] of [["f-source", "source"], ["f-topic", "topic"], ["f-month
 $("board").addEventListener("click", (e) => {
   const b = e.target.closest("button[data-sort]"); if (!b) return;
   const k = b.dataset.sort;
-  const higherBetter = ["accuracy", "auroc", "answered", "judge"].includes(k);
+  const higherBetter = ["accuracy", "auroc", "sharpness", "balancedAccuracy", "mcc", "skill", "answered", "judge"].includes(k);
   state.sort = state.sort.key === k ? { key: k, dir: -state.sort.dir } : { key: k, dir: higherBetter ? -1 : 1 };
   renderBoard(filtered());
 });
@@ -586,8 +601,8 @@ $("q-outcome").addEventListener("change", (e) => { state.outcome = e.target.valu
 $("prev").addEventListener("click", () => { state.page--; renderQuestions(filtered()); });
 $("next").addEventListener("click", () => { state.page++; renderQuestions(filtered()); });
 $("copy-csv").addEventListener("click", () => {
-  const head = ["setup", "kind", "answered", "coverage", "brier", "brier_abstain_0.5", "log_score", "accuracy", "ece", "auroc", "judge"];
-  const lines = [head.join(",")].concat(lastBoard.map((b) => [b.setup.id, b.setup.kind, b.answered, b.coverage, b.brier, b.brierFill, b.log, b.accuracy, b.ece, b.auroc, b.judge]
+  const head = ["setup", "kind", "answered", "coverage", "brier", "brier_abstain_0.5", "log_score", "accuracy", "ece", "sharpness", "auroc", "balanced_accuracy", "mcc", "skill_vs_market", "judge"];
+  const lines = [head.join(",")].concat(lastBoard.map((b) => [b.setup.id, b.setup.kind, b.answered, b.coverage, b.brier, b.brierFill, b.log, b.accuracy, b.ece, b.sharpness, b.auroc, b.balancedAccuracy, b.mcc, b.skill, b.judge]
     .map((v) => (v == null ? "" : typeof v === "number" ? +v.toFixed(4) : `"${String(v).replace(/"/g, '""')}"`)).join(",")));
   const text = lines.join("\n");
   const fallback = () => { const ta = $("csv-fallback"); ta.hidden = false; ta.value = text; ta.select(); };

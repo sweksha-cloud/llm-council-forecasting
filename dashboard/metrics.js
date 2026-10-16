@@ -1,5 +1,5 @@
 // Scoring for the dashboard. Mirrors scoring/proper.py, scoring/calibration.py and
-// scoring/discrimination.py exactly; tests/test_dashboard.py checks the two agree.
+// scoring/discrimination.py and scoring/classification.py exactly; tests/test_dashboard.py checks the two agree.
 // p = probability the event happens, y = 1 if it happened. Lower Brier/log is better.
 
 const Metrics = (() => {
@@ -46,6 +46,33 @@ const Metrics = (() => {
     return (posSum - nPos * (nPos + 1) / 2) / (nPos * nNeg);
   }
 
+  // Yes/No calls vs outcomes (above 0.5 = Yes, below = No, exactly 0.5 = no call).
+  function confusion(ps, ys) {
+    const c = { tp: 0, fp: 0, tn: 0, fn: 0 };
+    ps.forEach((p, i) => {
+      if (p === 0.5) return;
+      if (p > 0.5) ys[i] === 1 ? c.tp++ : c.fp++;
+      else ys[i] === 1 ? c.fn++ : c.tn++;
+    });
+    return c;
+  }
+  function balancedAccuracy({ tp, fp, tn, fn }) {
+    if (!(tp + fn) || !(tn + fp)) return null;
+    return (tp / (tp + fn) + tn / (tn + fp)) / 2;
+  }
+  function mcc({ tp, fp, tn, fn }) {
+    if (!(tp + fp + tn + fn)) return null;
+    const d = Math.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn));
+    return d ? (tp * tn - fp * fn) / d : 0;
+  }
+
+  // Brier skill vs a reference on paired [p, ref, y] rows: 1 - Brier / reference Brier. > 0 = better.
+  function skill(pairs) {
+    if (pairs.length < 2) return null;
+    const ref = pairs.reduce((s, [, r, y]) => s + brier(r, y), 0);
+    return ref ? 1 - pairs.reduce((s, [p, , y]) => s + brier(p, y), 0) / ref : null;
+  }
+
   // All metrics for one list of (probability, outcome) pairs.
   function score(ps, ys) {
     if (!ps.length) return null;
@@ -55,7 +82,10 @@ const Metrics = (() => {
       log: mean(ps.map((p, i) => logScore(p, ys[i]))),
       accuracy: mean(ps.map((p, i) => hit(p, ys[i]))),
       ece: ece(ps, ys),
+      sharpness: mean(ps.map((p) => Math.abs(p - 0.5))),
       auroc: auroc(ps, ys),
+      balancedAccuracy: balancedAccuracy(confusion(ps, ys)),
+      mcc: mcc(confusion(ps, ys)),
     };
   }
 
@@ -82,7 +112,7 @@ const Metrics = (() => {
     return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
   };
 
-  return { brier, logScore, hit, bins, ece, auroc, score, pairedDiff, meanPool, medianPool };
+  return { brier, logScore, hit, bins, ece, auroc, confusion, balancedAccuracy, mcc, skill, score, pairedDiff, meanPool, medianPool };
 })();
 
 if (typeof module !== "undefined") module.exports = Metrics;
