@@ -53,6 +53,7 @@ deepseek-r1:8b (the Qwen3-based build on spark) ignores `think=false` and reason
    python3 -m forecast.drop_stale
    ```
 4. Start the queue (order and estimates in the script): `tmux new -s queue "bash scripts/queue_spark.sh"`
+   Check on it any time (read-only): `bash scripts/status_spark.sh` — progress per set and setup, failed calls, ETA.
 5. After it, the variance runs: `tmux new -s variance "bash scripts/queue_variance.sh"` (waits for the queue session to end).
 
 ## Outcome updates
