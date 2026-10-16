@@ -7,6 +7,9 @@ Calibration and Murphy decomposition of the Brier score.
   resolution   - does the forecaster move away from the base rate in the right direction? (higher is better)
   uncertainty  - depends only on the questions, not the forecaster: base_rate * (1 - base_rate)
 
+Expected calibration error (ECE) summarises the reliability diagram in one number: the average
+gap between forecast and observed frequency, weighted by how many forecasts fall in each bin.
+
 The identity is exact when every forecast in a bin is the same value. With
 binned continuous forecasts it's approximate; `brier` is reported alongside
 so the gap is visible.
@@ -63,3 +66,9 @@ def murphy_decomposition(ps: Sequence[float], ys: Sequence[int], n_bins: int = 1
     res = sum(b.count * (b.observed_rate - base_rate) ** 2 for b in bins) / n
     unc = base_rate * (1 - base_rate)
     return Decomposition(rel, res, unc, mean_brier(ps, ys), bins)
+
+
+def expected_calibration_error(ps: Sequence[float], ys: Sequence[int], n_bins: int = 10) -> float:
+    """Count-weighted mean of |mean forecast - observed rate| over equal-width bins. 0 is perfectly calibrated."""
+    bins = reliability_bins(ps, ys, n_bins)
+    return sum(b.count * abs(b.mean_forecast - b.observed_rate) for b in bins) / len(ps)

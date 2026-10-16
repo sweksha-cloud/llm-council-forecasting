@@ -68,6 +68,22 @@ def test_scores_and_common_set(data):
     assert rows["single:b"]["brier_abstain_0.5"] == approx(0.19)
 
 
+def test_new_metrics_in_score_table(data):
+    outcomes, probs, _, _ = data
+    rows = {r["setup"]: r for r in score_table(probs, outcomes)}
+    # market 0.6, 0.3, 0.7 vs outcomes 1, 0, 1: all on the right side of 0.5
+    assert rows["market"]["accuracy"] == approx(1.0)
+    # market Yes forecasts 0.6, 0.7 both above the No forecast 0.3
+    assert rows["market"]["auroc"] == approx(1.0)
+    # market bins: 0.3 (No) -> 0.3 ; 0.6 (Yes) -> 0.4 ; 0.7 (Yes) -> 0.3 ; ECE = 1.0 / 3
+    assert rows["market"]["ece"] == approx(0.3333)
+    # single:b answered q0 (0.6, Yes) and q1 (0.4, No) -> both right
+    assert rows["single:b"]["accuracy"] == approx(1.0)
+    # common set is q0, q1 (one Yes, one No)
+    assert rows["council:chair=a"]["accuracy_common"] == approx(1.0)
+    assert rows["council:chair=a"]["auroc_common"] == approx(1.0)
+
+
 def test_paired_difference(data):
     outcomes, probs, _, _ = data
     res = paired_brier_diff(probs["council:chair=a"], probs["market"], outcomes, n_boot=200)

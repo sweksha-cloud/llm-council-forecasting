@@ -7,8 +7,9 @@ For every setup (each single model, each council) and for the baselines built
 from the single models (mean, median, logit pool, extremized pool, best
 single) plus the market price, it reports:
 
-  scores.csv          Brier and log score; coverage (share answered); scores on the
-                      common set of questions every setup answered; skill vs market
+  scores.csv          Brier and log score, accuracy, ECE and AUROC; coverage (share
+                      answered); scores on the common set of questions every setup
+                      answered; skill vs market
   comparisons.csv     paired Brier differences (council vs market / best single / mean)
                       with 95% bootstrap intervals
   decomposition.csv   Murphy decomposition (reliability, resolution, uncertainty)
@@ -36,8 +37,9 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from scoring.aggregation import extremized_pool, logit_pool, mean_pool, median_pool
-from scoring.calibration import murphy_decomposition
-from scoring.proper import brier, fill_abstentions, log_score, mean_brier, mean_log_score
+from scoring.calibration import expected_calibration_error, murphy_decomposition
+from scoring.discrimination import average_ranks, auroc
+from scoring.proper import accuracy, brier, fill_abstentions, log_score, mean_brier, mean_log_score
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -140,7 +142,11 @@ def common_questions(probs: Probs, outcomes: Dict[str, int]) -> List[str]:
     return [q for q in outcomes if all(probs[s].get(q) is not None for s in active)]
 
 
-def score_table(probs: Probs, outcomes: Dict[str, int]) -> List[Dict]:
+def _round(x: Optional[float], digits: int = 4):
+    return "" if x is None else round(x, digits)
+
+
+def score_table(probs: Probs, outcomes: Dict[str, int], n_bins: int = 10) -> List[Dict]:
     common = common_questions(probs, outcomes)
     market = probs.get("market", {})
     rows = []
@@ -153,6 +159,9 @@ def score_table(probs: Probs, outcomes: Dict[str, int]) -> List[Dict]:
             a_ps, a_ys = [ps[q] for q in answered], [outcomes[q] for q in answered]
             row["brier"] = round(mean_brier(a_ps, a_ys), 4)
             row["log_score"] = round(mean_log_score(a_ps, a_ys), 4)
+            row["accuracy"] = round(accuracy(a_ps, a_ys), 4)
+            row["ece"] = round(expected_calibration_error(a_ps, a_ys, n_bins), 4)
+            row["auroc"] = _round(auroc(a_ps, a_ys))
             all_ps = fill_abstentions([ps.get(q) for q in outcomes])
             row["brier_abstain_0.5"] = round(mean_brier(all_ps, [outcomes[q] for q in outcomes]), 4)
         if common:
@@ -160,6 +169,8 @@ def score_table(probs: Probs, outcomes: Dict[str, int]) -> List[Dict]:
             row["common_n"] = len(common)
             row["brier_common"] = round(mean_brier([ps[q] for q in common], c_ys), 4)
             row["log_common"] = round(mean_log_score([ps[q] for q in common], c_ys), 4)
+            row["accuracy_common"] = round(accuracy([ps[q] for q in common], c_ys), 4)
+            row["auroc_common"] = _round(auroc([ps[q] for q in common], c_ys))
             if setup != "market" and market and all(market.get(q) is not None for q in common):
                 ref = mean_brier([market[q] for q in common], c_ys)
                 row["skill_vs_market"] = round(1 - row["brier_common"] / ref, 4) if ref else ""
@@ -224,24 +235,10 @@ def calibration_tables(probs: Probs, outcomes: Dict[str, int], n_bins: int):
 
 # ── Disagreement ──────────────────────────────────────────────────────────────
 
-def _ranks(xs: Sequence[float]) -> List[float]:
-    order = sorted(range(len(xs)), key=lambda i: xs[i])
-    ranks = [0.0] * len(xs)
-    i = 0
-    while i < len(order):
-        j = i
-        while j + 1 < len(order) and xs[order[j + 1]] == xs[order[i]]:
-            j += 1
-        for k in range(i, j + 1):
-            ranks[order[k]] = (i + j) / 2 + 1  # ties share the average rank
-        i = j + 1
-    return ranks
-
-
 def spearman(xs: Sequence[float], ys: Sequence[float]) -> Optional[float]:
     if len(xs) < 3:
         return None
-    rx, ry = _ranks(xs), _ranks(ys)
+    rx, ry = average_ranks(xs), average_ranks(ys)
     if statistics.pstdev(rx) == 0 or statistics.pstdev(ry) == 0:
         return None
     return statistics.correlation(rx, ry)
@@ -301,7 +298,7 @@ def run(args) -> None:
         print("No resolved questions to score yet.")
         return
     notes = add_baselines(probs, outcomes, args.extremize_a)
-    scores = score_table(probs, outcomes)
+    scores = score_table(probs, outcomes, args.bins)
     comps = comparison_table(probs, outcomes, args.bootstrap)
     decomp, bins = calibration_tables(probs, outcomes, args.bins)
     disagree = disagreement_table(probs, members, outcomes)
@@ -317,7 +314,11 @@ def run(args) -> None:
           + (f", prompt {args.prompt_id}" if args.prompt_id else "") + "). Lower Brier/log score is better.\n",
           "## Scores\n",
           "`brier`/`log_score`: answered questions only. `*_common`: the questions every setup answered, "
-          "the fair comparison. `skill_vs_market` > 0 means better than the market.\n",
+          "the fair comparison. `skill_vs_market` > 0 means better than the market. "
+          "`accuracy`: share on the right side of 0.5 (exactly 0.5 counts half), so the `market` row is the "
+          "market-baseline accuracy. `ece`: expected calibration error, 0 = perfectly calibrated. "
+          "`auroc`: how well the setup ranks Yes questions above No ones, 0.5 = chance, ignores calibration. "
+          "For 0/1 answers (imported free-text results) ECE and AUROC carry little information.\n",
           md_table(scores)]
     for k, v in notes.items():
         md.append(f"- `{k}` {v}\n")

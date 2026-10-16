@@ -6,7 +6,9 @@ CS180 Individual Studies, San Jose State University, Fall 2026: Sweksha Shaw, ad
 
 In an LLM council, several language models answer the same question and a chairman model combines their answers into one. This project tests whether the council actually beats the models it's built from. The test bed is prediction-market questions from **Polymarket** and **Kalshi**, which resolve to a real outcome and have a market price to compare against.
 
-Every model, and the council, gives a **probability** that the event happens. Forecasts are scored with proper scoring rules (Brier and log score), calibration analysis, and a set of baselines that ends with the market price.
+Every model, and the council, gives a **probability** that the event happens. Forecasts are scored with proper scoring rules (Brier and log score), accuracy, calibration (ECE, reliability diagrams), discrimination (AUROC), and a set of baselines that ends with the market price.
+
+**Results dashboard:** `make dashboard` builds `dashboard/index.html` from the committed data. **Reproducing everything:** `make setup && make reproduce`; see [`docs/reproduce.md`](docs/reproduce.md).
 
 ## Building on earlier work
 
@@ -21,13 +23,14 @@ Her results are imported read-only from a pinned commit of that repo (see `impor
 |---|---|
 | `collect/` | Collect questions, market prices and resolution dates from Polymarket and Kalshi |
 | `forecast/` | Run each model alone and as a council, with identical prompts, asking for a probability |
-| `scoring/` | Brier score, log score, decomposition, aggregation baselines: plain functions |
+| `scoring/` | Brier, log score, accuracy, ECE, AUROC, decomposition, aggregation baselines: plain functions |
+| `dashboard/` | Builds the results dashboard (one self-contained HTML page) from the data files |
 | `tests/` | Scoring checked against hand-computed values |
 | `importers/` | Convert earlier students' results into the shared record format |
 | `data/` | Results in the shared record format. Locked forecasts are never edited. |
 | `docs/` | Plan, record format, and notes |
 
-See [`docs/record_format.md`](docs/record_format.md) for the shared record format and [`docs/plan.md`](docs/plan.md) for the timeline.
+See [`docs/record_format.md`](docs/record_format.md) for the shared record format, [`docs/plan.md`](docs/plan.md) for the timeline, and [`docs/reproduce.md`](docs/reproduce.md) for rebuilding the results.
 
 ## Working rules
 
@@ -49,13 +52,14 @@ All commands run from the repo root.
 | Fill in outcomes as markets resolve | `python3 -m collect.update_outcomes` | anywhere |
 | Results tables | `python3 -m scoring.report --set live --out results/live` | anywhere |
 | Import and re-score Aye's results | `python3 -m importers.import_aye` | anywhere |
+| Dashboard | `make dashboard` (or `python3 -m dashboard.build`) | anywhere |
+| Rebuild every result and check it matches | `make reproduce` | anywhere |
 | Tests | `python3 -m pytest` | anywhere |
 
 ## Setup
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+make setup        # or: python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 ```
 
 Models run through [Ollama](https://ollama.com) on the SJSU GPU server (spark-833c-1), or locally with `scripts/run_local.sh`.

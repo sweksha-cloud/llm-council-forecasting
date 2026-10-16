@@ -4,6 +4,9 @@ One line per decision: what was decided, why, and what it affects. Newest first.
 
 | Date | Decision | Why | Affects |
 |---|---|---|---|
+| 2026-10-16 | Add accuracy (right side of 0.5, exactly 0.5 counts half), ECE (10 equal bins) and AUROC to every results table and the dashboard | Accuracy gives a market-baseline number anyone understands; ECE summarises calibration in one number; AUROC shows whether a model ranks events correctly even when its probabilities are off, which is the usual problem with 8B models | `results/*/scores.csv`, dashboard |
+| 2026-10-16 | The dashboard recomputes metrics in the page, with a test that it matches `scoring/report.py` on real data | Filters (market, topic, month) need re-scoring on any subset; the test keeps the two from drifting | Dashboard |
+| 2026-10-16 | On the dashboard, the market is scored on the questions that have forecasts; `scoring/report.py` scores it on every resolved question | Compares the market with the models on the same questions | Market row, live set |
 | 2026-10-12 | Run deepseek-r1:8b separately with a 1,024-token thinking budget, then force it to answer | It answered 6 of 6 test questions this way (about 110 s each) vs 0 of 4 with a plain 2,048-token cap. It's a single model only, not a council member | DeepSeek results on settled and contamination sets |
 | 2026-10-12 | Pause the settled run until the live top-up finishes | Live questions close daily; settled questions don't, and two runs at once slowed both | Run order |
 | 2026-10-12 | Re-score Aye's councils against an "always No" baseline, not only against single models | 67% of her questions resolved No; councils looked better mainly by answering No more often | Week 9 notes |
