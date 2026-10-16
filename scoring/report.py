@@ -13,6 +13,8 @@ single) plus the market price, it reports:
                       setup's own answered questions with a 95% bootstrap interval)
   ground_truth.csv    each forecast as a Yes/No call vs the outcome: confusion matrix,
                       precision, recall, F1, balanced accuracy, MCC
+  contamination.csv   questions resolved before vs after each model's training cutoff
+                      (only when some resolved before; see scoring/contamination.py)
   judge_vs_truth.csv  imported results only: does the LLM-judge score track being right?
   comparisons.csv     paired Brier differences (council vs market / best single / mean)
                       with 95% bootstrap intervals
@@ -27,6 +29,7 @@ into numbers silently: "answered" scores use answered questions only, and
 
 Usage (from the repo root):
   python3 -m scoring.report --set live --out results/live
+  python3 -m scoring.report --set settled contamination --out results/backtest
   python3 -m scoring.report --questions data/imported/aye-2026/questions.csv \\
       --forecasts data/imported/aye-2026/forecasts.csv --id-prefix aye-new: --out results/aye-2026-new
 """
@@ -42,6 +45,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 from scoring.aggregation import extremized_pool, logit_pool, mean_pool, median_pool
 from scoring.calibration import expected_calibration_error, murphy_decomposition, sharpness
+from scoring.contamination import split_table
 from scoring.classification import balanced_accuracy, confusion, f1, mcc, precision, recall
 from scoring.discrimination import average_ranks, auroc
 from scoring.proper import accuracy, brier, fill_abstentions, log_score, mean_brier, mean_log_score
@@ -68,11 +72,16 @@ def _float(x) -> Optional[float]:
         return None
 
 
+def _in_sets(q, which_set) -> bool:
+    sets = [which_set] if isinstance(which_set, str) else list(which_set)
+    return "all" in sets or q.get("set") in sets
+
+
 def load(question_files, forecast_files, which_set="all", prompt_id=None, id_prefix=None):
     """Returns (outcomes, probs, members, market)."""
     outcomes, collected_price = {}, {}
     for q in _read(question_files):
-        if which_set != "all" and q.get("set") != which_set:
+        if not _in_sets(q, which_set):
             continue
         if id_prefix and not q["question_id"].startswith(id_prefix):
             continue
@@ -105,6 +114,33 @@ def load(question_files, forecast_files, which_set="all", prompt_id=None, id_pre
     if any(p is not None for p in market.values()):
         probs["market"] = market
     return outcomes, dict(probs), members, market
+
+
+def load_resolution_dates(question_files, outcomes):
+    """question_id -> date it resolved (resolved_at, else the scheduled close), for scored questions."""
+    from datetime import date
+    dates = {}
+    for q in _read(question_files):
+        when = (q.get("resolved_at") or q.get("resolution_date") or "")[:10]
+        if q["question_id"] in outcomes and when:
+            try:
+                dates[q["question_id"]] = date.fromisoformat(when)
+            except ValueError:
+                pass  # e.g. Aye's "2026-28-28"
+    return dates
+
+
+def members_of_setups(probs: Probs, members: Dict[Tuple[str, str], List[str]]) -> Dict[str, List[str]]:
+    """Model tags each council and pooled baseline is built from (for the contamination cutoff)."""
+    out: Dict[str, List[str]] = {}
+    for (setup, _), ms in members.items():
+        out.setdefault(setup, [])
+        out[setup] += [m for m in ms if m not in out[setup]]
+    singles = [s.split(":", 1)[1] for s in probs if s.startswith("single:")]
+    for s in probs:
+        if s.startswith("baseline:") and s not in ("baseline:always_no", "baseline:base_rate", "baseline:best_single"):
+            out[s] = singles
+    return out
 
 
 def load_judge_scores(forecast_files, outcomes, prompt_id=None) -> Dict[Tuple[str, str], float]:
@@ -406,6 +442,9 @@ def run(args) -> None:
     comps = comparison_table(probs, outcomes, args.bootstrap)
     decomp, bins = calibration_tables(probs, outcomes, args.bins)
     disagree = disagreement_table(probs, members, outcomes)
+    contam = split_table(probs, outcomes, load_resolution_dates(args.questions, outcomes),
+                         members_of_setups(probs, members), args.bootstrap)
+    contam = contam if any(r["n_before"] for r in contam) else []
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -414,9 +453,11 @@ def run(args) -> None:
         write_csv(out / f"{name}.csv", rows)
     if judged:
         write_csv(out / "judge_vs_truth.csv", judged)
+    if contam:
+        write_csv(out / "contamination.csv", contam)
 
     md = [f"# Results: {out.name}\n",
-          f"Resolved questions scored: **{len(outcomes)}** (set: {args.set}"
+          f"Resolved questions scored: **{len(outcomes)}** (set: {' + '.join(args.set)}"
           + (f", prompt {args.prompt_id}" if args.prompt_id else "") + "). Lower Brier/log score is better.\n",
           "## Scores\n",
           "`brier`/`log_score`: answered questions only. `*_common`: the questions every setup answered, "
@@ -444,6 +485,13 @@ def run(args) -> None:
                "Mean judge score (1–5) for answers that turned out right vs wrong. `judge_auroc_for_right`: "
                "chance a right answer got a higher judge score than a wrong one; 0.5 = the judge can't tell.\n",
                md_table(judged)]
+    if contam:
+        md += ["\n## Contamination: resolved before vs after each model's training cutoff\n",
+               "`gap` = Brier before − Brier after (negative = better on questions the model might remember), "
+               "with a 95% bootstrap interval. `excess_gap` subtracts the market's own before−after gap, so it "
+               "allows for the older questions being easier; clearly negative points to recall. Cutoffs: "
+               "`scoring/contamination.py` (stated cutoff, else release date; councils use their latest member).\n",
+               md_table(contam)]
     md += ["\n## Council vs baselines (paired Brier difference, negative = council better)\n", md_table(comps),
            "\n## Murphy decomposition (Brier = reliability − resolution + uncertainty)\n",
            "Each row uses the questions that setup answered (see `n`), so rows with different `n` "
@@ -459,7 +507,8 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--questions", nargs="+", default=[str(ROOT / "data" / "questions.csv")])
     ap.add_argument("--forecasts", nargs="+", default=[str(ROOT / "data" / "forecasts.csv")])
-    ap.add_argument("--set", choices=["live", "settled", "contamination", "all"], default="all")
+    ap.add_argument("--set", nargs="+", choices=["live", "settled", "contamination", "all"], default=["all"],
+                    help="one or more question sets, e.g. --set settled contamination")
     ap.add_argument("--prompt-id", default=None, help="only forecasts made with this prompt version")
     ap.add_argument("--id-prefix", default=None, help="only questions whose id starts with this, e.g. aye-new:")
     ap.add_argument("--out", default=str(ROOT / "results" / "latest"))

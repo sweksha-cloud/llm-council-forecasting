@@ -1,0 +1,4 @@
+setup,n,reliability,resolution,uncertainty,brier
+baseline:always_no,515,0.1909,0.0,0.246,0.4369
+baseline:base_rate,515,0.0,0.0,0.246,0.246
+market,513,0.0084,0.1253,0.2457,0.1269

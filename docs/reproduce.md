@@ -32,6 +32,8 @@ python3 -m scoring.report --questions data/imported/aye-2026/questions.csv \
 python3 -m dashboard.build                 # dashboard/index.html; open it in a browser
 ```
 
+`make results` also scores the settled and contamination sets (`results/settled`, `results/contamination`) and both together (`results/backtest`, which adds the contamination split). Until the spark runs are merged they hold only the market and the always-No/base-rate baselines.
+
 Live-set tables, once enough questions have resolved: `python3 -m scoring.report --set live --out results/live`.
 
 ### Where each input comes from
@@ -53,6 +55,7 @@ Live-set tables, once enough questions have resolved: `python3 -m scoring.report
 | `results/*/judge_vs_truth.csv` | `scoring/report.py` | Imported results: mean LLM-judge score for right vs wrong answers, judge AUROC for being right |
 | `results/*/comparisons.csv` | `scoring/report.py` | Council minus market / best single / mean / always No, paired, 95% bootstrap (seed 0) |
 | `results/*/decomposition.csv`, `reliability.csv` | `scoring/calibration.py` | Murphy decomposition, reliability bins (10 equal bins) |
+| `results/backtest/contamination.csv` | `scoring/contamination.py` | Brier and accuracy on questions resolved before vs after each model's cutoff, 95% bootstrap on the gap, and the market's gap on the same split as a difficulty control |
 | `results/*/disagreement.csv` | `scoring/report.py` | Spearman of member spread vs council error |
 | `dashboard/index.html` | `dashboard/build.py`, `dashboard/metrics.js` | The same metrics, recomputed in the page so filters work. `tests/test_dashboard.py` checks they match `scoring/report.py`. |
 
