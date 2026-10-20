@@ -40,6 +40,7 @@ import json
 import random
 import statistics
 from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 
@@ -82,9 +83,29 @@ def _in_sets(q, which_set) -> bool:
     return "all" in sets or q.get("set") in sets
 
 
+def _when(s: Optional[str]) -> Optional[datetime]:
+    try:
+        return datetime.fromisoformat((s or "").replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def made_after_resolution(q: Dict[str, str], f: Dict[str, str]) -> bool:
+    """A live forecast made at or after its market actually ended. The stored resolution_date is the
+    scheduled close, and markets often end earlier (Kalshi games, "by date" markets), so run_forecasts
+    could ask a question that was already decided; its stored market price is then the settled price.
+    resolved_at is when the market really ended. Backtests are asked after resolution by design, as of
+    an earlier date, so this applies to live questions only."""
+    if q.get("set") != "live":
+        return False
+    ended, made = _when(q.get("resolved_at")), _when(f.get("forecast_at"))
+    return bool(ended and made and made >= ended)
+
+
 def load(question_files, forecast_files, which_set="all", prompt_id=None, id_prefix=None):
-    """Returns (outcomes, probs, members, market)."""
-    outcomes, collected_price = {}, {}
+    """Returns (outcomes, probs, members, market). Live forecasts made after their market ended are
+    left out entirely, market price included (see made_after_resolution)."""
+    outcomes, collected_price, scored = {}, {}, {}
     for q in _read(question_files):
         if not _in_sets(q, which_set):
             continue
@@ -93,6 +114,7 @@ def load(question_files, forecast_files, which_set="all", prompt_id=None, id_pre
         if q.get("outcome") in ("0", "1"):
             outcomes[q["question_id"]] = int(q["outcome"])
             collected_price[q["question_id"]] = _float(q.get("market_price"))
+            scored[q["question_id"]] = q
 
     probs: Probs = defaultdict(dict)
     members: Dict[Tuple[str, str], List[str]] = {}
@@ -101,6 +123,8 @@ def load(question_files, forecast_files, which_set="all", prompt_id=None, id_pre
     for f in _read(forecast_files):
         qid, setup = f["question_id"], f["setup"]
         if qid not in outcomes or (prompt_id and f.get("prompt_id") != prompt_id):
+            continue
+        if made_after_resolution(scored[qid], f):
             continue
         if qid in probs[setup] and (setup, qid) not in failed:
             continue  # first (locked) forecast wins
