@@ -185,7 +185,7 @@ def analyses(ds: Dict, n_boot: int = 1000) -> Dict[str, List[Dict]]:
         b_out, b_probs, b_members, _ = load(qfiles, ffiles, BACKTEST)
         add_baselines(b_probs, b_out, members=b_members)
         split = split_table(b_probs, b_out, load_resolution_dates(qfiles, b_out),
-                            members_of_setups(b_probs, b_members), n_boot)
+                            members_of_setups(b_probs, b_members), n_boot, strata=strata)
         if any(r.get("n_before") for r in split):
             out["contamination"] = split
     if ds["key"] in ("settled", "settled-all"):
