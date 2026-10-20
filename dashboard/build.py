@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 from forecast.run_forecasts import parse_response
+from scoring.report import made_after_resolution
 
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parent
@@ -104,8 +105,8 @@ def build_dataset(ds: Dict) -> Dict:
     forecast_price: Dict[str, float] = {}
     for f in _read(ds["forecasts"]):
         qid, setup = f["question_id"], f["setup"]
-        if qid not in by_id:
-            continue
+        if qid not in by_id or made_after_resolution(by_id[qid], f):
+            continue  # not in this tab, or a live forecast made after its market ended (as in scoring/report.py)
         kept = cells.get(qid, {}).get(setup)
         if kept is not None and not kept.get("failed"):
             continue  # first (locked) forecast wins, as in scoring/report.py; a retry replaces a failed call
