@@ -30,7 +30,7 @@ from pathlib import Path
 from typing import Callable, Dict, List, Optional
 
 from scoring.proper import accuracy, mean_brier
-from scoring.report import (ROOT, _read, add_baselines, add_reference_baselines, load,
+from scoring.report import (ROOT, _read, add_baselines, add_reference_baselines, load, load_sources, reference,
                             md_table, paired_brier_diff, write_csv)
 
 MIN_GROUP = 30
@@ -90,7 +90,9 @@ def question_groups(question_files, outcomes: Dict[str, int], market: Dict[str, 
     return cuts
 
 
-def tables(probs, outcomes, cuts, n_boot: int = 1000):
+def tables(probs, outcomes, cuts, n_boot: int = 1000, strata=None, members=None):
+    """`strata`: question -> source, so every interval resamples within source (pre-registration);
+    `members`: each council's members per question, so pools are built from them (scoring.report.reference)."""
     scores, paired = [], []
     market = probs.get("market", {})
     councils = [s for s in probs if s.startswith("council:")]
@@ -116,10 +118,11 @@ def tables(probs, outcomes, cuts, n_boot: int = 1000):
                 for ref in REFERENCES:
                     if ref not in probs:
                         continue
-                    shared = [q for q in sub if probs[c].get(q) is not None and probs[ref].get(q) is not None]
+                    ref_probs = reference(probs, c, ref, members)
+                    shared = [q for q in sub if probs[c].get(q) is not None and ref_probs.get(q) is not None]
                     row = {"cut": cut, "group": group, "council": c, "versus": ref, "n": len(shared)}
                     if len(shared) >= MIN_GROUP:
-                        res = paired_brier_diff(probs[c], probs[ref], sub, n_boot)
+                        res = paired_brier_diff(probs[c], ref_probs, sub, n_boot, strata=strata)
                         row.update({k: res[k] for k in ("mean_diff", "ci_low", "ci_high")})
                         row["verdict"] = ("council better" if res["ci_high"] < 0 else
                                           "council worse" if res["ci_low"] > 0 else "no clear difference")
@@ -137,7 +140,7 @@ def run(args) -> None:
     add_baselines(probs, outcomes, members=members)
     add_reference_baselines(probs, outcomes)
     cuts = question_groups(args.questions, outcomes, market, args.forecasts)
-    scores, paired = tables(probs, outcomes, cuts, args.bootstrap)
+    scores, paired = tables(probs, outcomes, cuts, args.bootstrap, load_sources(args.questions), members)
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     write_csv(out / "robustness.csv", scores)

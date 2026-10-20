@@ -38,7 +38,7 @@ def score_run(questions: Path, forecasts: List[Path], n_boot: int):
         qs = [q for q in outcomes if ps.get(q) is not None]
         if qs:
             briers[s] = mean_brier([ps[q] for q in qs], [outcomes[q] for q in qs])
-    comps = {(r["council"], r["versus"]): r["mean_diff"] for r in comparison_table(probs, outcomes, n_boot)}
+    comps = {(r["council"], r["versus"]): r["mean_diff"] for r in comparison_table(probs, outcomes, n_boot, members=members)}
     return briers, comps
 
 

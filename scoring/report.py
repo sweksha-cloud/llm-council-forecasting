@@ -139,7 +139,10 @@ def load(question_files, forecast_files, which_set="all", prompt_id=None, id_pre
             forecast_price[qid] = price
 
     # Market baseline: price at forecast time if recorded, else the price recorded with the question
-    market = {qid: forecast_price.get(qid, collected_price.get(qid)) for qid in outcomes}
+    # Live: the price when the forecast was made (lock time). Backtests: the price in questions.csv,
+    # which is what the models were asked against; a row made before a reprice can't override it.
+    market = {qid: forecast_price.get(qid, collected_price.get(qid)) if scored[qid].get("set") == "live"
+              else collected_price.get(qid) for qid in outcomes}
     if any(p is not None for p in market.values()):
         probs["market"] = market
     return outcomes, dict(probs), members, market
@@ -370,19 +373,66 @@ def paired_brier_diff(a: Dict[str, Optional[float]], b: Dict[str, Optional[float
             "ci_low": round(boots[int(0.025 * n_boot)], 4), "ci_high": round(boots[int(0.975 * n_boot) - 1], 4)}
 
 
+POOLS = {"baseline:mean": mean_pool, "baseline:logit_pool": logit_pool}
+
+
+def reference(probs: Probs, council: str, ref: str,
+              members: Optional[Dict[Tuple[str, str], List[str]]] = None) -> Dict[str, Optional[float]]:
+    """What `council` is compared against. A pool is rebuilt on each question from exactly the members
+    that council saw there (its `members` column), so a member whose call failed at council time and
+    was retried later isn't in that council's pool. Other references are used as they are."""
+    if ref not in POOLS or not members:
+        return probs[ref]
+    out: Dict[str, Optional[float]] = {}
+    for q in probs[council]:
+        ms = members.get((council, q))
+        if not ms:
+            out[q] = probs[ref].get(q)
+            continue
+        ps = [probs.get(f"single:{m}", {}).get(q) for m in ms]
+        ps = [p for p in ps if p is not None]
+        out[q] = POOLS[ref](ps) if len(ps) >= 2 else None
+    return out
+
+
+def verdict(res: Dict, min_n: int = MIN_N) -> Dict:
+    """Interval and verdict for a paired comparison; below min_n shared questions, the mean only."""
+    if res["n"] < min_n:
+        return {"n": res["n"], "mean_diff": res["mean_diff"], "verdict": f"too few (< {min_n})"}
+    return {**res, "verdict": ("council better" if res["ci_high"] < 0 else
+                               "council worse" if res["ci_low"] > 0 else "no clear difference")}
+
+
 def comparison_table(probs: Probs, outcomes: Dict[str, int], n_boot: int,
-                     strata: Optional[Dict[str, str]] = None) -> List[Dict]:
+                     strata: Optional[Dict[str, str]] = None,
+                     members: Optional[Dict[Tuple[str, str], List[str]]] = None, min_n: int = MIN_N) -> List[Dict]:
     councils = [s for s in probs if s.startswith("council:")]
     refs = [r for r in ("market", "baseline:best_single", "baseline:mean", "baseline:logit_pool",
                         "baseline:always_no") if r in probs]
     rows = []
     for c in councils:
         for r in refs:
-            res = paired_brier_diff(probs[c], probs[r], outcomes, n_boot, strata=strata)
+            res = paired_brier_diff(probs[c], reference(probs, c, r, members), outcomes, n_boot, strata=strata)
             if res:
-                verdict = ("council better" if res["ci_high"] < 0 else
-                           "council worse" if res["ci_low"] > 0 else "no clear difference")
-                rows.append({"council": c, "versus": r, **res, "verdict": verdict})
+                rows.append({"council": c, "versus": r, **verdict(res, min_n)})
+    return rows
+
+
+def by_source_table(probs: Probs, outcomes: Dict[str, int], strata: Dict[str, str], n_boot: int,
+                    members: Optional[Dict[Tuple[str, str], List[str]]] = None, a: float = 2.0) -> List[Dict]:
+    """comparison_table inside each source, with the baselines rebuilt there, so "best member" is
+    each source's own best rather than the pooled one."""
+    sources = sorted({strata.get(q, "") for q in outcomes})
+    if len(sources) < 2:
+        return []
+    rows = []
+    for src in sources:
+        sub = {q: y for q, y in outcomes.items() if strata.get(q, "") == src}
+        sub_probs = {s: {q: p for q, p in ps.items() if q in sub}
+                     for s, ps in probs.items() if not s.startswith("baseline:")}
+        add_baselines(sub_probs, sub, a, members=members)
+        add_reference_baselines(sub_probs, sub)
+        rows += [{"source": src, **r} for r in comparison_table(sub_probs, sub, n_boot, members=members)]
     return rows
 
 
@@ -510,11 +560,8 @@ def run(args) -> None:
     scores = score_table(probs, outcomes, args.bins, args.bootstrap, strata=strata)
     truth = ground_truth_table(probs, outcomes)
     judged = judge_table(probs, load_judge_scores(args.forecasts, outcomes, args.prompt_id), outcomes)
-    comps = comparison_table(probs, outcomes, args.bootstrap, strata=strata)
-    sources = sorted({strata.get(q, "") for q in outcomes})
-    by_source = [] if len(sources) < 2 else [
-        {"source": src, **row} for src in sources
-        for row in comparison_table(probs, {q: y for q, y in outcomes.items() if strata.get(q, "") == src}, args.bootstrap)]
+    comps = comparison_table(probs, outcomes, args.bootstrap, strata=strata, members=members)
+    by_source = by_source_table(probs, outcomes, strata, args.bootstrap, members, args.extremize_a)
     decomp, bins = calibration_tables(probs, outcomes, args.bins)
     disagree = disagreement_table(probs, members, outcomes)
     contam = split_table(probs, outcomes, load_resolution_dates(args.questions, outcomes),

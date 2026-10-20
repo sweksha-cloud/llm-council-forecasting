@@ -29,7 +29,7 @@ from typing import Dict, List, Optional
 
 from scoring.proper import mean_brier
 from scoring.report import (ROOT, add_baselines, load, load_sources, md_table, paired_brier_diff,
-                            spearman, write_csv)
+                            reference, spearman, write_csv)
 
 VARIANTS = ("numbers-only", "reasoning-only")
 POOLS = ("baseline:mean", "baseline:logit_pool")
@@ -46,7 +46,7 @@ def _verdict(res: Dict) -> str:
     return ("first better" if res["ci_high"] < 0 else "first worse" if res["ci_low"] > 0 else "no clear difference")
 
 
-def view_table(probs, outcomes, strata, n_boot) -> List[Dict]:
+def view_table(probs, outcomes, strata, n_boot, members=None) -> List[Dict]:
     councils = sorted(s for s in probs if s.startswith("council:"))
     full = {view_and_chair(s)[1]: s for s in councils if view_and_chair(s)[0] == "full"}
     pairs = []
@@ -60,7 +60,7 @@ def view_table(probs, outcomes, strata, n_boot) -> List[Dict]:
     rows = []
     for a, b in pairs:
         for group, outs in groups:
-            res = paired_brier_diff(probs[a], probs[b], outs, n_boot, strata=strata)
+            res = paired_brier_diff(probs[a], reference(probs, a, b, members), outs, n_boot, strata=strata)
             if res:
                 rows.append({"setup": a, "versus": b, "source": group, **res, "verdict": _verdict(res)})
     return rows
@@ -115,7 +115,7 @@ def run(questions: List[str], forecasts: List[str], sets: List[str], n_boot: int
         return None
     add_baselines(probs, outcomes, members=members)
     strata = load_sources(questions)
-    return view_table(probs, outcomes, strata, n_boot), chair_table(probs, outcomes, strata, n_boot), \
+    return view_table(probs, outcomes, strata, n_boot, members), chair_table(probs, outcomes, strata, n_boot), \
         shift_table(probs, outcomes)
 
 
