@@ -1,6 +1,6 @@
 # llm-council-forecasting
 
-**Does an LLM council forecast better than simply averaging its members?**
+**Does an LLM council forecast better than a simple average of its members?**
 
 CS180 Individual Studies, San Jose State University, Fall 2026: Sweksha Shaw, advised by Prof. Bill Andreopoulos.
 
@@ -10,7 +10,7 @@ Every model, and the council, gives a **probability** that the event happens. Fo
 
 ## Research question
 
-> **Does a council of small LLMs that deliberates forecast better than simply averaging the same models' probabilities, and why?**
+> **Does a deliberating council of small LLMs forecast better than a simple average of its members' probabilities, and what explains the difference?**
 
 1. **Deliberation vs averaging (main):** each council against the mean and logit pools of exactly its own members, on 1,039 settled questions. Paired Brier differences with source-stratified bootstrap intervals; the power analysis gives the smallest difference we could detect (about 0.013 Brier vs the pool, [`docs/power.md`](docs/power.md)), so "no difference" is a result too.
 2. **Why (chair ablation):** the chair is re-run seeing only the members' numbers, only their reasoning, or with each member as chair, so reasoning can be separated from averaging (`forecast/rechair.py`).
