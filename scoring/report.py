@@ -565,7 +565,7 @@ def run(args) -> None:
     decomp, bins = calibration_tables(probs, outcomes, args.bins)
     disagree = disagreement_table(probs, members, outcomes)
     contam = split_table(probs, outcomes, load_resolution_dates(args.questions, outcomes),
-                         members_of_setups(probs, members), args.bootstrap)
+                         members_of_setups(probs, members), args.bootstrap, strata=strata)
     contam = contam if any(r["n_before"] for r in contam) else []
 
     out = Path(args.out)

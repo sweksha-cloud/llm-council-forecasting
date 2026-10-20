@@ -50,20 +50,37 @@ def setup_cutoff(setup: str, members: Sequence[str] = ()) -> Optional[Tuple[date
     return latest[0], f"latest member ({latest[1]})"
 
 
-def gap_interval(before: List[float], after: List[float], n_boot: int = 1000,
-                 seed: int = 0) -> Tuple[float, float]:
-    """95% bootstrap interval for mean(before) - mean(after) (two independent groups)."""
+def _draw(values: List[float], keys: List[str], rng: random.Random) -> List[float]:
+    """Resample with replacement within each stratum (source), keeping each stratum's size."""
+    groups: Dict[str, List[float]] = {}
+    for v, k in zip(values, keys):
+        groups.setdefault(k, []).append(v)
+    return [x for k in sorted(groups) for x in rng.choices(groups[k], k=len(groups[k]))]
+
+
+def gap_interval(before: List[float], after: List[float], n_boot: int = 1000, seed: int = 0,
+                 keys_before: Optional[List[str]] = None, keys_after: Optional[List[str]] = None) -> Tuple[float, float]:
+    """95% bootstrap interval for mean(before) - mean(after) (two independent groups), resampling
+    within source inside each group when keys are given."""
     rng = random.Random(seed)
-    boots = sorted(statistics.fmean(rng.choices(before, k=len(before)))
-                   - statistics.fmean(rng.choices(after, k=len(after))) for _ in range(n_boot))
+    kb, ka = keys_before or [""] * len(before), keys_after or [""] * len(after)
+    boots = sorted(statistics.fmean(_draw(before, kb, rng)) - statistics.fmean(_draw(after, ka, rng))
+                   for _ in range(n_boot))
     return boots[int(0.025 * n_boot)], boots[int(0.975 * n_boot) - 1]
 
 
 def split_table(probs: Dict[str, Dict[str, Optional[float]]], outcomes: Dict[str, int],
                 resolved_on: Dict[str, date], members_of: Dict[str, List[str]],
-                n_boot: int = 1000) -> List[Dict]:
+                n_boot: int = 1000, strata: Optional[Dict[str, str]] = None) -> List[Dict]:
     """One row per setup with a known cutoff: scores on questions resolved before vs after it.
-    `members_of` maps council/baseline setups to the model tags they're built from."""
+    `members_of` maps council/baseline setups to the model tags they're built from; `strata`
+    (question -> source) makes every interval resample within source.
+
+    excess_gap is computed per question on the questions with a market price: the mean of
+    Brier(setup) - Brier(market) before the cutoff minus the same after it, so the model and the
+    market are compared on exactly the same questions. Negative = the setup gains more on old
+    questions than the market does."""
+    keys = lambda qs: [(strata or {}).get(q, "") for q in qs]
     market = probs.get("market", {})
     rows = []
     for setup in probs:
@@ -90,9 +107,14 @@ def split_table(probs: Dict[str, Dict[str, Optional[float]]], outcomes: Dict[str
             b = [brier(probs[setup][q], outcomes[q]) for q in before]
             a = [brier(probs[setup][q], outcomes[q]) for q in after]
             row["gap"] = round(statistics.fmean(b) - statistics.fmean(a), 4)
-            lo, hi = gap_interval(b, a, n_boot)
+            lo, hi = gap_interval(b, a, n_boot, keys_before=keys(before), keys_after=keys(after))
             row["gap_ci_low"], row["gap_ci_high"] = round(lo, 4), round(hi, 4)
-            if "market_brier_before" in row and "market_brier_after" in row:
-                row["excess_gap"] = round(row["gap"] - (row["market_brier_before"] - row["market_brier_after"]), 4)
+        pb, pa = ([q for q in qs if market.get(q) is not None] for qs in (before, after))
+        if len(pb) >= 2 and len(pa) >= 2:
+            d = lambda qs: [brier(probs[setup][q], outcomes[q]) - brier(market[q], outcomes[q]) for q in qs]
+            db, da = d(pb), d(pa)
+            row["excess_gap"] = round(statistics.fmean(db) - statistics.fmean(da), 4)
+            lo, hi = gap_interval(db, da, n_boot, keys_before=keys(pb), keys_after=keys(pa))
+            row["excess_ci_low"], row["excess_ci_high"] = round(lo, 4), round(hi, 4)
         rows.append(row)
     return rows
