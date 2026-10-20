@@ -1,0 +1,11 @@
+council,versus,n,mean_diff,ci_low,ci_high,verdict
+council:chair=llama3.1:8b,market,37,0.2141,0.1395,0.2881,council worse
+council:chair=llama3.1:8b,baseline:best_single,37,0.031,-0.0105,0.0817,no clear difference
+council:chair=llama3.1:8b,baseline:mean,37,0.0127,-0.0123,0.0391,no clear difference
+council:chair=llama3.1:8b,baseline:logit_pool,37,-0.0011,-0.0377,0.0353,no clear difference
+council:chair=llama3.1:8b,baseline:always_no,37,-0.0567,-0.2404,0.1073,no clear difference
+council:chair=qwen3:8b,market,37,0.215,0.1374,0.2931,council worse
+council:chair=qwen3:8b,baseline:best_single,37,0.0319,-0.0115,0.0812,no clear difference
+council:chair=qwen3:8b,baseline:mean,37,0.0136,-0.0093,0.0382,no clear difference
+council:chair=qwen3:8b,baseline:logit_pool,37,-0.0002,-0.033,0.0316,no clear difference
+council:chair=qwen3:8b,baseline:always_no,37,-0.0558,-0.2365,0.1134,no clear difference

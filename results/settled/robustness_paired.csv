@@ -1,0 +1,121 @@
+cut,group,council,versus,n,mean_diff,ci_low,ci_high,verdict
+source,kalshi,council:chair=llama3.1:8b,baseline:mean,200,0.0,-0.0084,0.0089,no clear difference
+source,kalshi,council:chair=llama3.1:8b,baseline:logit_pool,200,-0.0092,-0.0235,0.0055,no clear difference
+source,kalshi,council:chair=llama3.1:8b,baseline:best_single,200,-0.0155,-0.0376,0.0043,no clear difference
+source,kalshi,council:chair=llama3.1:8b,market,200,0.1209,0.0871,0.1568,council worse
+source,kalshi,council:chair=llama3.1:8b,baseline:always_no,200,-0.1942,-0.2589,-0.1269,council better
+source,kalshi,council:chair=qwen3:8b,baseline:mean,200,0.0103,-0.0009,0.0225,no clear difference
+source,kalshi,council:chair=qwen3:8b,baseline:logit_pool,200,0.001,-0.0095,0.0121,no clear difference
+source,kalshi,council:chair=qwen3:8b,baseline:best_single,200,-0.0053,-0.0316,0.0192,no clear difference
+source,kalshi,council:chair=qwen3:8b,market,200,0.1312,0.0936,0.1711,council worse
+source,kalshi,council:chair=qwen3:8b,baseline:always_no,200,-0.1839,-0.2469,-0.1183,council better
+source,polymarket,council:chair=llama3.1:8b,baseline:mean,159,0.0049,-0.0027,0.0135,no clear difference
+source,polymarket,council:chair=llama3.1:8b,baseline:logit_pool,159,-0.0008,-0.015,0.0129,no clear difference
+source,polymarket,council:chair=llama3.1:8b,baseline:best_single,159,0.0107,-0.0109,0.0325,no clear difference
+source,polymarket,council:chair=llama3.1:8b,market,159,0.0949,0.0554,0.1328,council worse
+source,polymarket,council:chair=llama3.1:8b,baseline:always_no,159,-0.2478,-0.3242,-0.1692,council better
+source,polymarket,council:chair=qwen3:8b,baseline:mean,159,0.0107,0.003,0.0208,council worse
+source,polymarket,council:chair=qwen3:8b,baseline:logit_pool,159,0.005,-0.0065,0.0148,no clear difference
+source,polymarket,council:chair=qwen3:8b,baseline:best_single,159,0.0165,-0.0069,0.0416,no clear difference
+source,polymarket,council:chair=qwen3:8b,market,159,0.1007,0.0605,0.1428,council worse
+source,polymarket,council:chair=qwen3:8b,baseline:always_no,159,-0.2419,-0.318,-0.1673,council better
+topic,Elections,council:chair=llama3.1:8b,baseline:mean,72,0.0063,-0.0051,0.0183,no clear difference
+topic,Elections,council:chair=llama3.1:8b,baseline:logit_pool,72,-0.0014,-0.0243,0.0199,no clear difference
+topic,Elections,council:chair=llama3.1:8b,baseline:best_single,72,-0.0225,-0.0578,0.0103,no clear difference
+topic,Elections,council:chair=llama3.1:8b,market,72,0.1318,0.0538,0.1964,council worse
+topic,Elections,council:chair=llama3.1:8b,baseline:always_no,72,-0.1151,-0.2167,-0.0163,council better
+topic,Elections,council:chair=qwen3:8b,baseline:mean,72,0.017,0.0012,0.0341,council worse
+topic,Elections,council:chair=qwen3:8b,baseline:logit_pool,72,0.0092,-0.0072,0.0271,no clear difference
+topic,Elections,council:chair=qwen3:8b,baseline:best_single,72,-0.0119,-0.056,0.0287,no clear difference
+topic,Elections,council:chair=qwen3:8b,market,72,0.1424,0.0665,0.2093,council worse
+topic,Elections,council:chair=qwen3:8b,baseline:always_no,72,-0.1045,-0.2029,-0.0088,council better
+topic,Other,council:chair=llama3.1:8b,baseline:mean,73,0.012,-0.003,0.0275,no clear difference
+topic,Other,council:chair=llama3.1:8b,baseline:logit_pool,73,0.0048,-0.0174,0.0269,no clear difference
+topic,Other,council:chair=llama3.1:8b,baseline:best_single,73,0.0253,-0.0134,0.0604,no clear difference
+topic,Other,council:chair=llama3.1:8b,market,73,0.1202,0.0503,0.1909,council worse
+topic,Other,council:chair=llama3.1:8b,baseline:always_no,73,-0.0969,-0.2054,0.0184,no clear difference
+topic,Other,council:chair=qwen3:8b,baseline:mean,73,0.0157,-0.0028,0.0341,no clear difference
+topic,Other,council:chair=qwen3:8b,baseline:logit_pool,73,0.0085,-0.0167,0.0305,no clear difference
+topic,Other,council:chair=qwen3:8b,baseline:best_single,73,0.029,-0.0166,0.0713,no clear difference
+topic,Other,council:chair=qwen3:8b,market,73,0.1239,0.0488,0.2012,council worse
+topic,Other,council:chair=qwen3:8b,baseline:always_no,73,-0.0932,-0.2043,0.0156,no clear difference
+topic,Politics,council:chair=llama3.1:8b,baseline:mean,66,0.0016,-0.0167,0.0208,no clear difference
+topic,Politics,council:chair=llama3.1:8b,baseline:logit_pool,66,-0.0078,-0.04,0.0195,no clear difference
+topic,Politics,council:chair=llama3.1:8b,baseline:best_single,66,-0.0065,-0.0494,0.0311,no clear difference
+topic,Politics,council:chair=llama3.1:8b,market,66,0.1621,0.0918,0.2281,council worse
+topic,Politics,council:chair=llama3.1:8b,baseline:always_no,66,-0.1207,-0.221,-0.02,council better
+topic,Politics,council:chair=qwen3:8b,baseline:mean,66,0.0134,-0.0035,0.0343,no clear difference
+topic,Politics,council:chair=qwen3:8b,baseline:logit_pool,66,0.004,-0.0088,0.0174,no clear difference
+topic,Politics,council:chair=qwen3:8b,baseline:best_single,66,0.0053,-0.0415,0.0489,no clear difference
+topic,Politics,council:chair=qwen3:8b,market,66,0.1739,0.0971,0.2488,council worse
+topic,Politics,council:chair=qwen3:8b,baseline:always_no,66,-0.1089,-0.2048,-0.0135,council better
+topic,Sports,council:chair=llama3.1:8b,baseline:mean,148,-0.0044,-0.0119,0.0029,no clear difference
+topic,Sports,council:chair=llama3.1:8b,baseline:logit_pool,148,-0.0116,-0.0271,0.0014,no clear difference
+topic,Sports,council:chair=llama3.1:8b,baseline:best_single,148,-0.0082,-0.0258,0.0085,no clear difference
+topic,Sports,council:chair=llama3.1:8b,market,148,0.0696,0.0443,0.0973,council worse
+topic,Sports,council:chair=llama3.1:8b,baseline:always_no,148,-0.371,-0.4465,-0.2921,council better
+topic,Sports,council:chair=qwen3:8b,baseline:mean,148,0.0035,-0.0048,0.0138,no clear difference
+topic,Sports,council:chair=qwen3:8b,baseline:logit_pool,148,-0.0037,-0.0158,0.0055,no clear difference
+topic,Sports,council:chair=qwen3:8b,baseline:best_single,148,-0.0003,-0.0204,0.0195,no clear difference
+topic,Sports,council:chair=qwen3:8b,market,148,0.0775,0.0477,0.1091,council worse
+topic,Sports,council:chair=qwen3:8b,baseline:always_no,148,-0.3631,-0.4391,-0.2873,council better
+horizon,8-30 days,council:chair=llama3.1:8b,baseline:mean,130,0.0067,-0.0029,0.0175,no clear difference
+horizon,8-30 days,council:chair=llama3.1:8b,baseline:logit_pool,130,-0.0,-0.019,0.0158,no clear difference
+horizon,8-30 days,council:chair=llama3.1:8b,baseline:best_single,130,0.0114,-0.0152,0.0366,no clear difference
+horizon,8-30 days,council:chair=llama3.1:8b,market,130,0.1027,0.0578,0.1478,council worse
+horizon,8-30 days,council:chair=llama3.1:8b,baseline:always_no,130,-0.256,-0.3441,-0.1695,council better
+horizon,8-30 days,council:chair=qwen3:8b,baseline:mean,130,0.0116,0.0023,0.0226,council worse
+horizon,8-30 days,council:chair=qwen3:8b,baseline:logit_pool,130,0.0048,-0.0086,0.0159,no clear difference
+horizon,8-30 days,council:chair=qwen3:8b,baseline:best_single,130,0.0162,-0.0119,0.0443,no clear difference
+horizon,8-30 days,council:chair=qwen3:8b,market,130,0.1076,0.0624,0.1548,council worse
+horizon,8-30 days,council:chair=qwen3:8b,baseline:always_no,130,-0.2512,-0.3381,-0.1677,council better
+horizon,<=7 days,council:chair=llama3.1:8b,baseline:mean,228,-0.0006,-0.0091,0.0073,no clear difference
+horizon,<=7 days,council:chair=llama3.1:8b,baseline:logit_pool,228,-0.0089,-0.0229,0.0041,no clear difference
+horizon,<=7 days,council:chair=llama3.1:8b,baseline:best_single,228,-0.0133,-0.0335,0.0042,no clear difference
+horizon,<=7 days,council:chair=llama3.1:8b,market,228,0.1128,0.0809,0.1476,council worse
+horizon,<=7 days,council:chair=llama3.1:8b,baseline:always_no,228,-0.198,-0.2603,-0.1365,council better
+horizon,<=7 days,council:chair=qwen3:8b,baseline:mean,228,0.0099,0.0007,0.0207,council worse
+horizon,<=7 days,council:chair=qwen3:8b,baseline:logit_pool,228,0.0016,-0.0081,0.0119,no clear difference
+horizon,<=7 days,council:chair=qwen3:8b,baseline:best_single,228,-0.0028,-0.0263,0.0191,no clear difference
+horizon,<=7 days,council:chair=qwen3:8b,market,228,0.1233,0.0879,0.1616,council worse
+horizon,<=7 days,council:chair=qwen3:8b,baseline:always_no,228,-0.1875,-0.2482,-0.1296,council better
+horizon,>30 days,council:chair=llama3.1:8b,baseline:mean,1,,,,too few (< 30)
+horizon,>30 days,council:chair=llama3.1:8b,baseline:logit_pool,1,,,,too few (< 30)
+horizon,>30 days,council:chair=llama3.1:8b,baseline:best_single,1,,,,too few (< 30)
+horizon,>30 days,council:chair=llama3.1:8b,market,1,,,,too few (< 30)
+horizon,>30 days,council:chair=llama3.1:8b,baseline:always_no,1,,,,too few (< 30)
+horizon,>30 days,council:chair=qwen3:8b,baseline:mean,1,,,,too few (< 30)
+horizon,>30 days,council:chair=qwen3:8b,baseline:logit_pool,1,,,,too few (< 30)
+horizon,>30 days,council:chair=qwen3:8b,baseline:best_single,1,,,,too few (< 30)
+horizon,>30 days,council:chair=qwen3:8b,market,1,,,,too few (< 30)
+horizon,>30 days,council:chair=qwen3:8b,baseline:always_no,1,,,,too few (< 30)
+extremity,leaning,council:chair=llama3.1:8b,baseline:mean,91,-0.0004,-0.0168,0.015,no clear difference
+extremity,leaning,council:chair=llama3.1:8b,baseline:logit_pool,91,-0.0109,-0.0397,0.0133,no clear difference
+extremity,leaning,council:chair=llama3.1:8b,baseline:best_single,91,-0.0086,-0.0461,0.0235,no clear difference
+extremity,leaning,council:chair=llama3.1:8b,market,91,0.1429,0.083,0.2045,council worse
+extremity,leaning,council:chair=llama3.1:8b,baseline:always_no,91,-0.2102,-0.3127,-0.1123,council better
+extremity,leaning,council:chair=qwen3:8b,baseline:mean,91,0.0166,0.0002,0.0343,council worse
+extremity,leaning,council:chair=qwen3:8b,baseline:logit_pool,91,0.0061,-0.0067,0.0179,no clear difference
+extremity,leaning,council:chair=qwen3:8b,baseline:best_single,91,0.0083,-0.0287,0.0445,no clear difference
+extremity,leaning,council:chair=qwen3:8b,market,91,0.1598,0.0932,0.2309,council worse
+extremity,leaning,council:chair=qwen3:8b,baseline:always_no,91,-0.1933,-0.2916,-0.0998,council better
+extremity,near-certain,council:chair=llama3.1:8b,baseline:mean,105,0.0119,0.002,0.0221,council worse
+extremity,near-certain,council:chair=llama3.1:8b,baseline:logit_pool,105,0.007,-0.0123,0.024,no clear difference
+extremity,near-certain,council:chair=llama3.1:8b,baseline:best_single,105,-0.0115,-0.0447,0.0193,no clear difference
+extremity,near-certain,council:chair=llama3.1:8b,market,105,0.1796,0.1285,0.2296,council worse
+extremity,near-certain,council:chair=llama3.1:8b,baseline:always_no,105,-0.0313,-0.1098,0.0442,no clear difference
+extremity,near-certain,council:chair=qwen3:8b,baseline:mean,105,0.0109,-0.0016,0.0252,no clear difference
+extremity,near-certain,council:chair=qwen3:8b,baseline:logit_pool,105,0.006,-0.0103,0.0205,no clear difference
+extremity,near-certain,council:chair=qwen3:8b,baseline:best_single,105,-0.0125,-0.051,0.0227,no clear difference
+extremity,near-certain,council:chair=qwen3:8b,market,105,0.1786,0.127,0.2297,council worse
+extremity,near-certain,council:chair=qwen3:8b,baseline:always_no,105,-0.0323,-0.1086,0.0454,no clear difference
+extremity,uncertain,council:chair=llama3.1:8b,baseline:mean,163,-0.0026,-0.0104,0.0054,no clear difference
+extremity,uncertain,council:chair=llama3.1:8b,baseline:logit_pool,163,-0.0106,-0.0239,0.002,no clear difference
+extremity,uncertain,council:chair=llama3.1:8b,baseline:best_single,163,0.0036,-0.0151,0.0225,no clear difference
+extremity,uncertain,council:chair=llama3.1:8b,market,163,0.0455,0.0146,0.0785,council worse
+extremity,uncertain,council:chair=llama3.1:8b,baseline:always_no,163,-0.3424,-0.4256,-0.2588,council better
+extremity,uncertain,council:chair=qwen3:8b,baseline:mean,163,0.0068,-0.0026,0.0169,no clear difference
+extremity,uncertain,council:chair=qwen3:8b,baseline:logit_pool,163,-0.0011,-0.0145,0.0111,no clear difference
+extremity,uncertain,council:chair=qwen3:8b,baseline:best_single,163,0.013,-0.0081,0.0357,no clear difference
+extremity,uncertain,council:chair=qwen3:8b,market,163,0.0549,0.0207,0.0917,council worse
+extremity,uncertain,council:chair=qwen3:8b,baseline:always_no,163,-0.333,-0.412,-0.2525,council better

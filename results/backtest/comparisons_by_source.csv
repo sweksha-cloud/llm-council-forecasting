@@ -1,0 +1,21 @@
+source,council,versus,n,mean_diff,ci_low,ci_high,verdict
+kalshi,council:chair=llama3.1:8b,market,200,0.1209,0.0871,0.1568,council worse
+kalshi,council:chair=llama3.1:8b,baseline:best_single,200,-0.0085,-0.0308,0.0149,no clear difference
+kalshi,council:chair=llama3.1:8b,baseline:mean,200,0.0,-0.0084,0.0089,no clear difference
+kalshi,council:chair=llama3.1:8b,baseline:logit_pool,200,-0.0092,-0.0235,0.0055,no clear difference
+kalshi,council:chair=llama3.1:8b,baseline:always_no,200,-0.1942,-0.2589,-0.1269,council better
+kalshi,council:chair=qwen3:8b,market,200,0.1312,0.0936,0.1711,council worse
+kalshi,council:chair=qwen3:8b,baseline:best_single,200,0.0017,-0.0232,0.0274,no clear difference
+kalshi,council:chair=qwen3:8b,baseline:mean,200,0.0103,-0.0009,0.0225,no clear difference
+kalshi,council:chair=qwen3:8b,baseline:logit_pool,200,0.001,-0.0095,0.0121,no clear difference
+kalshi,council:chair=qwen3:8b,baseline:always_no,200,-0.1839,-0.2469,-0.1183,council better
+polymarket,council:chair=llama3.1:8b,market,985,0.0797,0.0657,0.0938,council worse
+polymarket,council:chair=llama3.1:8b,baseline:best_single,985,-0.0002,-0.0089,0.0084,no clear difference
+polymarket,council:chair=llama3.1:8b,baseline:mean,985,0.0049,0.0008,0.0089,council worse
+polymarket,council:chair=llama3.1:8b,baseline:logit_pool,985,-0.0034,-0.0097,0.0032,no clear difference
+polymarket,council:chair=llama3.1:8b,baseline:always_no,985,-0.1742,-0.2028,-0.1447,council better
+polymarket,council:chair=qwen3:8b,market,985,0.0867,0.0712,0.102,council worse
+polymarket,council:chair=qwen3:8b,baseline:best_single,985,0.0068,-0.0032,0.0167,no clear difference
+polymarket,council:chair=qwen3:8b,baseline:mean,985,0.0119,0.0071,0.017,council worse
+polymarket,council:chair=qwen3:8b,baseline:logit_pool,985,0.0036,-0.002,0.0089,no clear difference
+polymarket,council:chair=qwen3:8b,baseline:always_no,985,-0.1673,-0.1963,-0.1382,council better
