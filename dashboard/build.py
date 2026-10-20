@@ -164,7 +164,7 @@ def analyses(ds: Dict, n_boot: int = 1000) -> Dict[str, List[Dict]]:
     """The pre-registered tables for one dataset, from scoring/ and analysis/ (the same code as results/)."""
     from analysis import recalibration, robustness, variance
     from scoring.contamination import split_table
-    from scoring.report import (add_baselines, add_reference_baselines, comparison_table, load,
+    from scoring.report import (add_baselines, add_reference_baselines, by_source_table, comparison_table, load,
                                 load_resolution_dates, load_sources, members_of_setups)
     qfiles, ffiles = [str(REPO / ds["questions"])], [str(REPO / ds["forecasts"])]
     outcomes, probs, members, market = load(qfiles, ffiles, ds["set"] or "all", None, ds["prefix"])
@@ -174,13 +174,12 @@ def analyses(ds: Dict, n_boot: int = 1000) -> Dict[str, List[Dict]]:
     add_baselines(probs, outcomes, members=members)
     add_reference_baselines(probs, outcomes)
     strata = load_sources(qfiles)
-    out["comparisons"] = _ordered(comparison_table(probs, outcomes, n_boot, strata=strata))
-    sources = sorted({strata.get(q, "") for q in outcomes})
-    if len(sources) > 1:
-        out["by_source"] = _ordered([{"source": src, **r} for src in sources for r in comparison_table(
-            probs, {q: y for q, y in outcomes.items() if strata.get(q, "") == src}, n_boot)])
+    out["comparisons"] = _ordered(comparison_table(probs, outcomes, n_boot, strata=strata, members=members))
+    by_source = by_source_table(probs, outcomes, strata, n_boot, members)
+    if by_source:
+        out["by_source"] = _ordered(by_source)
     cuts = robustness.question_groups(qfiles, outcomes, market, ffiles)
-    out["robustness"] = _ordered(robustness.tables(probs, outcomes, cuts, n_boot)[1])
+    out["robustness"] = _ordered(robustness.tables(probs, outcomes, cuts, n_boot, strata, members)[1])
     out["recalibration"] = recalibration.table(probs, outcomes, n_boot)
     if ds["key"] in ("settled-all", "contamination"):
         b_out, b_probs, b_members, _ = load(qfiles, ffiles, BACKTEST)
