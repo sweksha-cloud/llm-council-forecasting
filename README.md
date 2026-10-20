@@ -27,6 +27,7 @@ Supporting checks: calibration, memorisation (contamination split by knowledge c
 | Earlier work | 2,501 questions from the previous council study re-scored after fixing its scoring bugs |
 | Evaluation | Brier and log score, calibration, AUROC, ground-truth call metrics, paired source-stratified bootstrap, power analysis, pre-registration |
 | Data quality | 5 kinds of leakage found and fixed before scoring ([`docs/leakage.md`](docs/leakage.md)) |
+| Benchmark | 1,185 leak-checked resolved questions released for reuse ([`benchmark/`](benchmark/README.md)) |
 | Engineering | One-command reproduction (`make reproduce`), tests in CI, results dashboard and leaderboard |
 
 **Results dashboard:** `make dashboard` builds `dashboard/index.html` from the committed data. **Reproducing everything:** `make setup && make reproduce`; see [`docs/reproduce.md`](docs/reproduce.md).
