@@ -54,9 +54,7 @@ deepseek-r1:8b (the Qwen3-based build on spark) ignores `think=false` and reason
    ```
 4. Start the queue (order and estimates in the script): `tmux new -s queue "bash scripts/queue_spark.sh"`
    Check on it any time (read-only): `bash scripts/status_spark.sh` — progress per set and setup, failed calls, ETA.
-5. After it, the variance runs: `tmux new -s variance "bash scripts/queue_variance.sh"` (waits for the queue session to end).
-6. Then the chair ablations: `tmux new -s ablation "bash scripts/queue_ablation.sh"` (waits for both sessions to end; re-runs only the chair, writes `data/ablation/forecasts.csv`).
-7. Then debate, round 2: `tmux new -s debate "bash scripts/queue_debate.sh"` (waits for the ablation; writes `data/debate/forecasts.csv`).
+5. Then everything else in one session, most informative first: `tmux new -s followups "bash scripts/queue_followups.sh"` (waits for the queue session; runs the chair ablation on settled, debate, the ablation on settled-ext, then the variance seeds). The separate `queue_variance.sh`, `queue_ablation.sh` and `queue_debate.sh` still work on their own.
 
 ## Outcome updates
 
