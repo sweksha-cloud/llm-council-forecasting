@@ -13,7 +13,7 @@ Every model, and the council, gives a **probability** that the event happens. Fo
 > **Does a deliberating council of small LLMs forecast better than a simple average of its members' probabilities, and what explains the difference?**
 
 1. **Deliberation vs averaging (main):** each council against the mean and logit pools of exactly its own members, on 1,039 settled questions. Paired Brier differences with source-stratified bootstrap intervals; the power analysis gives the smallest difference we could detect (about 0.013 Brier vs the pool, [`docs/power.md`](docs/power.md)), so "no difference" is a result too.
-2. **Why (chair ablation):** the chair is re-run seeing only the members' numbers, only their reasoning, or with each member as chair, so reasoning can be separated from averaging (`forecast/rechair.py`).
+2. **Why (chair ablation):** the chair is re-run seeing only the members' numbers, only their reasoning, or with each member as chair, so reasoning can be separated from averaging (`forecast/rechair.py`), and each chair's effective weight on every member is fitted, including whether it favours its own model (`analysis/chair_weights.py`).
 3. **How far from the market:** every setup against the market price 7 days before close, and on the live set, which can't leak.
 
 Supporting checks: calibration, memorisation (contamination split by knowledge cutoff), robustness by source, topic, horizon and market certainty, and variance across seeds. Scope: open 8B models without retrieval; larger models and multi-round debate are next semester. The sample and every comparison were fixed before any results ([`docs/decisions.md`](docs/decisions.md), 2026-10-16 and 2026-10-20).
