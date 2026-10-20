@@ -18,6 +18,17 @@ Every model, and the council, gives a **probability** that the event happens. Fo
 
 Supporting checks: calibration, memorisation (contamination split by knowledge cutoff), robustness by source, topic, horizon and market certainty, and variance across seeds. Scope: open 8B models without retrieval; larger models and multi-round debate are next semester. The sample and every comparison were fixed before any results ([`docs/decisions.md`](docs/decisions.md), 2026-10-16 and 2026-10-20).
 
+## At a glance
+
+| | |
+|---|---|
+| Questions | 1,730 from Polymarket and Kalshi: 1,039 settled (pre-registered sample), 146 for the contamination check, 545 live |
+| Forecasts | 5 open models (Llama 3.1 8B, Mistral 7B, Qwen 3 8B, Gemma 2 9B, Phi-3 Medium) alone and as councils with 2 chairs; 2,394 live forecasts locked before resolution |
+| Earlier work | 2,501 questions from the previous council study re-scored after fixing its scoring bugs |
+| Evaluation | Brier and log score, calibration, AUROC, ground-truth call metrics, paired source-stratified bootstrap, power analysis, pre-registration |
+| Data quality | 5 kinds of leakage found and fixed before scoring ([`docs/leakage.md`](docs/leakage.md)) |
+| Engineering | One-command reproduction (`make reproduce`), tests in CI, results dashboard and leaderboard |
+
 **Results dashboard:** `make dashboard` builds `dashboard/index.html` from the committed data. **Reproducing everything:** `make setup && make reproduce`; see [`docs/reproduce.md`](docs/reproduce.md).
 
 ## Building on earlier work
