@@ -15,7 +15,7 @@ The SJSU GPU server runs the models through Ollama. All analysis can run anywher
    ```
 2. **Copy the repo over from your laptop.** Spark gets no GitHub credentials; code goes up with rsync and results come back with scp, then get committed on the laptop:
    ```bash
-   rsync -az --exclude .venv --exclude logs --exclude data/forecasts.csv --exclude .git ./ <username>@100.110.180.56:llm-council-forecasting/
+   rsync -az --exclude .venv --exclude logs --exclude data/forecasts.csv --exclude data/ablation --exclude .git ./ <username>@100.110.180.56:llm-council-forecasting/
    ```
    The forecasting and collection code uses only the Python standard library, so no environment is needed on spark.
 
@@ -41,7 +41,7 @@ deepseek-r1:8b (the Qwen3-based build on spark) ignores `think=false` and reason
 
 1. From the laptop, on an up-to-date `main`, send the code and questions up (same rsync as above; it leaves spark's `data/forecasts.csv` alone):
    ```bash
-   rsync -az --exclude .venv --exclude logs --exclude data/forecasts.csv --exclude .git --exclude .notes --exclude .claude ./ <username>@100.110.180.56:llm-council-forecasting/
+   rsync -az --exclude .venv --exclude logs --exclude data/forecasts.csv --exclude data/ablation --exclude .git --exclude .notes --exclude .claude ./ <username>@100.110.180.56:llm-council-forecasting/
    ```
 2. On spark, refill live outcomes (rsync replaced spark's `questions.csv`, which the cron job keeps current) and check the code:
    ```bash
@@ -55,6 +55,7 @@ deepseek-r1:8b (the Qwen3-based build on spark) ignores `think=false` and reason
 4. Start the queue (order and estimates in the script): `tmux new -s queue "bash scripts/queue_spark.sh"`
    Check on it any time (read-only): `bash scripts/status_spark.sh` — progress per set and setup, failed calls, ETA.
 5. After it, the variance runs: `tmux new -s variance "bash scripts/queue_variance.sh"` (waits for the queue session to end).
+6. Then the chair ablations: `tmux new -s ablation "bash scripts/queue_ablation.sh"` (waits for both sessions to end; re-runs only the chair, writes `data/ablation/forecasts.csv`).
 
 ## Outcome updates
 
@@ -71,5 +72,5 @@ scp <username>@100.110.180.56:llm-council-forecasting/logs/cmds_spark.log logs/
 make postrun SPARK=data/tmp/spark_forecasts.csv     # check, merge, make results + dashboard
 git checkout -b data/settled-results && git add data/forecasts.csv data/questions.csv logs/cmds_spark.log results && git commit -m "..."
 ```
-`make postrun` checks the spark file first (every queued setup answered every eligible question, failed calls, abstention and malformed-reply rates, one prompt version, council members, market prices match `questions.csv`, no seed/temperature overrides in the log) and stops with a report, merging nothing, if anything is off. `python3 -m forecast.postrun data/tmp/spark_forecasts.csv --dry-run` only checks. Variance runs live in their own files: copy `data/variance/seed*.csv` back as they are.
+`make postrun` checks the spark file first (every queued setup answered every eligible question, failed calls, abstention and malformed-reply rates, one prompt version, council members, market prices match `questions.csv`, no seed/temperature overrides in the log) and stops with a report, merging nothing, if anything is off. `python3 -m forecast.postrun data/tmp/spark_forecasts.csv --dry-run` only checks. Variance runs live in their own files: copy `data/variance/seed*.csv` back as they are. So do the chair ablations: `scp …:llm-council-forecasting/data/ablation/forecasts.csv data/ablation/`, then `python3 -m analysis.ablation` (the rsync up excludes `data/ablation`, so spark's copy is never overwritten).
 Merge instead of overwriting: the laptop's `data/forecasts.csv` may hold rows spark's copy doesn't (e.g. from a run written to a separate file). The merge only appends rows it doesn't already have, so locked forecasts never change.

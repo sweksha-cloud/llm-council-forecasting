@@ -58,6 +58,7 @@ Live-set tables, once enough questions have resolved: `python3 -m scoring.report
 | `results/backtest/contamination.csv` | `scoring/contamination.py` | Brier and accuracy on questions resolved before vs after each model's cutoff, 95% bootstrap on the gap, and the market's gap on the same split as a difficulty control |
 | `results/*/disagreement.csv` | `scoring/report.py` | Spearman of member spread vs council error |
 | `results/variance/` | `analysis/variance.py` | The pre-registered comparisons on the fixed 200-question subset, per seed (temperature 0.7) next to the temperature-0 run |
+| `results/ablation/` | `analysis/ablation.py` | Chair ablations (numbers only, reasoning only, each member as chair) vs the full council and the pools of the same members, pooled and per source |
 | `dashboard/index.html` | `dashboard/build.py`, `dashboard/metrics.js` | Leaderboard, calibration and questions are recomputed in the page so filters work (`tests/test_dashboard.py` checks they match `scoring/report.py`). The pre-registered comparisons (pooled and per source), contamination split, robustness, recalibration and variance are computed by the same Python code as `results/` and embedded as tables. |
 
 Metric definitions are in the docstrings of `scoring/` and on the dashboard under "How it's scored". Choices that affect the numbers (grading rules, abstentions, baselines) are logged with their reasons in [`decisions.md`](decisions.md).
