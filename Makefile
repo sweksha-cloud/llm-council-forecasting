@@ -33,6 +33,8 @@ results:          ## all results tables (results/*/)
 	$(PY) -m analysis.recalibration --set settled settled-ext --out results/settled-all
 	$(PY) -m analysis.recalibration --set settled --out results/settled
 	$(PY) -m analysis.variance --out results/variance
+	$(PY) -m analysis.ablation --set settled settled-ext --out results/ablation
+	$(PY) -m analysis.ablation --set settled --out results/ablation/settled
 	$(PY) -m scoring.report --set contamination --out results/contamination
 	$(PY) -m scoring.report --set settled settled-ext contamination --out results/backtest   # includes the contamination split
 
