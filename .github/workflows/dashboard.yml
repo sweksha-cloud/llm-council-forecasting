@@ -1,4 +1,5 @@
-# Builds the results dashboard from the committed data and deploys it to GitHub Pages.
+# Builds the leaderboard (site/, at the root) and the full dashboard (at /dashboard/) from the
+# committed data and deploys them to GitHub Pages.
 # Pull requests: test + build only (the page is kept as a downloadable artifact).
 # Pushes to main: test + build + deploy. Needs Settings → Pages → Source: "GitHub Actions".
 name: Dashboard
@@ -30,9 +31,10 @@ jobs:
           node-version: "20"
       - run: pip install -r requirements.txt
       - run: python -m pytest -q
-      - name: Build dashboard
+      - name: Build leaderboard and dashboard
         run: |
-          python -m dashboard.build --out _site/index.html
+          python -m dashboard.build --out _site/dashboard/index.html
+          python site/build.py --out _site/index.html
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -65,6 +65,9 @@ def test_site_matches_report(tmp_path, spec):
     want = report_scores(spec)
     assert {"baseline:always_no"} < set(got), "no setups scored"
     for setup, g in got.items():
+        if setup not in want:   # forecast only on open questions so far: the report has no row for it
+            assert g["answered"] == 0, setup
+            continue
         w = want[setup]
         assert (g["answered"], g["total"]) == (w["answered"], w["questions"]), setup   # so coverage matches
         for js_key, py_key in METRICS:

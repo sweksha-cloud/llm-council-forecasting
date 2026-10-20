@@ -86,34 +86,12 @@ def seconds_per_question(forecasts: str, question_ids) -> Dict[str, float]:
     return {s: round(statistics.median(v), 1) for s, v in per_setup.items()}
 
 
-def unforecast_questions(spec: Dict, ds: Dict) -> List[Dict]:
-    """Resolved questions in the set that no setup forecast. build_dataset leaves them out, but
-    scoring/report.py counts them as abstentions for every setup (coverage, Brier with abstain = 0.5),
-    so the site puts them back as rows with no forecasts."""
-    have = {q["id"] for q in ds["questions"]}
-    sets = spec["set"] if spec["set"] is None or isinstance(spec["set"], list) else [spec["set"]]
-    out = []
-    with open(REPO / spec["questions"], newline="", encoding="utf-8") as f:
-        for q in csv.DictReader(f):
-            if (q["question_id"] in have or q.get("outcome") not in ("0", "1")
-                    or (sets is not None and q.get("set") not in sets)
-                    or (spec["prefix"] and not q["question_id"].startswith(spec["prefix"]))):
-                continue
-            try:
-                market = float(q.get("market_price"))
-            except (TypeError, ValueError):
-                market = None
-            out.append({"id": q["question_id"], "text": q["question_text"], "url": q.get("url", ""),
-                        "source": q.get("source", ""), "topic": q.get("topic") or "Uncategorized",
-                        "close": (q.get("resolution_date") or "")[:10], "y": int(q["outcome"]),
-                        "market": market, "f": [None] * len(ds["setups"])})
-    return out
+def has_forecasts(ds: Dict) -> bool:
+    return any(c for q in ds["questions"] for c in q["f"])
 
 
 def site_dataset(spec: Dict) -> Dict:
     ds = build_dataset(spec)
-    if ds["questions"]:
-        ds["questions"] = sorted(ds["questions"] + unforecast_questions(spec, ds), key=lambda r: (r["close"], r["id"]))
     ds["seconds"] = seconds_per_question(spec["forecasts"], {q["id"] for q in ds["questions"]})
     for s in ds["setups"]:
         s["params"] = params_b(s["id"])
@@ -126,7 +104,7 @@ def site_dataset(spec: Dict) -> Dict:
 
 def datasets() -> List[Dict]:
     # A set appears once it has forecasts, as on the dashboard.
-    return [d for d in (site_dataset(spec) for spec in DATASETS) if d["questions"]]
+    return [d for d in (site_dataset(spec) for spec in DATASETS) if has_forecasts(d)]
 
 
 def build(out: Path) -> Path:
