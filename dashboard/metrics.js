@@ -4,7 +4,18 @@
 
 const Metrics = (() => {
   const EPS = 1e-6;
-  const mean = (xs) => xs.reduce((a, b) => a + b, 0) / xs.length;
+  // Compensated (Neumaier) summation, like Python's math.fsum: the result doesn't depend on the order
+  // of the terms, so an average of exactly 0.5 stays 0.5 here as it does in scoring/ (statistics.fmean).
+  const fsum = (xs) => {
+    let s = 0, c = 0;
+    for (const x of xs) {
+      const t = s + x;
+      c += Math.abs(s) >= Math.abs(x) ? (s - t) + x : (x - t) + s;
+      s = t;
+    }
+    return s + c;
+  };
+  const mean = (xs) => fsum(xs) / xs.length;
 
   const brier = (p, y) => (p - y) ** 2;
   const logScore = (p, y) => {
