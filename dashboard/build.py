@@ -129,15 +129,15 @@ def build_dataset(ds: Dict) -> Dict:
     index = {s: i for i, s in enumerate(setups)}
     rows = []
     for qid, q in by_id.items():
-        if qid not in cells:
-            continue  # nothing was forecast for this question
         outcome = q.get("outcome")
+        if qid not in cells and outcome not in ("0", "1"):
+            continue  # open and never forecast; a resolved one stays, as an abstention for every setup (as in report.py)
         price = forecast_price.get(qid, _float(q.get("market_price")))
         rows.append({
             "id": qid, "text": q["question_text"], "url": q.get("url", ""), "source": q.get("source", ""),
             "topic": q.get("topic") or "Uncategorized", "close": (q.get("resolution_date") or "")[:10],
             "y": int(outcome) if outcome in ("0", "1") else None, "market": price,
-            "f": [cells[qid].get(s) for s in setups],
+            "f": [cells.get(qid, {}).get(s) for s in setups],
         })
     rows.sort(key=lambda r: (r["close"], r["id"]))
     return {"key": ds["key"], "label": ds["label"], "who": ds["who"], "note": ds["note"],
@@ -214,7 +214,7 @@ def build(out: Path, fragment: bool = False) -> Path:
     datasets = []
     for spec in DATASETS:
         d = build_dataset(spec)
-        if d["questions"]:
+        if any(c for q in d["questions"] for c in q["f"]):
             d["analyses"] = analyses(spec)
             datasets.append(d)
     data = {"datasets": datasets,
