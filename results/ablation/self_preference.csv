@@ -1,0 +1,3 @@
+chair,versus_chairs,n,own_weight_minus_others,ci_low,ci_high,verdict
+llama3.1:8b,qwen3:8b,1039,0.047,-0.121,0.175,no clear difference
+qwen3:8b,llama3.1:8b,1039,0.197,0.151,0.243,favours own model

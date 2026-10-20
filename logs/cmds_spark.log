@@ -10,3 +10,17 @@ phi3:medium                    cf611a26b048    7.9 GB    3 months ago
 gemma2:9b                      ff02c3702f32    5.4 GB    3 months ago          
 llama3.1:8b-instruct-q4_K_M    46e0c10c039e    4.9 GB    3 months ago          
 2026-10-12T21:09:27Z restarted without deepseek-r1:8b (ignores think=false, >800 tokens of reasoning per answer): python3 -u -m forecast.run_forecasts --set live --lock --no-think --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium --chairmen llama3.1:8b qwen3:8b
+2026-10-13T04:54:51Z python3 -u -m forecast.run_forecasts --set settled --no-think --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium --chairmen llama3.1:8b qwen3:8b
+2026-10-13T05:20:54Z top-up: python3 -u -m forecast.run_forecasts --set live --lock --no-think --out data/forecasts_topup.csv --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium --chairmen llama3.1:8b qwen3:8b
+2026-10-13T08:26:50Z queue: --set settled --no-think --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium --chairmen llama3.1:8b qwen3:8b
+2026-10-13T15:37:08Z queue: --set contamination --no-think --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium --chairmen llama3.1:8b qwen3:8b
+2026-10-13T18:59:00Z queue: --set settled --think-budget 1024 --models deepseek-r1:8b --chairmen
+2026-10-14T01:12:51Z queue: --set contamination --think-budget 1024 --models deepseek-r1:8b --chairmen
+2026-10-14T03:31:12Z queue finished
+2026-10-20T09:09:21Z queue: --set settled --no-think --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium --chairmen llama3.1:8b qwen3:8b
+2026-10-20T11:05:04Z queue: --set contamination --no-think --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium --chairmen llama3.1:8b qwen3:8b
+2026-10-20T12:43:27Z queue: --set settled-ext --no-think --models llama3.1:8b mistral:latest qwen3:8b gemma2:9b phi3:medium --chairmen llama3.1:8b qwen3:8b
+2026-10-20T21:42:09Z queue: --set settled --think-budget 1024 --models deepseek-r1:8b --chairmen
+2026-10-20T22:24:43Z queue: --set contamination --think-budget 1024 --models deepseek-r1:8b --chairmen
+2026-10-20T23:19:29Z queue finished
+2026-10-20T23:20:29Z followups: rechair --set settled

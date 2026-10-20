@@ -4,7 +4,158 @@ Each cut splits the 1039 scored questions into groups and re-scores inside each.
 
 ## Council vs references, by group
 
-_none_
+| cut | group | council | versus | n | mean_diff | ci_low | ci_high | verdict |
+|---|---|---|---|---|---|---|---|---|
+| source | kalshi | council:chair=llama3.1:8b | baseline:mean | 200 | 0.0 | -0.0084 | 0.0089 | no clear difference |
+| source | kalshi | council:chair=llama3.1:8b | baseline:logit_pool | 200 | -0.0092 | -0.0235 | 0.0055 | no clear difference |
+| source | kalshi | council:chair=llama3.1:8b | baseline:best_single | 200 | -0.0155 | -0.0376 | 0.0043 | no clear difference |
+| source | kalshi | council:chair=llama3.1:8b | market | 200 | 0.1209 | 0.0871 | 0.1568 | council worse |
+| source | kalshi | council:chair=llama3.1:8b | baseline:always_no | 200 | -0.1942 | -0.2589 | -0.1269 | council better |
+| source | kalshi | council:chair=qwen3:8b | baseline:mean | 200 | 0.0103 | -0.0009 | 0.0225 | no clear difference |
+| source | kalshi | council:chair=qwen3:8b | baseline:logit_pool | 200 | 0.001 | -0.0095 | 0.0121 | no clear difference |
+| source | kalshi | council:chair=qwen3:8b | baseline:best_single | 200 | -0.0053 | -0.0316 | 0.0192 | no clear difference |
+| source | kalshi | council:chair=qwen3:8b | market | 200 | 0.1312 | 0.0936 | 0.1711 | council worse |
+| source | kalshi | council:chair=qwen3:8b | baseline:always_no | 200 | -0.1839 | -0.2469 | -0.1183 | council better |
+| source | polymarket | council:chair=llama3.1:8b | baseline:mean | 839 | 0.0036 | -0.0002 | 0.0075 | no clear difference |
+| source | polymarket | council:chair=llama3.1:8b | baseline:logit_pool | 839 | -0.0052 | -0.0124 | 0.0021 | no clear difference |
+| source | polymarket | council:chair=llama3.1:8b | baseline:best_single | 839 | 0.0028 | -0.0071 | 0.012 | no clear difference |
+| source | polymarket | council:chair=llama3.1:8b | market | 839 | 0.0753 | 0.0587 | 0.0907 | council worse |
+| source | polymarket | council:chair=llama3.1:8b | baseline:always_no | 839 | -0.1789 | -0.2101 | -0.1492 | council better |
+| source | polymarket | council:chair=qwen3:8b | baseline:mean | 839 | 0.0117 | 0.0065 | 0.0176 | council worse |
+| source | polymarket | council:chair=qwen3:8b | baseline:logit_pool | 839 | 0.0029 | -0.003 | 0.0091 | no clear difference |
+| source | polymarket | council:chair=qwen3:8b | baseline:best_single | 839 | 0.011 | 0.0 | 0.0221 | no clear difference |
+| source | polymarket | council:chair=qwen3:8b | market | 839 | 0.0835 | 0.0652 | 0.1007 | council worse |
+| source | polymarket | council:chair=qwen3:8b | baseline:always_no | 839 | -0.1708 | -0.2014 | -0.1428 | council better |
+| topic | Culture | council:chair=llama3.1:8b | baseline:mean | 103 | 0.0342 | 0.0215 | 0.0464 | council worse |
+| topic | Culture | council:chair=llama3.1:8b | baseline:logit_pool | 103 | 0.0356 | 0.0189 | 0.0517 | council worse |
+| topic | Culture | council:chair=llama3.1:8b | baseline:best_single | 103 | 0.0684 | 0.0218 | 0.1117 | council worse |
+| topic | Culture | council:chair=llama3.1:8b | market | 103 | 0.1442 | 0.0783 | 0.2095 | council worse |
+| topic | Culture | council:chair=llama3.1:8b | baseline:always_no | 103 | 0.0605 | -0.0329 | 0.1472 | no clear difference |
+| topic | Culture | council:chair=qwen3:8b | baseline:mean | 103 | 0.0333 | 0.0136 | 0.0521 | council worse |
+| topic | Culture | council:chair=qwen3:8b | baseline:logit_pool | 103 | 0.0347 | 0.0144 | 0.0533 | council worse |
+| topic | Culture | council:chair=qwen3:8b | baseline:best_single | 103 | 0.0675 | 0.0158 | 0.1152 | council worse |
+| topic | Culture | council:chair=qwen3:8b | market | 103 | 0.1433 | 0.0723 | 0.2172 | council worse |
+| topic | Culture | council:chair=qwen3:8b | baseline:always_no | 103 | 0.0597 | -0.0331 | 0.1514 | no clear difference |
+| topic | Elections | council:chair=llama3.1:8b | baseline:mean | 83 | 0.0048 | -0.0067 | 0.0157 | no clear difference |
+| topic | Elections | council:chair=llama3.1:8b | baseline:logit_pool | 83 | -0.0077 | -0.0362 | 0.0152 | no clear difference |
+| topic | Elections | council:chair=llama3.1:8b | baseline:best_single | 83 | -0.0199 | -0.0519 | 0.0121 | no clear difference |
+| topic | Elections | council:chair=llama3.1:8b | market | 83 | 0.1323 | 0.0668 | 0.1915 | council worse |
+| topic | Elections | council:chair=llama3.1:8b | baseline:always_no | 83 | -0.1186 | -0.2134 | -0.0297 | council better |
+| topic | Elections | council:chair=qwen3:8b | baseline:mean | 83 | 0.0142 | -0.0005 | 0.03 | no clear difference |
+| topic | Elections | council:chair=qwen3:8b | baseline:logit_pool | 83 | 0.0017 | -0.0218 | 0.0216 | no clear difference |
+| topic | Elections | council:chair=qwen3:8b | baseline:best_single | 83 | -0.0105 | -0.0483 | 0.0288 | no clear difference |
+| topic | Elections | council:chair=qwen3:8b | market | 83 | 0.1417 | 0.0768 | 0.2038 | council worse |
+| topic | Elections | council:chair=qwen3:8b | baseline:always_no | 83 | -0.1093 | -0.2008 | -0.0208 | council better |
+| topic | Geopolitics | council:chair=llama3.1:8b | baseline:mean | 82 | -0.0048 | -0.0171 | 0.0072 | no clear difference |
+| topic | Geopolitics | council:chair=llama3.1:8b | baseline:logit_pool | 82 | -0.0043 | -0.0197 | 0.0105 | no clear difference |
+| topic | Geopolitics | council:chair=llama3.1:8b | baseline:best_single | 82 | -0.0216 | -0.0421 | -0.0009 | council better |
+| topic | Geopolitics | council:chair=llama3.1:8b | market | 82 | 0.0323 | -0.0233 | 0.0866 | no clear difference |
+| topic | Geopolitics | council:chair=llama3.1:8b | baseline:always_no | 82 | -0.0809 | -0.1537 | -0.01 | council better |
+| topic | Geopolitics | council:chair=qwen3:8b | baseline:mean | 82 | -0.0076 | -0.0186 | 0.0028 | no clear difference |
+| topic | Geopolitics | council:chair=qwen3:8b | baseline:logit_pool | 82 | -0.007 | -0.0194 | 0.0039 | no clear difference |
+| topic | Geopolitics | council:chair=qwen3:8b | baseline:best_single | 82 | -0.0243 | -0.0481 | -0.0013 | council better |
+| topic | Geopolitics | council:chair=qwen3:8b | market | 82 | 0.0296 | -0.0231 | 0.0821 | no clear difference |
+| topic | Geopolitics | council:chair=qwen3:8b | baseline:always_no | 82 | -0.0836 | -0.1544 | -0.0173 | council better |
+| topic | Other | council:chair=llama3.1:8b | baseline:mean | 98 | 0.0135 | 0.0001 | 0.0263 | council worse |
+| topic | Other | council:chair=llama3.1:8b | baseline:logit_pool | 98 | 0.0069 | -0.0123 | 0.024 | no clear difference |
+| topic | Other | council:chair=llama3.1:8b | baseline:best_single | 98 | -0.0015 | -0.0308 | 0.0283 | no clear difference |
+| topic | Other | council:chair=llama3.1:8b | market | 98 | 0.1696 | 0.1171 | 0.2205 | council worse |
+| topic | Other | council:chair=llama3.1:8b | baseline:always_no | 98 | -0.0924 | -0.1874 | 0.0035 | no clear difference |
+| topic | Other | council:chair=qwen3:8b | baseline:mean | 98 | 0.014 | 0.0004 | 0.0288 | council worse |
+| topic | Other | council:chair=qwen3:8b | baseline:logit_pool | 98 | 0.0073 | -0.0119 | 0.025 | no clear difference |
+| topic | Other | council:chair=qwen3:8b | baseline:best_single | 98 | -0.001 | -0.0319 | 0.0312 | no clear difference |
+| topic | Other | council:chair=qwen3:8b | market | 98 | 0.1701 | 0.1165 | 0.2226 | council worse |
+| topic | Other | council:chair=qwen3:8b | baseline:always_no | 98 | -0.092 | -0.1856 | 0.0007 | no clear difference |
+| topic | Politics | council:chair=llama3.1:8b | baseline:mean | 210 | -0.0022 | -0.012 | 0.0086 | no clear difference |
+| topic | Politics | council:chair=llama3.1:8b | baseline:logit_pool | 210 | -0.0127 | -0.0273 | 0.0019 | no clear difference |
+| topic | Politics | council:chair=llama3.1:8b | baseline:best_single | 210 | -0.0117 | -0.0347 | 0.0098 | no clear difference |
+| topic | Politics | council:chair=llama3.1:8b | market | 210 | 0.1144 | 0.0786 | 0.1497 | council worse |
+| topic | Politics | council:chair=llama3.1:8b | baseline:always_no | 210 | -0.1519 | -0.2052 | -0.1008 | council better |
+| topic | Politics | council:chair=qwen3:8b | baseline:mean | 210 | 0.0178 | 0.0072 | 0.032 | council worse |
+| topic | Politics | council:chair=qwen3:8b | baseline:logit_pool | 210 | 0.0073 | -0.0043 | 0.0211 | no clear difference |
+| topic | Politics | council:chair=qwen3:8b | baseline:best_single | 210 | 0.0083 | -0.0178 | 0.0361 | no clear difference |
+| topic | Politics | council:chair=qwen3:8b | market | 210 | 0.1344 | 0.0944 | 0.1741 | council worse |
+| topic | Politics | council:chair=qwen3:8b | baseline:always_no | 210 | -0.1319 | -0.1839 | -0.0834 | council better |
+| topic | Sports | council:chair=llama3.1:8b | baseline:mean | 420 | -0.0023 | -0.0062 | 0.0015 | no clear difference |
+| topic | Sports | council:chair=llama3.1:8b | baseline:logit_pool | 420 | -0.014 | -0.0253 | -0.0034 | council better |
+| topic | Sports | council:chair=llama3.1:8b | baseline:best_single | 420 | -0.0017 | -0.0102 | 0.0063 | no clear difference |
+| topic | Sports | council:chair=llama3.1:8b | market | 420 | 0.0384 | 0.0239 | 0.0534 | council worse |
+| topic | Sports | council:chair=llama3.1:8b | baseline:always_no | 420 | -0.3131 | -0.3622 | -0.2628 | council better |
+| topic | Sports | council:chair=qwen3:8b | baseline:mean | 420 | 0.0064 | -0.0005 | 0.0133 | no clear difference |
+| topic | Sports | council:chair=qwen3:8b | baseline:logit_pool | 420 | -0.0054 | -0.0147 | 0.0025 | no clear difference |
+| topic | Sports | council:chair=qwen3:8b | baseline:best_single | 420 | 0.007 | -0.0046 | 0.0184 | no clear difference |
+| topic | Sports | council:chair=qwen3:8b | market | 420 | 0.0471 | 0.029 | 0.0661 | council worse |
+| topic | Sports | council:chair=qwen3:8b | baseline:always_no | 420 | -0.3044 | -0.3524 | -0.2543 | council better |
+| topic | World | council:chair=llama3.1:8b | baseline:mean | 43 | -0.0101 | -0.0263 | 0.0066 | no clear difference |
+| topic | World | council:chair=llama3.1:8b | baseline:logit_pool | 43 | -0.0237 | -0.0541 | 0.0033 | no clear difference |
+| topic | World | council:chair=llama3.1:8b | baseline:best_single | 43 | -0.024 | -0.0577 | 0.0066 | no clear difference |
+| topic | World | council:chair=llama3.1:8b | market | 43 | 0.0479 | -0.0188 | 0.1243 | no clear difference |
+| topic | World | council:chair=llama3.1:8b | baseline:always_no | 43 | -0.1459 | -0.2435 | -0.0477 | council better |
+| topic | World | council:chair=qwen3:8b | baseline:mean | 43 | 0.0032 | -0.0121 | 0.0192 | no clear difference |
+| topic | World | council:chair=qwen3:8b | baseline:logit_pool | 43 | -0.0104 | -0.0345 | 0.0095 | no clear difference |
+| topic | World | council:chair=qwen3:8b | baseline:best_single | 43 | -0.0107 | -0.0471 | 0.0242 | no clear difference |
+| topic | World | council:chair=qwen3:8b | market | 43 | 0.0612 | -0.0097 | 0.1389 | no clear difference |
+| topic | World | council:chair=qwen3:8b | baseline:always_no | 43 | -0.1326 | -0.2284 | -0.0438 | council better |
+| horizon | 8-30 days | council:chair=llama3.1:8b | baseline:mean | 668 | 0.0057 | 0.0016 | 0.0102 | council worse |
+| horizon | 8-30 days | council:chair=llama3.1:8b | baseline:logit_pool | 668 | -0.002 | -0.0104 | 0.0064 | no clear difference |
+| horizon | 8-30 days | council:chair=llama3.1:8b | baseline:best_single | 668 | -0.0017 | -0.0131 | 0.0084 | no clear difference |
+| horizon | 8-30 days | council:chair=llama3.1:8b | market | 668 | 0.0582 | 0.0409 | 0.076 | council worse |
+| horizon | 8-30 days | council:chair=llama3.1:8b | baseline:always_no | 668 | -0.1828 | -0.2184 | -0.1466 | council better |
+| horizon | 8-30 days | council:chair=qwen3:8b | baseline:mean | 668 | 0.0076 | 0.0022 | 0.0129 | council worse |
+| horizon | 8-30 days | council:chair=qwen3:8b | baseline:logit_pool | 668 | -0.0001 | -0.0065 | 0.0062 | no clear difference |
+| horizon | 8-30 days | council:chair=qwen3:8b | baseline:best_single | 668 | 0.0001 | -0.0122 | 0.0119 | no clear difference |
+| horizon | 8-30 days | council:chair=qwen3:8b | market | 668 | 0.0601 | 0.0411 | 0.0791 | council worse |
+| horizon | 8-30 days | council:chair=qwen3:8b | baseline:always_no | 668 | -0.181 | -0.2148 | -0.1446 | council better |
+| horizon | <=7 days | council:chair=llama3.1:8b | baseline:mean | 351 | -0.0015 | -0.0082 | 0.0044 | no clear difference |
+| horizon | <=7 days | council:chair=llama3.1:8b | baseline:logit_pool | 351 | -0.0114 | -0.022 | -0.0023 | council better |
+| horizon | <=7 days | council:chair=llama3.1:8b | baseline:best_single | 351 | -0.0003 | -0.0152 | 0.0149 | no clear difference |
+| horizon | <=7 days | council:chair=llama3.1:8b | market | 351 | 0.1312 | 0.1024 | 0.1574 | council worse |
+| horizon | <=7 days | council:chair=llama3.1:8b | baseline:always_no | 351 | -0.179 | -0.2272 | -0.1314 | council better |
+| horizon | <=7 days | council:chair=qwen3:8b | baseline:mean | 351 | 0.0191 | 0.0112 | 0.027 | council worse |
+| horizon | <=7 days | council:chair=qwen3:8b | baseline:logit_pool | 351 | 0.0092 | 0.0014 | 0.017 | council worse |
+| horizon | <=7 days | council:chair=qwen3:8b | baseline:best_single | 351 | 0.0203 | 0.0022 | 0.0391 | council worse |
+| horizon | <=7 days | council:chair=qwen3:8b | market | 351 | 0.1518 | 0.1216 | 0.1813 | council worse |
+| horizon | <=7 days | council:chair=qwen3:8b | baseline:always_no | 351 | -0.1584 | -0.2034 | -0.1132 | council better |
+| horizon | >30 days | council:chair=llama3.1:8b | baseline:mean | 20 |  |  |  | too few (< 30) |
+| horizon | >30 days | council:chair=llama3.1:8b | baseline:logit_pool | 20 |  |  |  | too few (< 30) |
+| horizon | >30 days | council:chair=llama3.1:8b | baseline:best_single | 20 |  |  |  | too few (< 30) |
+| horizon | >30 days | council:chair=llama3.1:8b | market | 20 |  |  |  | too few (< 30) |
+| horizon | >30 days | council:chair=llama3.1:8b | baseline:always_no | 20 |  |  |  | too few (< 30) |
+| horizon | >30 days | council:chair=qwen3:8b | baseline:mean | 20 |  |  |  | too few (< 30) |
+| horizon | >30 days | council:chair=qwen3:8b | baseline:logit_pool | 20 |  |  |  | too few (< 30) |
+| horizon | >30 days | council:chair=qwen3:8b | baseline:best_single | 20 |  |  |  | too few (< 30) |
+| horizon | >30 days | council:chair=qwen3:8b | market | 20 |  |  |  | too few (< 30) |
+| horizon | >30 days | council:chair=qwen3:8b | baseline:always_no | 20 |  |  |  | too few (< 30) |
+| extremity | leaning | council:chair=llama3.1:8b | baseline:mean | 226 | 0.0001 | -0.0087 | 0.0087 | no clear difference |
+| extremity | leaning | council:chair=llama3.1:8b | baseline:logit_pool | 226 | -0.0137 | -0.0301 | 0.0001 | no clear difference |
+| extremity | leaning | council:chair=llama3.1:8b | baseline:best_single | 226 | -0.006 | -0.0306 | 0.0162 | no clear difference |
+| extremity | leaning | council:chair=llama3.1:8b | market | 226 | 0.101 | 0.0608 | 0.1426 | council worse |
+| extremity | leaning | council:chair=llama3.1:8b | baseline:always_no | 226 | -0.181 | -0.2391 | -0.1232 | council better |
+| extremity | leaning | council:chair=qwen3:8b | baseline:mean | 226 | 0.0175 | 0.0061 | 0.0287 | council worse |
+| extremity | leaning | council:chair=qwen3:8b | baseline:logit_pool | 226 | 0.0037 | -0.0094 | 0.0159 | no clear difference |
+| extremity | leaning | council:chair=qwen3:8b | baseline:best_single | 226 | 0.0114 | -0.0174 | 0.0367 | no clear difference |
+| extremity | leaning | council:chair=qwen3:8b | market | 226 | 0.1184 | 0.0741 | 0.1618 | council worse |
+| extremity | leaning | council:chair=qwen3:8b | baseline:always_no | 226 | -0.1636 | -0.2244 | -0.1049 | council better |
+| extremity | near-certain | council:chair=llama3.1:8b | baseline:mean | 319 | 0.0194 | 0.0125 | 0.0269 | council worse |
+| extremity | near-certain | council:chair=llama3.1:8b | baseline:logit_pool | 319 | 0.0228 | 0.0124 | 0.0327 | council worse |
+| extremity | near-certain | council:chair=llama3.1:8b | baseline:best_single | 319 | -0.0055 | -0.0233 | 0.0108 | no clear difference |
+| extremity | near-certain | council:chair=llama3.1:8b | market | 319 | 0.1375 | 0.1121 | 0.1646 | council worse |
+| extremity | near-certain | council:chair=llama3.1:8b | baseline:always_no | 319 | 0.0159 | -0.0247 | 0.055 | no clear difference |
+| extremity | near-certain | council:chair=qwen3:8b | baseline:mean | 319 | 0.0112 | 0.0032 | 0.0213 | council worse |
+| extremity | near-certain | council:chair=qwen3:8b | baseline:logit_pool | 319 | 0.0145 | 0.0056 | 0.0249 | council worse |
+| extremity | near-certain | council:chair=qwen3:8b | baseline:best_single | 319 | -0.0137 | -0.0333 | 0.0053 | no clear difference |
+| extremity | near-certain | council:chair=qwen3:8b | market | 319 | 0.1293 | 0.1048 | 0.1573 | council worse |
+| extremity | near-certain | council:chair=qwen3:8b | baseline:always_no | 319 | 0.0077 | -0.0305 | 0.0448 | no clear difference |
+| extremity | uncertain | council:chair=llama3.1:8b | baseline:mean | 494 | -0.0065 | -0.0109 | -0.0022 | council better |
+| extremity | uncertain | council:chair=llama3.1:8b | baseline:logit_pool | 494 | -0.021 | -0.0308 | -0.012 | council better |
+| extremity | uncertain | council:chair=llama3.1:8b | baseline:best_single | 494 | 0.0048 | -0.0045 | 0.0142 | no clear difference |
+| extremity | uncertain | council:chair=llama3.1:8b | market | 494 | 0.0418 | 0.0238 | 0.06 | council worse |
+| extremity | uncertain | council:chair=llama3.1:8b | baseline:always_no | 494 | -0.31 | -0.3553 | -0.2674 | council better |
+| extremity | uncertain | council:chair=qwen3:8b | baseline:mean | 494 | 0.0089 | 0.0025 | 0.0156 | council worse |
+| extremity | uncertain | council:chair=qwen3:8b | baseline:logit_pool | 494 | -0.0056 | -0.0136 | 0.0012 | no clear difference |
+| extremity | uncertain | council:chair=qwen3:8b | baseline:best_single | 494 | 0.0203 | 0.0082 | 0.0323 | council worse |
+| extremity | uncertain | council:chair=qwen3:8b | market | 494 | 0.0572 | 0.0364 | 0.0774 | council worse |
+| extremity | uncertain | council:chair=qwen3:8b | baseline:always_no | 494 | -0.2946 | -0.3393 | -0.253 | council better |
 
 
 ## Every setup, by group
@@ -13,46 +164,241 @@ _none_
 |---|---|---|---|---|---|---|
 | source | kalshi | baseline:always_no | 200 | 0.45 | 0.55 | -2.3365 |
 | source | kalshi | baseline:base_rate | 200 | 0.2477 | 0.55 | -0.8367 |
+| source | kalshi | baseline:best_single | 200 | 0.2713 | 0.56 | -1.0118 |
+| source | kalshi | baseline:extremized(a=2) | 200 | 0.3029 | 0.5775 | -1.2458 |
+| source | kalshi | baseline:logit_pool | 200 | 0.265 | 0.5775 | -0.965 |
+| source | kalshi | baseline:mean | 200 | 0.2558 | 0.5825 | -0.8966 |
+| source | kalshi | baseline:median | 200 | 0.2703 | 0.56 | -1.0044 |
+| source | kalshi | council:chair=llama3.1:8b | 200 | 0.2558 | 0.5725 | -0.8967 |
+| source | kalshi | council:chair=qwen3:8b | 200 | 0.2661 | 0.5775 | -0.9727 |
 | source | kalshi | market | 200 | 0.1349 | 0.805 |  |
+| source | kalshi | single:deepseek-r1:8b | 200 | 0.3039 | 0.55 | -1.2536 |
+| source | kalshi | single:gemma2:9b | 200 | 0.2827 | 0.5525 | -1.0963 |
+| source | kalshi | single:llama3.1:8b | 200 | 0.2742 | 0.5325 | -1.0328 |
+| source | kalshi | single:mistral:latest | 200 | 0.2643 | 0.5725 | -0.9599 |
+| source | kalshi | single:phi3:medium | 200 | 0.2713 | 0.56 | -1.0118 |
+| source | kalshi | single:qwen3:8b | 200 | 0.3039 | 0.5575 | -1.2536 |
 | source | polymarket | baseline:always_no | 839 | 0.4315 | 0.5685 | -1.4342 |
 | source | polymarket | baseline:base_rate | 839 | 0.2453 | 0.5685 | -0.384 |
+| source | polymarket | baseline:best_single | 839 | 0.2497 | 0.5828 | -0.4086 |
+| source | polymarket | baseline:extremized(a=2) | 839 | 0.2901 | 0.5703 | -0.6366 |
+| source | polymarket | baseline:logit_pool | 839 | 0.2578 | 0.5703 | -0.4542 |
+| source | polymarket | baseline:mean | 839 | 0.249 | 0.5691 | -0.4046 |
+| source | polymarket | baseline:median | 839 | 0.2536 | 0.5751 | -0.4307 |
+| source | polymarket | council:chair=llama3.1:8b | 839 | 0.2525 | 0.5584 | -0.4246 |
+| source | polymarket | council:chair=qwen3:8b | 839 | 0.2607 | 0.5602 | -0.4708 |
 | source | polymarket | market | 839 | 0.1773 | 0.7223 |  |
+| source | polymarket | single:deepseek-r1:8b | 159 | 0.2737 | 0.4937 | -0.7052 |
+| source | polymarket | single:gemma2:9b | 839 | 0.2558 | 0.5822 | -0.4432 |
+| source | polymarket | single:llama3.1:8b | 839 | 0.2529 | 0.5483 | -0.427 |
+| source | polymarket | single:mistral:latest | 839 | 0.2805 | 0.5524 | -0.5822 |
+| source | polymarket | single:phi3:medium | 839 | 0.2497 | 0.5828 | -0.4086 |
+| source | polymarket | single:qwen3:8b | 839 | 0.2927 | 0.553 | -0.6511 |
 | topic | Culture | baseline:always_no | 103 | 0.233 | 0.767 | -0.5605 |
 | topic | Culture | baseline:base_rate | 103 | 0.2195 | 0.767 | -0.4702 |
+| topic | Culture | baseline:best_single | 103 | 0.2251 | 0.6359 | -0.5077 |
+| topic | Culture | baseline:extremized(a=2) | 103 | 0.2905 | 0.534 | -0.9457 |
+| topic | Culture | baseline:logit_pool | 103 | 0.258 | 0.534 | -0.7276 |
+| topic | Culture | baseline:mean | 103 | 0.2594 | 0.5146 | -0.737 |
+| topic | Culture | baseline:median | 103 | 0.2806 | 0.4854 | -0.8791 |
+| topic | Culture | council:chair=llama3.1:8b | 103 | 0.2935 | 0.4078 | -0.9659 |
+| topic | Culture | council:chair=qwen3:8b | 103 | 0.2927 | 0.466 | -0.96 |
 | topic | Culture | market | 103 | 0.1493 | 0.8252 |  |
+| topic | Culture | single:deepseek-r1:8b | 17 | 0.3019 | 0.5588 |  |
+| topic | Culture | single:gemma2:9b | 103 | 0.2688 | 0.5825 | -0.8001 |
+| topic | Culture | single:llama3.1:8b | 103 | 0.29 | 0.4078 | -0.9419 |
+| topic | Culture | single:mistral:latest | 103 | 0.4103 | 0.3786 | -1.7481 |
+| topic | Culture | single:phi3:medium | 103 | 0.2251 | 0.6359 | -0.5077 |
+| topic | Culture | single:qwen3:8b | 103 | 0.2976 | 0.5194 | -0.9929 |
 | topic | Elections | baseline:always_no | 83 | 0.3735 | 0.6265 | -2.0481 |
 | topic | Elections | baseline:base_rate | 83 | 0.2378 | 0.6265 | -0.9406 |
+| topic | Elections | baseline:best_single | 83 | 0.2747 | 0.5783 | -1.2419 |
+| topic | Elections | baseline:extremized(a=2) | 83 | 0.3084 | 0.5663 | -1.517 |
+| topic | Elections | baseline:logit_pool | 83 | 0.2626 | 0.5663 | -1.143 |
+| topic | Elections | baseline:mean | 83 | 0.25 | 0.5723 | -1.0403 |
+| topic | Elections | baseline:median | 83 | 0.2601 | 0.5602 | -1.1224 |
+| topic | Elections | council:chair=llama3.1:8b | 83 | 0.2548 | 0.5904 | -1.0798 |
+| topic | Elections | council:chair=qwen3:8b | 83 | 0.2642 | 0.5843 | -1.1565 |
 | topic | Elections | market | 83 | 0.1225 | 0.8554 |  |
+| topic | Elections | single:deepseek-r1:8b | 72 | 0.3143 | 0.5278 | -1.4542 |
+| topic | Elections | single:gemma2:9b | 83 | 0.273 | 0.5361 | -1.2283 |
+| topic | Elections | single:llama3.1:8b | 83 | 0.2562 | 0.5964 | -1.0909 |
+| topic | Elections | single:mistral:latest | 83 | 0.2414 | 0.5904 | -0.97 |
+| topic | Elections | single:phi3:medium | 83 | 0.2747 | 0.5783 | -1.2419 |
+| topic | Elections | single:qwen3:8b | 83 | 0.3135 | 0.5542 | -1.5585 |
 | topic | Geopolitics | baseline:always_no | 82 | 0.2561 | 0.7439 | -0.792 |
 | topic | Geopolitics | baseline:base_rate | 82 | 0.2225 | 0.7439 | -0.5571 |
+| topic | Geopolitics | baseline:best_single | 82 | 0.1968 | 0.7256 | -0.3771 |
+| topic | Geopolitics | baseline:extremized(a=2) | 82 | 0.2087 | 0.7439 | -0.4606 |
+| topic | Geopolitics | baseline:logit_pool | 82 | 0.1795 | 0.7439 | -0.2559 |
+| topic | Geopolitics | baseline:mean | 82 | 0.1801 | 0.7439 | -0.26 |
+| topic | Geopolitics | baseline:median | 82 | 0.1903 | 0.7256 | -0.3314 |
+| topic | Geopolitics | council:chair=llama3.1:8b | 82 | 0.1752 | 0.7317 | -0.2261 |
+| topic | Geopolitics | council:chair=qwen3:8b | 82 | 0.1725 | 0.7439 | -0.207 |
 | topic | Geopolitics | market | 82 | 0.1429 | 0.8049 |  |
+| topic | Geopolitics | single:deepseek-r1:8b | 4 | 0.23 | 0.5 |  |
+| topic | Geopolitics | single:gemma2:9b | 82 | 0.1903 | 0.7195 | -0.3316 |
+| topic | Geopolitics | single:llama3.1:8b | 82 | 0.1835 | 0.7317 | -0.2838 |
+| topic | Geopolitics | single:mistral:latest | 82 | 0.1795 | 0.7317 | -0.2557 |
+| topic | Geopolitics | single:phi3:medium | 82 | 0.1968 | 0.7256 | -0.3771 |
+| topic | Geopolitics | single:qwen3:8b | 82 | 0.2233 | 0.7073 | -0.5625 |
 | topic | Other | baseline:always_no | 98 | 0.398 | 0.602 | -1.9276 |
 | topic | Other | baseline:base_rate | 98 | 0.241 | 0.602 | -0.7726 |
+| topic | Other | baseline:best_single | 98 | 0.307 | 0.449 | -1.2586 |
+| topic | Other | baseline:extremized(a=2) | 98 | 0.3525 | 0.5102 | -1.5928 |
+| topic | Other | baseline:logit_pool | 98 | 0.2987 | 0.5102 | -1.1971 |
+| topic | Other | baseline:mean | 98 | 0.292 | 0.5255 | -1.1483 |
+| topic | Other | baseline:median | 98 | 0.3038 | 0.5102 | -1.2345 |
+| topic | Other | council:chair=llama3.1:8b | 98 | 0.3055 | 0.4592 | -1.2476 |
+| topic | Other | council:chair=qwen3:8b | 98 | 0.306 | 0.5102 | -1.2511 |
 | topic | Other | market | 98 | 0.1359 | 0.8061 |  |
+| topic | Other | single:deepseek-r1:8b | 47 | 0.319 | 0.4681 | -0.9871 |
+| topic | Other | single:gemma2:9b | 98 | 0.3286 | 0.5051 | -1.4171 |
+| topic | Other | single:llama3.1:8b | 98 | 0.3026 | 0.4694 | -1.226 |
+| topic | Other | single:mistral:latest | 98 | 0.3061 | 0.5 | -1.2522 |
+| topic | Other | single:phi3:medium | 98 | 0.307 | 0.449 | -1.2586 |
+| topic | Other | single:qwen3:8b | 98 | 0.3377 | 0.5 | -1.484 |
 | topic | Politics | baseline:always_no | 210 | 0.419 | 0.581 | -1.7435 |
 | topic | Politics | baseline:base_rate | 210 | 0.2437 | 0.581 | -0.5955 |
+| topic | Politics | baseline:best_single | 210 | 0.2789 | 0.569 | -0.8258 |
+| topic | Politics | baseline:extremized(a=2) | 210 | 0.3359 | 0.5857 | -1.1993 |
+| topic | Politics | baseline:logit_pool | 210 | 0.2798 | 0.5857 | -0.8321 |
+| topic | Politics | baseline:mean | 210 | 0.2693 | 0.5738 | -0.7633 |
+| topic | Politics | baseline:median | 210 | 0.278 | 0.5857 | -0.82 |
+| topic | Politics | council:chair=llama3.1:8b | 210 | 0.2672 | 0.5762 | -0.7491 |
+| topic | Politics | council:chair=qwen3:8b | 210 | 0.2871 | 0.5643 | -0.8798 |
 | topic | Politics | market | 210 | 0.1527 | 0.7905 |  |
+| topic | Politics | single:deepseek-r1:8b | 66 | 0.2835 | 0.6288 | -1.9545 |
+| topic | Politics | single:gemma2:9b | 210 | 0.2856 | 0.5857 | -0.8695 |
+| topic | Politics | single:llama3.1:8b | 210 | 0.2584 | 0.5738 | -0.6919 |
+| topic | Politics | single:mistral:latest | 210 | 0.3137 | 0.5452 | -1.054 |
+| topic | Politics | single:phi3:medium | 210 | 0.2789 | 0.569 | -0.8258 |
+| topic | Politics | single:qwen3:8b | 210 | 0.3104 | 0.5833 | -1.0325 |
 | topic | Sports | baseline:always_no | 420 | 0.5524 | 0.4476 | -1.7503 |
 | topic | Sports | baseline:base_rate | 420 | 0.261 | 0.4476 | -0.2996 |
+| topic | Sports | baseline:best_single | 420 | 0.241 | 0.5702 | -0.1998 |
+| topic | Sports | baseline:extremized(a=2) | 420 | 0.2674 | 0.5524 | -0.3315 |
+| topic | Sports | baseline:logit_pool | 420 | 0.2533 | 0.5524 | -0.2613 |
+| topic | Sports | baseline:mean | 420 | 0.2416 | 0.5583 | -0.2029 |
+| topic | Sports | baseline:median | 420 | 0.2416 | 0.569 | -0.2031 |
+| topic | Sports | council:chair=llama3.1:8b | 420 | 0.2393 | 0.5786 | -0.1914 |
+| topic | Sports | council:chair=qwen3:8b | 420 | 0.248 | 0.5631 | -0.2346 |
 | topic | Sports | market | 420 | 0.2008 | 0.6405 |  |
+| topic | Sports | single:deepseek-r1:8b | 148 | 0.2722 | 0.4899 | -0.6253 |
+| topic | Sports | single:gemma2:9b | 420 | 0.2424 | 0.5667 | -0.2067 |
+| topic | Sports | single:llama3.1:8b | 420 | 0.2511 | 0.531 | -0.2504 |
+| topic | Sports | single:mistral:latest | 420 | 0.2468 | 0.5726 | -0.2286 |
+| topic | Sports | single:phi3:medium | 420 | 0.241 | 0.5702 | -0.1998 |
+| topic | Sports | single:qwen3:8b | 420 | 0.2847 | 0.5226 | -0.4174 |
 | topic | World | baseline:always_no | 43 | 0.3953 | 0.6047 | -0.9617 |
 | topic | World | baseline:base_rate | 43 | 0.2406 | 0.6047 | -0.1939 |
+| topic | World | baseline:best_single | 43 | 0.2734 | 0.5814 | -0.3567 |
+| topic | World | baseline:extremized(a=2) | 43 | 0.3239 | 0.6047 | -0.6071 |
+| topic | World | baseline:logit_pool | 43 | 0.2731 | 0.6047 | -0.3553 |
+| topic | World | baseline:mean | 43 | 0.2595 | 0.6047 | -0.2878 |
+| topic | World | baseline:median | 43 | 0.2585 | 0.6163 | -0.2826 |
+| topic | World | council:chair=llama3.1:8b | 43 | 0.2494 | 0.5349 | -0.2377 |
+| topic | World | council:chair=qwen3:8b | 43 | 0.2628 | 0.5349 | -0.3038 |
 | topic | World | market | 43 | 0.2015 | 0.7209 |  |
+| topic | World | single:deepseek-r1:8b | 5 | 0.326 | 0.6 |  |
+| topic | World | single:gemma2:9b | 43 | 0.262 | 0.5814 | -0.3 |
+| topic | World | single:llama3.1:8b | 43 | 0.2666 | 0.593 | -0.3229 |
+| topic | World | single:mistral:latest | 43 | 0.2704 | 0.6047 | -0.3416 |
+| topic | World | single:phi3:medium | 43 | 0.2734 | 0.5814 | -0.3567 |
+| topic | World | single:qwen3:8b | 43 | 0.3141 | 0.6279 | -0.5586 |
 | horizon | 8-30 days | baseline:always_no | 668 | 0.4132 | 0.5868 | -1.4007 |
 | horizon | 8-30 days | baseline:base_rate | 668 | 0.2429 | 0.5868 | -0.4116 |
+| horizon | 8-30 days | baseline:best_single | 668 | 0.2321 | 0.6138 | -0.3484 |
+| horizon | 8-30 days | baseline:extremized(a=2) | 668 | 0.2525 | 0.6033 | -0.4671 |
+| horizon | 8-30 days | baseline:logit_pool | 668 | 0.2323 | 0.6033 | -0.3498 |
+| horizon | 8-30 days | baseline:mean | 668 | 0.2246 | 0.604 | -0.3052 |
+| horizon | 8-30 days | baseline:median | 668 | 0.2275 | 0.6123 | -0.3219 |
+| horizon | 8-30 days | council:chair=llama3.1:8b | 668 | 0.2303 | 0.5996 | -0.3384 |
+| horizon | 8-30 days | council:chair=qwen3:8b | 668 | 0.2322 | 0.607 | -0.3491 |
 | horizon | 8-30 days | market | 668 | 0.1721 | 0.7201 |  |
+| horizon | 8-30 days | single:deepseek-r1:8b | 130 | 0.2642 | 0.4885 | -0.6869 |
+| horizon | 8-30 days | single:gemma2:9b | 668 | 0.228 | 0.6093 | -0.3249 |
+| horizon | 8-30 days | single:llama3.1:8b | 668 | 0.2352 | 0.5838 | -0.3667 |
+| horizon | 8-30 days | single:mistral:latest | 668 | 0.2531 | 0.5801 | -0.4708 |
+| horizon | 8-30 days | single:phi3:medium | 668 | 0.2321 | 0.6138 | -0.3484 |
+| horizon | 8-30 days | single:qwen3:8b | 668 | 0.2574 | 0.5906 | -0.4954 |
 | horizon | <=7 days | baseline:always_no | 351 | 0.4729 | 0.5271 | -1.9057 |
 | horizon | <=7 days | baseline:base_rate | 351 | 0.2507 | 0.5271 | -0.5403 |
+| horizon | <=7 days | baseline:best_single | 351 | 0.2942 | 0.5128 | -0.8075 |
+| horizon | <=7 days | baseline:extremized(a=2) | 351 | 0.3622 | 0.5185 | -1.2254 |
+| horizon | <=7 days | baseline:logit_pool | 351 | 0.3053 | 0.5185 | -0.8756 |
+| horizon | <=7 days | baseline:mean | 351 | 0.2955 | 0.5185 | -0.8152 |
+| horizon | <=7 days | baseline:median | 351 | 0.3082 | 0.5043 | -0.8936 |
+| horizon | <=7 days | council:chair=llama3.1:8b | 351 | 0.2939 | 0.4915 | -0.8058 |
+| horizon | <=7 days | council:chair=qwen3:8b | 351 | 0.3145 | 0.4872 | -0.9324 |
 | horizon | <=7 days | market | 351 | 0.1628 | 0.7664 |  |
+| horizon | <=7 days | single:deepseek-r1:8b | 228 | 0.3062 | 0.5439 | -1.1731 |
+| horizon | <=7 days | single:gemma2:9b | 351 | 0.32 | 0.5214 | -0.9659 |
+| horizon | <=7 days | single:llama3.1:8b | 351 | 0.2962 | 0.4744 | -0.8197 |
+| horizon | <=7 days | single:mistral:latest | 351 | 0.3189 | 0.5114 | -0.9592 |
+| horizon | <=7 days | single:phi3:medium | 351 | 0.2942 | 0.5128 | -0.8075 |
+| horizon | <=7 days | single:qwen3:8b | 351 | 0.3603 | 0.4929 | -1.2134 |
 | horizon | >30 days | baseline:always_no | 20 | 0.5 | 0.5 |  |
 | horizon | >30 days | baseline:base_rate | 20 | 0.2542 | 0.5 |  |
+| horizon | >30 days | baseline:best_single | 20 | 0.2732 | 0.55 |  |
+| horizon | >30 days | baseline:extremized(a=2) | 20 | 0.4086 | 0.45 |  |
+| horizon | >30 days | baseline:logit_pool | 20 | 0.3464 | 0.45 |  |
+| horizon | >30 days | baseline:mean | 20 | 0.3141 | 0.425 |  |
+| horizon | >30 days | baseline:median | 20 | 0.334 | 0.425 |  |
+| horizon | >30 days | council:chair=llama3.1:8b | 20 | 0.2995 | 0.5 |  |
+| horizon | >30 days | council:chair=qwen3:8b | 20 | 0.3227 | 0.45 |  |
 | horizon | >30 days | market | 20 | 0.1796 | 0.85 |  |
+| horizon | >30 days | single:deepseek-r1:8b | 1 | 0.16 | 1.0 |  |
+| horizon | >30 days | single:gemma2:9b | 20 | 0.3272 | 0.45 |  |
+| horizon | >30 days | single:llama3.1:8b | 20 | 0.2983 | 0.5 |  |
+| horizon | >30 days | single:mistral:latest | 20 | 0.3575 | 0.55 |  |
+| horizon | >30 days | single:phi3:medium | 20 | 0.2732 | 0.55 |  |
+| horizon | >30 days | single:qwen3:8b | 20 | 0.398 | 0.4 |  |
 | extremity | leaning | baseline:always_no | 226 | 0.4646 | 0.5354 | -1.5448 |
 | extremity | leaning | baseline:base_rate | 226 | 0.2496 | 0.5354 | -0.3673 |
+| extremity | leaning | baseline:best_single | 226 | 0.2896 | 0.5332 | -0.5861 |
+| extremity | leaning | baseline:extremized(a=2) | 226 | 0.3499 | 0.5398 | -0.9168 |
+| extremity | leaning | baseline:logit_pool | 226 | 0.2973 | 0.5398 | -0.6286 |
+| extremity | leaning | baseline:mean | 226 | 0.2835 | 0.5332 | -0.5529 |
+| extremity | leaning | baseline:median | 226 | 0.2907 | 0.5243 | -0.592 |
+| extremity | leaning | council:chair=llama3.1:8b | 226 | 0.2836 | 0.5111 | -0.5534 |
+| extremity | leaning | council:chair=qwen3:8b | 226 | 0.301 | 0.5111 | -0.6487 |
 | extremity | leaning | market | 226 | 0.1826 | 0.7788 |  |
+| extremity | leaning | single:deepseek-r1:8b | 91 | 0.305 | 0.5165 | -1.5533 |
+| extremity | leaning | single:gemma2:9b | 226 | 0.2882 | 0.5597 | -0.5786 |
+| extremity | leaning | single:llama3.1:8b | 226 | 0.2803 | 0.5199 | -0.5351 |
+| extremity | leaning | single:mistral:latest | 226 | 0.3204 | 0.5044 | -0.7551 |
+| extremity | leaning | single:phi3:medium | 226 | 0.2896 | 0.5332 | -0.5861 |
+| extremity | leaning | single:qwen3:8b | 226 | 0.3599 | 0.4801 | -0.9714 |
 | extremity | near-certain | baseline:always_no | 319 | 0.1724 | 0.8276 | -2.3901 |
 | extremity | near-certain | baseline:base_rate | 319 | 0.2117 | 0.8276 | -3.1617 |
+| extremity | near-certain | baseline:best_single | 319 | 0.1939 | 0.7257 | -2.812 |
+| extremity | near-certain | baseline:extremized(a=2) | 319 | 0.1731 | 0.7571 | -2.4043 |
+| extremity | near-certain | baseline:logit_pool | 319 | 0.1656 | 0.7571 | -2.2556 |
+| extremity | near-certain | baseline:mean | 319 | 0.1689 | 0.7539 | -2.3211 |
+| extremity | near-certain | baseline:median | 319 | 0.1746 | 0.7492 | -2.4336 |
+| extremity | near-certain | council:chair=llama3.1:8b | 319 | 0.1883 | 0.6991 | -2.7033 |
+| extremity | near-certain | council:chair=qwen3:8b | 319 | 0.1801 | 0.7304 | -2.5416 |
 | extremity | near-certain | market | 319 | 0.0509 | 0.9467 |  |
+| extremity | near-certain | single:deepseek-r1:8b | 105 | 0.2415 | 0.6429 | -4.2234 |
+| extremity | near-certain | single:gemma2:9b | 319 | 0.1852 | 0.7445 | -2.6407 |
+| extremity | near-certain | single:llama3.1:8b | 319 | 0.1862 | 0.7085 | -2.6614 |
+| extremity | near-certain | single:mistral:latest | 319 | 0.217 | 0.674 | -3.266 |
+| extremity | near-certain | single:phi3:medium | 319 | 0.1939 | 0.7257 | -2.812 |
+| extremity | near-certain | single:qwen3:8b | 319 | 0.1746 | 0.7335 | -2.4338 |
 | extremity | uncertain | baseline:always_no | 494 | 0.5911 | 0.4089 | -1.4703 |
 | extremity | uncertain | baseline:base_rate | 494 | 0.2661 | 0.4089 | -0.1119 |
+| extremity | uncertain | baseline:best_single | 494 | 0.2762 | 0.504 | -0.1545 |
+| extremity | uncertain | baseline:extremized(a=2) | 494 | 0.3434 | 0.4666 | -0.4353 |
+| extremity | uncertain | baseline:logit_pool | 494 | 0.3021 | 0.4666 | -0.2627 |
+| extremity | uncertain | baseline:mean | 494 | 0.2876 | 0.4717 | -0.202 |
+| extremity | uncertain | baseline:median | 494 | 0.2944 | 0.4798 | -0.2305 |
+| extremity | uncertain | council:chair=llama3.1:8b | 494 | 0.2811 | 0.4949 | -0.1747 |
+| extremity | uncertain | council:chair=qwen3:8b | 494 | 0.2965 | 0.4798 | -0.2391 |
 | extremity | uncertain | market | 494 | 0.2393 | 0.585 |  |
+| extremity | uncertain | single:deepseek-r1:8b | 163 | 0.314 | 0.454 | -0.3922 |
+| extremity | uncertain | single:gemma2:9b | 494 | 0.2975 | 0.4757 | -0.2434 |
+| extremity | uncertain | single:llama3.1:8b | 494 | 0.2921 | 0.4514 | -0.2208 |
+| extremity | uncertain | single:mistral:latest | 494 | 0.2966 | 0.504 | -0.2397 |
+| extremity | uncertain | single:phi3:medium | 494 | 0.2762 | 0.504 | -0.1545 |
+| extremity | uncertain | single:qwen3:8b | 494 | 0.3427 | 0.4717 | -0.4321 |

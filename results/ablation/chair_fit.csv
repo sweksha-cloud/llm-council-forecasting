@@ -1,0 +1,3 @@
+setup,n,rmse_fitted,rmse_equal_weights,nearest_gemma2:9b,nearest_llama3.1:8b,nearest_mistral:latest,nearest_phi3:medium,nearest_qwen3:8b
+council:chair=llama3.1:8b,1039,0.354,0.411,0.33,0.274,0.209,0.138,0.049
+council:chair=qwen3:8b,1039,0.515,0.532,0.369,0.221,0.194,0.136,0.08

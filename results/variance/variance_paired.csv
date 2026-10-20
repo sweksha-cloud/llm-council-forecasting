@@ -1,0 +1,11 @@
+council,versus,T=0
+council:chair=llama3.1:8b,baseline:mean,0.0028
+council:chair=llama3.1:8b,baseline:logit_pool,-0.0053
+council:chair=llama3.1:8b,baseline:best_single,-0.005
+council:chair=llama3.1:8b,market,0.1101
+council:chair=llama3.1:8b,baseline:always_no,-0.2297
+council:chair=qwen3:8b,baseline:mean,0.0084
+council:chair=qwen3:8b,baseline:logit_pool,0.0003
+council:chair=qwen3:8b,baseline:best_single,0.0005
+council:chair=qwen3:8b,market,0.1157
+council:chair=qwen3:8b,baseline:always_no,-0.2241

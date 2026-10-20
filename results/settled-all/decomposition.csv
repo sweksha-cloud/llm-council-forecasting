@@ -1,4 +1,17 @@
 setup,n,reliability,resolution,uncertainty,brier
+council:chair=llama3.1:8b,1039,0.0153,0.008,0.2458,0.2532
+council:chair=qwen3:8b,1039,0.0239,0.0084,0.2458,0.2617
+single:deepseek-r1:8b,359,0.0516,0.0108,0.2493,0.2906
+single:gemma2:9b,1039,0.0259,0.0117,0.2458,0.261
+single:llama3.1:8b,1039,0.02,0.0086,0.2458,0.257
+single:mistral:latest,1039,0.0403,0.0075,0.2458,0.2774
+single:phi3:medium,1039,0.0196,0.0113,0.2458,0.2538
+single:qwen3:8b,1039,0.06,0.0119,0.2458,0.2948
 baseline:always_no,1039,0.1893,0.0,0.2458,0.435
 baseline:base_rate,1039,0.0,0.0,0.2458,0.2458
+baseline:best_single,1039,0.0196,0.0113,0.2458,0.2538
+baseline:extremized(a=2),1039,0.0536,0.0078,0.2458,0.2926
+baseline:logit_pool,1039,0.021,0.0085,0.2458,0.2592
+baseline:mean,1039,0.0137,0.0083,0.2458,0.2503
+baseline:median,1039,0.0204,0.0103,0.2458,0.2568
 market,1039,0.0083,0.0826,0.2458,0.1691
