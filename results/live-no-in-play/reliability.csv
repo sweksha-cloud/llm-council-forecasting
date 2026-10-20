@@ -1,0 +1,12 @@
+setup,bin,count,mean_forecast,observed_rate
+baseline:always_no,0.0-0.1,48,0.0,0.4583
+baseline:base_rate,0.4-0.5,48,0.4583,0.4583
+market,0.0-0.1,13,0.016,0.0
+market,0.1-0.2,2,0.15,0.0
+market,0.2-0.3,2,0.235,0.5
+market,0.4-0.5,8,0.475,0.5
+market,0.5-0.6,4,0.5375,0.5
+market,0.6-0.7,3,0.6383,0.6667
+market,0.7-0.8,6,0.7375,0.8333
+market,0.8-0.9,3,0.8133,0.3333
+market,0.9-1.0,7,0.9556,1.0

@@ -25,6 +25,7 @@ results:          ## all results tables (results/*/)
 	$(PY) -m scoring.report --questions data/imported/aye-2026/questions.csv \
 	    --forecasts data/imported/aye-2026/forecasts.csv --id-prefix aye-old: --out results/aye-2026-old
 	$(PY) -m scoring.report --set live --out results/live
+	$(PY) -m scoring.report --set live --exclude-in-play --out results/live-no-in-play   # sensitivity check
 	$(PY) -m scoring.report --set settled --out results/settled
 	$(PY) -m scoring.report --set settled-ext --out results/settled-ext
 	$(PY) -m scoring.report --set settled settled-ext --out results/settled-all   # the pre-registered sample

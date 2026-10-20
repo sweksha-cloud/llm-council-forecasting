@@ -102,14 +102,29 @@ def made_after_resolution(q: Dict[str, str], f: Dict[str, str]) -> bool:
     return bool(ended and made and made >= ended)
 
 
-def load(question_files, forecast_files, which_set="all", prompt_id=None, id_prefix=None):
+def collected_in_play(q: Dict[str, str], hours: float = 24) -> bool:
+    """A live question collected less than `hours` before its market actually ended: usually a game
+    already under way, so its stored price is an in-play snapshot rather than a pre-event forecast.
+    Backtests are priced 7 days before close, so this applies to live questions only."""
+    if q.get("set") != "live":
+        return False
+    collected, ended = _when(q.get("collected_at")), _when(q.get("resolved_at"))
+    return bool(collected and ended and (ended - collected).total_seconds() < hours * 3600)
+
+
+def load(question_files, forecast_files, which_set="all", prompt_id=None, id_prefix=None,
+         exclude_in_play=False):
     """Returns (outcomes, probs, members, market). Live forecasts made after their market ended are
-    left out entirely, market price included (see made_after_resolution)."""
+    left out entirely, market price included (see made_after_resolution). With exclude_in_play, live
+    questions collected under 24 hours before their market ended are left out too (collected_in_play),
+    a sensitivity check."""
     outcomes, collected_price, scored = {}, {}, {}
     for q in _read(question_files):
         if not _in_sets(q, which_set):
             continue
         if id_prefix and not q["question_id"].startswith(id_prefix):
+            continue
+        if exclude_in_play and collected_in_play(q):
             continue
         if q.get("outcome") in ("0", "1"):
             outcomes[q["question_id"]] = int(q["outcome"])
@@ -550,7 +565,8 @@ def md_table(rows: List[Dict]) -> str:
 
 
 def run(args) -> None:
-    outcomes, probs, members, _ = load(args.questions, args.forecasts, args.set, args.prompt_id, args.id_prefix)
+    outcomes, probs, members, _ = load(args.questions, args.forecasts, args.set, args.prompt_id, args.id_prefix,
+                                       getattr(args, "exclude_in_play", False))
     if not outcomes:
         print("No resolved questions to score yet.")
         return
@@ -639,6 +655,8 @@ def main() -> None:
                     help="one or more question sets, e.g. --set settled contamination")
     ap.add_argument("--prompt-id", default=None, help="only forecasts made with this prompt version")
     ap.add_argument("--id-prefix", default=None, help="only questions whose id starts with this, e.g. aye-new:")
+    ap.add_argument("--exclude-in-play", action="store_true",
+                    help="leave out live questions collected under 24 h before their market ended (sensitivity check)")
     ap.add_argument("--out", default=str(ROOT / "results" / "latest"))
     ap.add_argument("--bins", type=int, default=10)
     ap.add_argument("--bootstrap", type=int, default=1000)
