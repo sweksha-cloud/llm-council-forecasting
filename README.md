@@ -54,7 +54,7 @@ Her results are imported read-only from a pinned commit of that repo (see `impor
 | `data/` | Results in the shared record format. Locked forecasts are never edited. |
 | `docs/` | Plan, record format, and notes |
 
-See [`docs/record_format.md`](docs/record_format.md) for the shared record format, [`docs/plan.md`](docs/plan.md) for the timeline, and [`docs/reproduce.md`](docs/reproduce.md) for rebuilding the results.
+**New to the project?** Start with [`docs/handoff.md`](docs/handoff.md). See [`docs/record_format.md`](docs/record_format.md) for the shared record format, [`docs/plan.md`](docs/plan.md) for the timeline, and [`docs/reproduce.md`](docs/reproduce.md) for rebuilding the results.
 
 ## Working rules
 
