@@ -77,6 +77,19 @@ Weigh their arguments and give the panel's final probability that this question 
 Respond with JSON only, in exactly this format:
 {{"reasoning": "<2-4 sentences>", "probability": <number between 0 and 1>}}"""
 
+# Debate, round 2 (forecast/debate.py, docs/decisions.md 2026-10-20): each member sees its own
+# first answer and the other members' answers (anonymised), and may revise.
+REVISE_USER = """{question_block}
+
+Your earlier forecast: probability {own_p:.2f}. {own_reasoning}
+
+The other panelists answered independently:
+{member_answers}
+
+Reconsider your forecast in light of their arguments. Keep it if you still think it is right.
+Respond with JSON only, in exactly this format:
+{{"reasoning": "<2-4 sentences>", "probability": <number between 0 and 1>}}"""
+
 # Structured-output schema passed to Ollama so replies come back as JSON.
 # Reasoning comes first so the model thinks before it commits to a number.
 RESPONSE_SCHEMA = {
