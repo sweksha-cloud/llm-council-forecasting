@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this code or the benchmark, please cite it as below."
+title: "LLM council forecasting: does deliberation beat a simple average?"
+authors:
+  - family-names: Shaw
+    given-names: Sweksha
+    affiliation: San José State University
+version: 1.0.0
+date-released: 2026-10-20
+repository-code: "https://github.com/sweksha-cloud/llm-council-forecasting"
+url: "https://sweksha-cloud.github.io/llm-council-forecasting/"
+keywords: [LLM evaluation, forecasting, prediction markets, LLM council, ensembles]
