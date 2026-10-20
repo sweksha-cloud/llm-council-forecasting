@@ -1,12 +1,22 @@
 # llm-council-forecasting
 
-**Does an LLM council forecast better than its members?**
+**Does an LLM council forecast better than a simple average of its members?**
 
 CS180 Individual Studies, San Jose State University, Fall 2026: Sweksha Shaw, advised by Prof. Bill Andreopoulos.
 
 In an LLM council, several language models answer the same question and a chairman model combines their answers into one. This project tests whether the council actually beats the models it's built from. The test bed is prediction-market questions from **Polymarket** and **Kalshi**, which resolve to a real outcome and have a market price to compare against.
 
 Every model, and the council, gives a **probability** that the event happens. Forecasts are scored with proper scoring rules (Brier and log score), accuracy, calibration and sharpness (ECE, reliability diagrams, mean distance from 50%), discrimination (AUROC), ground-truth Yes/No call metrics (balanced accuracy, MCC, precision/recall), and a set of baselines that ends with the market price.
+
+## Research question
+
+> **Does a deliberating council of small LLMs forecast better than a simple average of its members' probabilities, and what explains the difference?**
+
+1. **Deliberation vs averaging (main):** each council against the mean and logit pools of exactly its own members, on 1,039 settled questions. Paired Brier differences with source-stratified bootstrap intervals; the power analysis gives the smallest difference we could detect (about 0.013 Brier vs the pool, [`docs/power.md`](docs/power.md)), so "no difference" is a result too.
+2. **Why (chair ablation):** the chair is re-run seeing only the members' numbers, only their reasoning, or with each member as chair, so reasoning can be separated from averaging (`forecast/rechair.py`).
+3. **How far from the market:** every setup against the market price 7 days before close, and on the live set, which can't leak.
+
+Supporting checks: calibration, memorisation (contamination split by knowledge cutoff), robustness by source, topic, horizon and market certainty, and variance across seeds. Scope: open 8B models without retrieval; larger models and multi-round debate are next semester. The sample and every comparison were fixed before any results ([`docs/decisions.md`](docs/decisions.md), 2026-10-16 and 2026-10-20).
 
 **Results dashboard:** `make dashboard` builds `dashboard/index.html` from the committed data. **Reproducing everything:** `make setup && make reproduce`; see [`docs/reproduce.md`](docs/reproduce.md).
 
