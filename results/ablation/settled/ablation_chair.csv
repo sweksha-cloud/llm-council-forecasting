@@ -1,0 +1,6 @@
+council,chair,n_common,council_brier,chair_alone_brier,vs_mean_pool,vs_mean_pool_ci_low,vs_mean_pool_ci_high,vs_chair_alone,vs_chair_alone_ci_low,vs_chair_alone_ci_high,spearman_chair_vs_council
+council:chair=gemma2:9b,gemma2:9b,359,0.2625,0.2715,0.0091,0.0031,0.0151,-0.0089,-0.0225,0.0043,0.9
+council:chair=llama3.1:8b,llama3.1:8b,359,0.2556,0.2711,0.0022,-0.004,0.008,-0.0155,-0.0279,-0.0026,0.9
+council:chair=mistral:latest,mistral:latest,359,0.2599,0.2737,0.0065,-0.007,0.0196,-0.0138,-0.0302,0.004,0.9
+council:chair=phi3:medium,phi3:medium,359,0.2541,0.2595,0.0006,-0.0053,0.0066,-0.0055,-0.0197,0.0083,0.9
+council:chair=qwen3:8b,qwen3:8b,359,0.2639,0.29,0.0105,0.004,0.018,-0.0261,-0.0445,-0.0081,0.9
