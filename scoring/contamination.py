@@ -23,6 +23,7 @@ from scoring.proper import accuracy, brier, mean_brier
 # Ollama tag prefix -> (cutoff, basis). Keep in step with docs/models.md.
 MODEL_CUTOFFS: Dict[str, Tuple[date, str]] = {
     "llama3.1": (date(2023, 12, 31), "stated cutoff"),
+    "llama3.3": (date(2023, 12, 31), "stated cutoff"),
     "phi3": (date(2023, 10, 31), "stated cutoff"),
     "mistral": (date(2024, 5, 22), "release date"),
     "gemma2": (date(2024, 6, 27), "release date"),

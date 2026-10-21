@@ -38,6 +38,7 @@ results:          ## all results tables (results/*/)
 	$(PY) -m analysis.ablation --set settled --out results/ablation/settled
 	$(PY) -m analysis.chair_weights --set live --out results/live
 	$(PY) -m analysis.debate --set settled --out results/debate
+	$(PY) -m analysis.ablation --set settled --forecasts data/forecasts.csv data/ablation/forecasts.csv data/scale/forecasts.csv --out results/scale   # 70B chair, once run
 	$(PY) -m analysis.chair_weights --set settled settled-ext --forecasts data/forecasts.csv data/ablation/forecasts.csv --out results/ablation
 	$(PY) -m scoring.report --set contamination --out results/contamination
 	$(PY) -m scoring.report --set settled settled-ext contamination --out results/backtest   # includes the contamination split
