@@ -11,6 +11,7 @@ date is used.
 | Ollama tag | Model | Released | Stated training cutoff | Source |
 |---|---|---|---|---|
 | `llama3.1:8b` | Llama 3.1 8B Instruct (Meta) | Jul 2024 | Dec 2023 | Meta model card |
+| `llama3.3:70b` | Llama 3.3 70B Instruct (Meta), scale check only (`scripts/queue_70b.sh`) | Dec 2024 | Dec 2023 | Meta model card |
 | `mistral:latest` | Mistral 7B Instruct v0.3 | May 2024 | not published | — |
 | `qwen3:8b` | Qwen3 8B (Alibaba) | Apr 2025 | not published | — |
 | `gemma2:9b` | Gemma 2 9B (Google) | Jun 2024 | not published | — |

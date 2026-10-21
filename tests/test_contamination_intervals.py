@@ -26,3 +26,12 @@ def test_stratified_interval_keeps_the_source_mix():
     assert gap_interval(before, after, 200, keys_before=kb, keys_after=ka) == (0.0, 0.0)
     lo, hi = gap_interval(before, after, 200)
     assert lo < 0 < hi
+
+
+def test_pooled_baselines_use_the_council_members_cutoff():
+    from scoring.report import members_of_setups
+    probs = {"single:llama3.1:8b": {}, "single:qwen3:8b": {}, "single:deepseek-r1:8b": {},
+             "council:chair=llama3.1:8b": {}, "baseline:mean": {}}
+    members = {("council:chair=llama3.1:8b", "q1"): ["llama3.1:8b", "qwen3:8b"]}
+    got = members_of_setups(probs, members)
+    assert got["baseline:mean"] == ["llama3.1:8b", "qwen3:8b"]   # deepseek isn't in the pool, so not in its cutoff

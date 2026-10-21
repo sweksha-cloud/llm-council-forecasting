@@ -15,7 +15,7 @@ The SJSU GPU server runs the models through Ollama. All analysis can run anywher
    ```
 2. **Copy the repo over from your laptop.** Spark gets no GitHub credentials; code goes up with rsync and results come back with scp, then get committed on the laptop:
    ```bash
-   rsync -az --exclude .venv --exclude logs --exclude data/forecasts.csv --exclude data/ablation --exclude data/debate --exclude .git ./ <username>@100.110.180.56:llm-council-forecasting/
+   rsync -az --exclude .venv --exclude logs --exclude data/forecasts.csv --exclude data/ablation --exclude data/debate --exclude data/scale --exclude .git ./ <username>@100.110.180.56:llm-council-forecasting/
    ```
    The forecasting and collection code uses only the Python standard library, so no environment is needed on spark.
 
@@ -41,7 +41,7 @@ deepseek-r1:8b (the Qwen3-based build on spark) ignores `think=false` and reason
 
 1. From the laptop, on an up-to-date `main`, send the code and questions up (same rsync as above; it leaves spark's `data/forecasts.csv` alone):
    ```bash
-   rsync -az --exclude .venv --exclude logs --exclude data/forecasts.csv --exclude data/ablation --exclude data/debate --exclude .git --exclude .notes --exclude .claude ./ <username>@100.110.180.56:llm-council-forecasting/
+   rsync -az --exclude .venv --exclude logs --exclude data/forecasts.csv --exclude data/ablation --exclude data/debate --exclude data/scale --exclude .git --exclude .notes --exclude .claude ./ <username>@100.110.180.56:llm-council-forecasting/
    ```
 2. On spark, refill live outcomes (rsync replaced spark's `questions.csv`, which the cron job keeps current) and check the code:
    ```bash

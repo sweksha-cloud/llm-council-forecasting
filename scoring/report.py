@@ -183,7 +183,8 @@ def members_of_setups(probs: Probs, members: Dict[Tuple[str, str], List[str]]) -
     for (setup, _), ms in members.items():
         out.setdefault(setup, [])
         out[setup] += [m for m in ms if m not in out[setup]]
-    singles = [s.split(":", 1)[1] for s in probs if s.startswith("single:")]
+    council_models = sorted({m for ms in members.values() for m in ms})
+    singles = council_models or [s.split(":", 1)[1] for s in probs if s.startswith("single:")]
     for s in probs:
         if s.startswith("baseline:") and s not in ("baseline:always_no", "baseline:base_rate", "baseline:best_single"):
             out[s] = singles
