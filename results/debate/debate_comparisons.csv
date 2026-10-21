@@ -1,0 +1,16 @@
+setup,versus,source,n,mean_diff,ci_low,ci_high,verdict
+debate:mean-r2,baseline:mean,all,359,0.0051,0.0021,0.0083,debate worse
+debate:mean-r2,baseline:mean,kalshi,200,0.0042,-0.0005,0.0091,no clear difference
+debate:mean-r2,baseline:mean,polymarket,159,0.0062,0.0026,0.0099,debate worse
+debate:mean-r2,baseline:best_single,all,359,-0.001,-0.0161,0.0134,no clear difference
+debate:mean-r2,baseline:best_single,kalshi,200,-0.0114,-0.0347,0.0087,no clear difference
+debate:mean-r2,baseline:best_single,polymarket,159,0.0119,-0.0114,0.036,no clear difference
+debate:mean-r2,market,all,359,0.1123,0.0875,0.1376,debate worse
+debate:mean-r2,market,kalshi,200,0.1251,0.0885,0.1614,debate worse
+debate:mean-r2,market,polymarket,159,0.0962,0.0585,0.1341,debate worse
+debate:mean-r2,council:chair=llama3.1:8b,all,359,0.0029,-0.0035,0.0095,no clear difference
+debate:mean-r2,council:chair=llama3.1:8b,kalshi,200,0.0042,-0.0052,0.013,no clear difference
+debate:mean-r2,council:chair=llama3.1:8b,polymarket,159,0.0013,-0.0078,0.0102,no clear difference
+debate:mean-r2,council:chair=qwen3:8b,all,359,-0.0054,-0.0122,0.0011,no clear difference
+debate:mean-r2,council:chair=qwen3:8b,kalshi,200,-0.0061,-0.0166,0.0046,no clear difference
+debate:mean-r2,council:chair=qwen3:8b,polymarket,159,-0.0046,-0.0141,0.0033,no clear difference
