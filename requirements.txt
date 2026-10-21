@@ -2,3 +2,4 @@
 # Pinned so `make setup` gives the same environment the committed results were built with.
 openpyxl==3.1.5   # reads Aye's .xlsx files (importers/)
 pytest==9.1.1     # tests/
+matplotlib==3.11.2   # analysis/figures.py (paper figures)

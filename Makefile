@@ -4,7 +4,7 @@
 
 PY ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 
-.PHONY: setup test aye-prices import results dashboard site reproduce clean postrun
+.PHONY: setup test aye-prices import results figures dashboard site reproduce clean postrun
 
 setup:            ## create .venv and install pinned dependencies
 	python3 -m venv .venv
@@ -42,6 +42,9 @@ results:          ## all results tables (results/*/)
 	$(PY) -m analysis.chair_weights --set settled settled-ext --forecasts data/forecasts.csv data/ablation/forecasts.csv --out results/ablation
 	$(PY) -m scoring.report --set contamination --out results/contamination
 	$(PY) -m scoring.report --set settled settled-ext contamination --out results/backtest   # includes the contamination split
+
+figures:          ## paper figures in results/figures/, from results/ only
+	$(PY) -m analysis.figures
 
 dashboard:        ## dashboard/index.html, built from the same data files
 	$(PY) -m dashboard.build
