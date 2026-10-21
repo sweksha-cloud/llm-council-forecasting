@@ -1,3 +1,10 @@
 setup,n,rmse_fitted,rmse_equal_weights,nearest_gemma2:9b,nearest_llama3.1:8b,nearest_mistral:latest,nearest_phi3:medium,nearest_qwen3:8b
+council:chair=gemma2:9b,1039,0.34,0.346,0.388,0.214,0.192,0.132,0.075
 council:chair=llama3.1:8b,1039,0.354,0.411,0.33,0.274,0.209,0.138,0.049
+council:chair=mistral:latest,1038,0.632,0.699,0.314,0.249,0.213,0.155,0.069
+council:chair=phi3:medium,1039,0.331,0.394,0.363,0.279,0.169,0.141,0.047
 council:chair=qwen3:8b,1039,0.515,0.532,0.369,0.221,0.194,0.136,0.08
+council:numbers-only:chair=llama3.1:8b,1039,0.303,0.374,0.361,0.261,0.183,0.153,0.042
+council:numbers-only:chair=qwen3:8b,1039,0.415,0.459,0.398,0.244,0.169,0.141,0.047
+council:reasoning-only:chair=llama3.1:8b,1039,0.61,0.632,0.261,0.311,0.203,0.135,0.09
+council:reasoning-only:chair=qwen3:8b,1039,0.746,0.857,0.358,0.2,0.133,0.115,0.193

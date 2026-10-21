@@ -1,0 +1,100 @@
+# Chair ablations (settled)
+
+Same members' answers on every question; only what the chair sees, or who chairs, changes. Paired Brier difference, first setup minus second (negative = first better), 95% bootstrap interval stratified by source.
+
+## What the chair sees
+
+| setup | versus | source | n | mean_diff | ci_low | ci_high | verdict |
+|---|---|---|---|---|---|---|---|
+| council:chair=gemma2:9b | baseline:mean | all | 359 | 0.0091 | 0.0031 | 0.0151 | first worse |
+| council:chair=gemma2:9b | baseline:mean | kalshi | 200 | 0.0123 | 0.0035 | 0.0224 | first worse |
+| council:chair=gemma2:9b | baseline:mean | polymarket | 159 | 0.0051 | -0.0011 | 0.0117 | no clear difference |
+| council:chair=gemma2:9b | baseline:logit_pool | all | 359 | 0.0014 | -0.0067 | 0.0083 | no clear difference |
+| council:chair=gemma2:9b | baseline:logit_pool | kalshi | 200 | 0.0031 | -0.008 | 0.0147 | no clear difference |
+| council:chair=gemma2:9b | baseline:logit_pool | polymarket | 159 | -0.0007 | -0.0121 | 0.0088 | no clear difference |
+| council:chair=llama3.1:8b | baseline:mean | all | 359 | 0.0022 | -0.004 | 0.008 | no clear difference |
+| council:chair=llama3.1:8b | baseline:mean | kalshi | 200 | 0.0 | -0.0084 | 0.0089 | no clear difference |
+| council:chair=llama3.1:8b | baseline:mean | polymarket | 159 | 0.0049 | -0.0027 | 0.0135 | no clear difference |
+| council:chair=llama3.1:8b | baseline:logit_pool | all | 359 | -0.0055 | -0.0161 | 0.0037 | no clear difference |
+| council:chair=llama3.1:8b | baseline:logit_pool | kalshi | 200 | -0.0092 | -0.0235 | 0.0055 | no clear difference |
+| council:chair=llama3.1:8b | baseline:logit_pool | polymarket | 159 | -0.0008 | -0.015 | 0.0129 | no clear difference |
+| council:chair=mistral:latest | baseline:mean | all | 359 | 0.0065 | -0.007 | 0.0196 | no clear difference |
+| council:chair=mistral:latest | baseline:mean | kalshi | 200 | -0.0017 | -0.0221 | 0.021 | no clear difference |
+| council:chair=mistral:latest | baseline:mean | polymarket | 159 | 0.0167 | 0.0041 | 0.0291 | first worse |
+| council:chair=mistral:latest | baseline:logit_pool | all | 359 | -0.0012 | -0.0178 | 0.0145 | no clear difference |
+| council:chair=mistral:latest | baseline:logit_pool | kalshi | 200 | -0.0109 | -0.0358 | 0.0151 | no clear difference |
+| council:chair=mistral:latest | baseline:logit_pool | polymarket | 159 | 0.0109 | -0.005 | 0.0259 | no clear difference |
+| council:chair=phi3:medium | baseline:mean | all | 359 | 0.0006 | -0.0053 | 0.0066 | no clear difference |
+| council:chair=phi3:medium | baseline:mean | kalshi | 200 | 0.0003 | -0.0086 | 0.0093 | no clear difference |
+| council:chair=phi3:medium | baseline:mean | polymarket | 159 | 0.001 | -0.0066 | 0.0081 | no clear difference |
+| council:chair=phi3:medium | baseline:logit_pool | all | 359 | -0.0071 | -0.0171 | 0.0021 | no clear difference |
+| council:chair=phi3:medium | baseline:logit_pool | kalshi | 200 | -0.009 | -0.0236 | 0.0055 | no clear difference |
+| council:chair=phi3:medium | baseline:logit_pool | polymarket | 159 | -0.0047 | -0.0196 | 0.0086 | no clear difference |
+| council:chair=qwen3:8b | baseline:mean | all | 359 | 0.0105 | 0.004 | 0.018 | first worse |
+| council:chair=qwen3:8b | baseline:mean | kalshi | 200 | 0.0103 | -0.0009 | 0.0225 | no clear difference |
+| council:chair=qwen3:8b | baseline:mean | polymarket | 159 | 0.0107 | 0.003 | 0.0208 | first worse |
+| council:chair=qwen3:8b | baseline:logit_pool | all | 359 | 0.0028 | -0.005 | 0.0105 | no clear difference |
+| council:chair=qwen3:8b | baseline:logit_pool | kalshi | 200 | 0.001 | -0.0095 | 0.0121 | no clear difference |
+| council:chair=qwen3:8b | baseline:logit_pool | polymarket | 159 | 0.005 | -0.0065 | 0.0148 | no clear difference |
+| council:numbers-only:chair=llama3.1:8b | council:chair=llama3.1:8b | all | 359 | -0.0011 | -0.0072 | 0.0056 | no clear difference |
+| council:numbers-only:chair=llama3.1:8b | council:chair=llama3.1:8b | kalshi | 200 | -0.0014 | -0.0105 | 0.0078 | no clear difference |
+| council:numbers-only:chair=llama3.1:8b | council:chair=llama3.1:8b | polymarket | 159 | -0.0006 | -0.0096 | 0.0105 | no clear difference |
+| council:numbers-only:chair=llama3.1:8b | baseline:mean | all | 359 | 0.0011 | -0.0038 | 0.0063 | no clear difference |
+| council:numbers-only:chair=llama3.1:8b | baseline:mean | kalshi | 200 | -0.0014 | -0.0086 | 0.0053 | no clear difference |
+| council:numbers-only:chair=llama3.1:8b | baseline:mean | polymarket | 159 | 0.0043 | -0.0023 | 0.0131 | no clear difference |
+| council:numbers-only:chair=llama3.1:8b | baseline:logit_pool | all | 359 | -0.0066 | -0.0156 | 0.0015 | no clear difference |
+| council:numbers-only:chair=llama3.1:8b | baseline:logit_pool | kalshi | 200 | -0.0106 | -0.0235 | 0.0013 | no clear difference |
+| council:numbers-only:chair=llama3.1:8b | baseline:logit_pool | polymarket | 159 | -0.0014 | -0.0151 | 0.0108 | no clear difference |
+| council:numbers-only:chair=qwen3:8b | council:chair=qwen3:8b | all | 359 | -0.0004 | -0.0116 | 0.0112 | no clear difference |
+| council:numbers-only:chair=qwen3:8b | council:chair=qwen3:8b | kalshi | 200 | 0.0013 | -0.0163 | 0.019 | no clear difference |
+| council:numbers-only:chair=qwen3:8b | council:chair=qwen3:8b | polymarket | 159 | -0.0026 | -0.0186 | 0.0106 | no clear difference |
+| council:numbers-only:chair=qwen3:8b | baseline:mean | all | 359 | 0.0101 | 0.0016 | 0.0197 | first worse |
+| council:numbers-only:chair=qwen3:8b | baseline:mean | kalshi | 200 | 0.0116 | -0.0013 | 0.0274 | no clear difference |
+| council:numbers-only:chair=qwen3:8b | baseline:mean | polymarket | 159 | 0.0082 | -0.0025 | 0.019 | no clear difference |
+| council:numbers-only:chair=qwen3:8b | baseline:logit_pool | all | 359 | 0.0024 | -0.0093 | 0.0147 | no clear difference |
+| council:numbers-only:chair=qwen3:8b | baseline:logit_pool | kalshi | 200 | 0.0023 | -0.014 | 0.0213 | no clear difference |
+| council:numbers-only:chair=qwen3:8b | baseline:logit_pool | polymarket | 159 | 0.0024 | -0.0156 | 0.0176 | no clear difference |
+| council:reasoning-only:chair=llama3.1:8b | council:chair=llama3.1:8b | all | 359 | 0.0091 | -0.0026 | 0.0208 | no clear difference |
+| council:reasoning-only:chair=llama3.1:8b | council:chair=llama3.1:8b | kalshi | 200 | 0.0081 | -0.0086 | 0.0259 | no clear difference |
+| council:reasoning-only:chair=llama3.1:8b | council:chair=llama3.1:8b | polymarket | 159 | 0.0103 | -0.0064 | 0.0279 | no clear difference |
+| council:reasoning-only:chair=llama3.1:8b | baseline:mean | all | 359 | 0.0113 | -0.0013 | 0.0244 | no clear difference |
+| council:reasoning-only:chair=llama3.1:8b | baseline:mean | kalshi | 200 | 0.0081 | -0.01 | 0.0265 | no clear difference |
+| council:reasoning-only:chair=llama3.1:8b | baseline:mean | polymarket | 159 | 0.0152 | -0.0007 | 0.0314 | no clear difference |
+| council:reasoning-only:chair=llama3.1:8b | baseline:logit_pool | all | 359 | 0.0036 | -0.0106 | 0.0174 | no clear difference |
+| council:reasoning-only:chair=llama3.1:8b | baseline:logit_pool | kalshi | 200 | -0.0011 | -0.021 | 0.0197 | no clear difference |
+| council:reasoning-only:chair=llama3.1:8b | baseline:logit_pool | polymarket | 159 | 0.0095 | -0.0087 | 0.0279 | no clear difference |
+| council:reasoning-only:chair=qwen3:8b | council:chair=qwen3:8b | all | 359 | 0.014 | 0.0021 | 0.0267 | first worse |
+| council:reasoning-only:chair=qwen3:8b | council:chair=qwen3:8b | kalshi | 200 | 0.0103 | -0.0044 | 0.0247 | no clear difference |
+| council:reasoning-only:chair=qwen3:8b | council:chair=qwen3:8b | polymarket | 159 | 0.0186 | 0.0003 | 0.0392 | first worse |
+| council:reasoning-only:chair=qwen3:8b | baseline:mean | all | 359 | 0.0245 | 0.0111 | 0.0388 | first worse |
+| council:reasoning-only:chair=qwen3:8b | baseline:mean | kalshi | 200 | 0.0206 | 0.003 | 0.0389 | first worse |
+| council:reasoning-only:chair=qwen3:8b | baseline:mean | polymarket | 159 | 0.0294 | 0.0079 | 0.0508 | first worse |
+| council:reasoning-only:chair=qwen3:8b | baseline:logit_pool | all | 359 | 0.0168 | 0.0037 | 0.0303 | first worse |
+| council:reasoning-only:chair=qwen3:8b | baseline:logit_pool | kalshi | 200 | 0.0114 | -0.0033 | 0.0272 | no clear difference |
+| council:reasoning-only:chair=qwen3:8b | baseline:logit_pool | polymarket | 159 | 0.0236 | 0.0021 | 0.045 | first worse |
+
+
+## Who chairs (full view, questions every full-view council answered)
+
+| council | chair | n_common | council_brier | chair_alone_brier | vs_mean_pool | vs_mean_pool_ci_low | vs_mean_pool_ci_high | vs_chair_alone | vs_chair_alone_ci_low | vs_chair_alone_ci_high | spearman_chair_vs_council |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| council:chair=gemma2:9b | gemma2:9b | 359 | 0.2625 | 0.2715 | 0.0091 | 0.0031 | 0.0151 | -0.0089 | -0.0225 | 0.0043 | 0.9 |
+| council:chair=llama3.1:8b | llama3.1:8b | 359 | 0.2556 | 0.2711 | 0.0022 | -0.004 | 0.008 | -0.0155 | -0.0279 | -0.0026 | 0.9 |
+| council:chair=mistral:latest | mistral:latest | 359 | 0.2599 | 0.2737 | 0.0065 | -0.007 | 0.0196 | -0.0138 | -0.0302 | 0.004 | 0.9 |
+| council:chair=phi3:medium | phi3:medium | 359 | 0.2541 | 0.2595 | 0.0006 | -0.0053 | 0.0066 | -0.0055 | -0.0197 | 0.0083 | 0.9 |
+| council:chair=qwen3:8b | qwen3:8b | 359 | 0.2639 | 0.29 | 0.0105 | 0.004 | 0.018 | -0.0261 | -0.0445 | -0.0081 | 0.9 |
+
+
+## How far each council moves from the mean pool
+
+| council | n | mean_abs_shift_from_mean_pool | share_within_0.05 |
+|---|---|---|---|
+| council:chair=gemma2:9b | 359 | 0.0396 | 0.7326 |
+| council:chair=llama3.1:8b | 359 | 0.0419 | 0.7298 |
+| council:chair=mistral:latest | 359 | 0.0885 | 0.4513 |
+| council:chair=phi3:medium | 359 | 0.0375 | 0.7716 |
+| council:chair=qwen3:8b | 359 | 0.0472 | 0.6769 |
+| council:numbers-only:chair=llama3.1:8b | 359 | 0.0251 | 0.8858 |
+| council:numbers-only:chair=qwen3:8b | 359 | 0.0412 | 0.7883 |
+| council:reasoning-only:chair=llama3.1:8b | 359 | 0.0947 | 0.3565 |
+| council:reasoning-only:chair=qwen3:8b | 359 | 0.1028 | 0.312 |

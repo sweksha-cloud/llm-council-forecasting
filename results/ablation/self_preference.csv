@@ -1,3 +1,6 @@
 chair,versus_chairs,n,own_weight_minus_others,ci_low,ci_high,verdict
-llama3.1:8b,qwen3:8b,1039,0.047,-0.121,0.175,no clear difference
-qwen3:8b,llama3.1:8b,1039,0.197,0.151,0.243,favours own model
+gemma2:9b,"llama3.1:8b, mistral:latest, phi3:medium, qwen3:8b",1038,0.095,0.063,0.132,favours own model
+llama3.1:8b,"gemma2:9b, mistral:latest, phi3:medium, qwen3:8b",1038,0.034,-0.025,0.088,no clear difference
+mistral:latest,"gemma2:9b, llama3.1:8b, phi3:medium, qwen3:8b",1038,0.149,0.079,0.215,favours own model
+phi3:medium,"gemma2:9b, llama3.1:8b, mistral:latest, qwen3:8b",1038,0.032,0.001,0.058,favours own model
+qwen3:8b,"gemma2:9b, llama3.1:8b, mistral:latest, phi3:medium",1038,0.173,0.13,0.215,favours own model

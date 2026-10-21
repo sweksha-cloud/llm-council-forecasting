@@ -1,0 +1,10 @@
+council,n,mean_abs_shift_from_mean_pool,share_within_0.05
+council:chair=gemma2:9b,359,0.0396,0.7326
+council:chair=llama3.1:8b,359,0.0419,0.7298
+council:chair=mistral:latest,359,0.0885,0.4513
+council:chair=phi3:medium,359,0.0375,0.7716
+council:chair=qwen3:8b,359,0.0472,0.6769
+council:numbers-only:chair=llama3.1:8b,359,0.0251,0.8858
+council:numbers-only:chair=qwen3:8b,359,0.0412,0.7883
+council:reasoning-only:chair=llama3.1:8b,359,0.0947,0.3565
+council:reasoning-only:chair=qwen3:8b,359,0.1028,0.312
