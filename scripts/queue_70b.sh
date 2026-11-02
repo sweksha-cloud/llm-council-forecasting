@@ -11,15 +11,20 @@ cd ~/llm-council-forecasting
 while tmux has-session -t queue 2>/dev/null || tmux has-session -t followups 2>/dev/null; do sleep 60; done
 log() { echo "$(date -u +%FT%TZ) scale: $*" >> logs/cmds_spark.log; }
 M=llama3.3:70b
+# Spark's GPU driver has been down since ~2026-10-28, so this runs on the CPU (~3-4 days):
+# use half of spark's 20 cores so other users keep the rest, and allow slow calls.
+export FORECAST_NUM_THREAD=${FORECAST_NUM_THREAD:-10}
+T=3600
+log "FORECAST_NUM_THREAD=$FORECAST_NUM_THREAD timeout=${T}s"
 # If someone else already has this model on spark, use it and never remove it.
 if ollama list | grep -q "^$M"; then PULLED=0; log "$M already on spark (not ours): will not remove it"
 else PULLED=1; log "ollama pull $M"; ollama pull $M || exit 1; fi
 ollama list | grep "^$M" >> logs/cmds_spark.log
 log "single $M on settled"
-python3 -u -m forecast.run_forecasts --set settled --models $M --chairmen --out data/scale/forecasts.csv \
+python3 -u -m forecast.run_forecasts --set settled --models $M --chairmen --out data/scale/forecasts.csv --timeout $T \
     2>&1 | tee -a logs/scale_$(date +%Y%m%d).log
 log "chair $M on settled"
-python3 -u -m forecast.rechair --set settled --variants --full-chairmen $M --out data/scale/forecasts.csv \
+python3 -u -m forecast.rechair --set settled --variants --full-chairmen $M --out data/scale/forecasts.csv --timeout $T \
     2>&1 | tee -a logs/scale_$(date +%Y%m%d).log
-if [ "$PULLED" = 1 ]; then log "ollama rm $M (only the model this script pulled)"; ollama rm $M; fi
+if [ "$PULLED" = 1 ]; then log "ollama rm $M (only the model this script pulled)"; ollama stop $M; ollama rm $M; fi
 log "finished"
