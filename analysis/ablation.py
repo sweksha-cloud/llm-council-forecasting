@@ -31,7 +31,7 @@ from scoring.proper import mean_brier
 from scoring.report import (ROOT, add_baselines, load, load_sources, md_table, paired_brier_diff,
                             reference, spearman, write_csv)
 
-VARIANTS = ("numbers-only", "reasoning-only")
+VARIANTS = ("numbers-only", "reasoning-only", "anchored")
 POOLS = ("baseline:mean", "baseline:logit_pool")
 
 

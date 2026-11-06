@@ -163,3 +163,14 @@ def test_shift_table_by_hand():
 def test_no_ablation_rows_means_no_tables(run_files):
     q, main, _ = run_files
     assert ablation.run([str(q)], [str(main)], ["settled"], n_boot=10) is None
+
+
+def test_anchored_view_shows_every_member_shuffled_with_their_average():
+    from forecast import prompts
+    from forecast.rechair import VIEWS, setup_name
+    answers = [(0.2, "low"), (0.6, "high"), (0.4, "mid")]
+    text = prompts.member_anchored_text(answers)
+    assert text == prompts.member_anchored_text(answers)          # same order every time for a question
+    assert all(f"probability {p:.2f}. {r}" in text for p, r in answers)
+    assert text.endswith("Average of the 3 analysts: 0.40")
+    assert "anchored" in VIEWS and setup_name("anchored", "qwen3:8b") == "council:anchored:chair=qwen3:8b"

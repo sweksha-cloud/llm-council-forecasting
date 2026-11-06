@@ -53,6 +53,7 @@ VIEWS = {
     "full": (prompts.CHAIRMAN_SYSTEM, prompts.CHAIRMAN_USER, prompts.member_answers_text),
     "numbers-only": (prompts.CHAIRMAN_NUMBERS_SYSTEM, prompts.CHAIRMAN_NUMBERS_USER, prompts.member_numbers_text),
     "reasoning-only": (prompts.CHAIRMAN_REASONING_SYSTEM, prompts.CHAIRMAN_REASONING_USER, prompts.member_reasoning_text),
+    "anchored": (prompts.CHAIRMAN_ANCHORED_SYSTEM, prompts.CHAIRMAN_ANCHORED_USER, prompts.member_anchored_text),
 }
 
 
@@ -141,7 +142,7 @@ def run(args) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--set", nargs="+", choices=BACKTEST_SETS, default=BACKTEST_SETS)
-    ap.add_argument("--variants", nargs="*", choices=["numbers-only", "reasoning-only"],
+    ap.add_argument("--variants", nargs="*", choices=["numbers-only", "reasoning-only", "anchored"],
                     default=["numbers-only", "reasoning-only"])
     ap.add_argument("--chairmen", nargs="*", default=["llama3.1:8b", "qwen3:8b"], help="chairs for the variants")
     ap.add_argument("--full-chairmen", nargs="*", default=[],
