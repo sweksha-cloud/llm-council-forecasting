@@ -30,3 +30,10 @@ llama3.1:8b-instruct-q4_K_M    46e0c10c039e    4.9 GB    3 months ago
 2026-10-21T15:59:51Z followups: variance seed 2
 2026-10-21T18:11:13Z followups: variance seed 3
 2026-10-21T20:22:38Z followups: finished
+2026-11-02T13:50:01Z scale: FORECAST_NUM_THREAD=10 timeout=3600s
+2026-11-02T13:50:01Z scale: ollama pull llama3.3:70b
+llama3.3:70b                   a6eb4748fd29    42 GB     Less than a second ago    
+2026-11-02T13:56:40Z scale: single llama3.3:70b on settled
+2026-11-02T19:21:56Z scale: chair llama3.3:70b on settled
+2026-11-03T04:32:41Z scale: ollama rm llama3.3:70b (only the model this script pulled)
+2026-11-03T04:32:48Z scale: finished

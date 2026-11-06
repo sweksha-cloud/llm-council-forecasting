@@ -9,6 +9,7 @@ from pathlib import Path
 
 import pytest
 
+from dashboard.build import forecast_files
 from scoring.report import add_baselines, add_reference_baselines, load, score_table
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -45,7 +46,7 @@ def site_scores(tmp_path, ds):
 
 
 def report_scores(spec):
-    outcomes, probs, members, _ = load([str(ROOT / spec["questions"])], [str(ROOT / spec["forecasts"])],
+    outcomes, probs, members, _ = load([str(ROOT / spec["questions"])], [str(ROOT / f) for f in forecast_files(spec)],
                                        spec["set"] or "all", None, spec["prefix"])
     add_baselines(probs, outcomes, members=members)
     add_reference_baselines(probs, outcomes)

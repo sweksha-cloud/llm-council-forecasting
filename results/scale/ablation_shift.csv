@@ -1,6 +1,7 @@
 council,n,mean_abs_shift_from_mean_pool,share_within_0.05
 council:chair=gemma2:9b,359,0.0396,0.7326
 council:chair=llama3.1:8b,359,0.0419,0.7298
+council:chair=llama3.3:70b,359,0.0335,0.8022
 council:chair=mistral:latest,359,0.0885,0.4513
 council:chair=phi3:medium,359,0.0375,0.7716
 council:chair=qwen3:8b,359,0.0472,0.6769
