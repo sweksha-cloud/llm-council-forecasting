@@ -32,6 +32,7 @@ import argparse
 import csv
 import hashlib
 import json
+import os
 import re
 import time
 import urllib.error
@@ -99,6 +100,8 @@ class OllamaBackend:
         self.host = host.rstrip("/")
         self.url = self.host + "/api/chat"
         self.options = {"temperature": temperature, "seed": seed}
+        if os.environ.get("FORECAST_NUM_THREAD"):  # cap CPU threads on a shared machine without a GPU
+            self.options["num_thread"] = int(os.environ["FORECAST_NUM_THREAD"])
         self.timeout = timeout
         self.no_think = no_think
         self.think_budget = think_budget
