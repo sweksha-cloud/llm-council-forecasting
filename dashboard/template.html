@@ -64,7 +64,29 @@ header { display: grid; gap: 4px; }
 
 /* Controls */
 .controls { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: end; padding: 16px; background: var(--surface);
-  border: 1px solid var(--line); border-radius: 10px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
+  border: 1px solid var(--line); border-radius: 10px; }
+/* Section nav: stays on screen, one link per section shown for this question set */
+.secnav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; display: flex; flex-wrap: wrap; align-items: center;
+  gap: 4px 6px; padding: 8px 10px; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px);
+  border: 1px solid var(--line); border-radius: 10px; }
+.secnav .set { font: 500 11px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-right: 6px; }
+.secnav a { font: 500 13px var(--body); color: var(--ink); text-decoration: none; padding: 5px 9px; border-radius: 6px; }
+.secnav a:hover { background: var(--sunken); }
+.secnav a[aria-current="true"] { background: var(--accent-soft); color: var(--accent); }
+.secnav a[hidden] { display: none; }
+section[id] { scroll-margin-top: 64px; }
+.filter-row { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 14px; color: var(--muted); }
+details.more > summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 10px; }
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::before { content: "\25B8"; color: var(--muted); font-size: 14px; transition: transform 120ms; }
+details.more[open] > summary::before { transform: rotate(90deg); }
+details.more > summary h2 { display: inline; }
+details.more > summary .hint { font-size: 13px; color: var(--muted); }
+details.more[open] > summary .hint { display: none; }
+details.more > .body { display: grid; gap: 14px; margin-top: 14px; }
+.totop { position: fixed; right: 18px; bottom: 18px; z-index: 6; font: 500 13px var(--body); padding: 8px 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; box-shadow: 0 2px 8px rgb(0 0 0 / 0.12); }
+.totop[hidden] { display: none; }
 .field { display: grid; gap: 6px; }
 .field > span { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; flex-wrap: wrap; }
@@ -151,7 +173,7 @@ code { font: 13px var(--mono); background: var(--sunken); padding: 1px 5px; bord
     <p class="lede">Does a council of language models forecast real events better than the models it's built from, or than the prediction market? Every setup is scored against how the question actually resolved.</p>
   </header>
 
-  <div class="controls" role="group" aria-label="Filters">
+  <div class="controls" id="main-controls" role="group" aria-label="Filters">
     <div class="field"><span>Results</span><div class="seg" id="ds"></div></div>
     <label class="field"><span>Market</span><select id="f-source"></select></label>
     <label class="field"><span>Topic</span><select id="f-topic"></select></label>
@@ -164,10 +186,23 @@ code { font: 13px var(--mono); background: var(--sunken); padding: 1px 5px; bord
     </div>
   </div>
 
+  <nav class="secnav" id="secnav" aria-label="Sections">
+    <span class="set" id="nav-set"></span>
+    <a href="#sec-board">Leaderboard</a>
+    <a href="#sec-vs">Council vs baselines</a>
+    <a href="#sec-robust">Robustness</a>
+    <a href="#sec-cal">Calibration</a>
+    <a href="#sec-q">Questions</a>
+    <a href="#sec-contam">Contamination</a>
+    <a href="#sec-recal">Recalibration</a>
+    <a href="#sec-var">Seed variance</a>
+    <a href="#sec-about">How it's scored</a>
+  </nav>
+
   <div class="status" id="status"></div>
   <p class="notice" id="notice" hidden></p>
 
-  <section aria-labelledby="h-board">
+  <section aria-labelledby="h-board" id="sec-board">
     <div class="section-head">
       <h2 id="h-board">Leaderboard</h2>
       <div class="toolbar"><button class="btn" id="copy-csv" type="button">Copy table as CSV</button><span class="copied" id="copied" hidden>Copied</span></div>
@@ -179,19 +214,12 @@ code { font: 13px var(--mono); background: var(--sunken); padding: 1px 5px; bord
 
   <section aria-labelledby="h-vs" id="sec-vs" hidden>
     <div class="section-head">
-      <h2 id="h-vs">Pre-registered comparisons</h2>
-      <p>Each council against, in this fixed order: the mean and logit pools of its own members, its best member, the market, and always saying No. Paired Brier difference on the questions both answered; negative means the council is better. 95% bootstrap interval, resampled within each source. Computed on the whole set by the same code as <code>results/</code>; the filters above don't apply here or below.</p>
+      <h2 id="h-vs">Council vs baselines</h2>
+      <p>The pre-registered comparisons. Each council against, in this fixed order: the mean and logit pools of its own members, its best member, the market, and always saying No. Paired Brier difference on the questions both answered; negative means the council is better. 95% bootstrap interval, resampled within each source. Computed on the whole set by the same code as <code>results/</code>; the filters above don't apply here or below.</p>
     </div>
+    <div class="filter-row"><label>Against <select class="against" aria-label="Compare each council against"></select></label></div>
     <div class="table-wrap"><table id="vs"></table></div>
     <div id="vs-source-wrap" hidden><h3>By source</h3><div class="table-wrap"><table id="vs-source"></table></div></div>
-  </section>
-
-  <section aria-labelledby="h-contam" id="sec-contam" hidden>
-    <div class="section-head">
-      <h2 id="h-contam">Contamination split</h2>
-      <p>Brier on questions resolved before vs after each setup's training cutoff, across all backtest sets. Gap = before − after (negative = better on questions it might remember). Excess gap subtracts the market's own gap on the same questions, so older questions being easier doesn't count as recall.</p>
-    </div>
-    <div class="table-wrap"><table id="contam"></table></div>
   </section>
 
   <section aria-labelledby="h-robust" id="sec-robust" hidden>
@@ -199,27 +227,11 @@ code { font: 13px var(--mono); background: var(--sunken); padding: 1px 5px; bord
       <h2 id="h-robust">Robustness</h2>
       <p>The same comparisons inside groups of questions. Groups under 30 questions get no interval.</p>
     </div>
-    <div class="controls"><label>Split by <select id="robust-cut"></select></label></div>
+    <div class="filter-row"><label>Split by <select id="robust-cut"></select></label><label>Against <select class="against" aria-label="Compare each council against"></select></label></div>
     <div class="table-wrap"><table id="robust"></table></div>
   </section>
 
-  <section aria-labelledby="h-recal" id="sec-recal" hidden>
-    <div class="section-head">
-      <h2 id="h-recal">Recalibration</h2>
-      <p>Extremizing and Platt scaling, each fitted on one half of the questions and tested on the other, so every Brier here is out of sample. A change below 0 means recalibration helps; <i>a</i> above 1 means the setup was underconfident.</p>
-    </div>
-    <div class="table-wrap"><table id="recal"></table></div>
-  </section>
-
-  <section aria-labelledby="h-var" id="sec-var" hidden>
-    <div class="section-head">
-      <h2 id="h-var">Variance across seeds</h2>
-      <p>The comparisons on the fixed 200-question subset: the main temperature-0 run (T=0) and three runs at temperature 0.7. "Same sign" counts the seeds that agree with T=0 on which side is better.</p>
-    </div>
-    <div class="table-wrap"><table id="var"></table></div>
-  </section>
-
-  <section aria-labelledby="h-cal">
+  <section aria-labelledby="h-cal" id="sec-cal">
     <div class="section-head">
       <h2 id="h-cal">Calibration</h2>
       <p>When a setup says 70%, does it happen about 70% of the time? Points on the diagonal are well calibrated. Pick up to three setups.</p>
@@ -234,7 +246,7 @@ code { font: 13px var(--mono); background: var(--sunken); padding: 1px 5px; bord
     </div>
   </section>
 
-  <section aria-labelledby="h-q">
+  <section aria-labelledby="h-q" id="sec-q">
     <div class="section-head">
       <h2 id="h-q">Questions</h2>
       <p>Each setup's probability that the event happens. Blue leans Yes, red leans No. Select a row to read the answers.</p>
@@ -249,7 +261,37 @@ code { font: 13px var(--mono); background: var(--sunken); padding: 1px 5px; bord
     <div class="pager"><button class="btn" id="prev" type="button">Previous</button><span id="pageinfo"></span><button class="btn" id="next" type="button">Next</button></div>
   </section>
 
-  <section aria-labelledby="h-about">
+  <section aria-labelledby="h-contam" id="sec-contam" hidden>
+    <details class="more">
+      <summary><h2 id="h-contam">Contamination split</h2><span class="hint">Show</span></summary>
+      <div class="body">
+      <p>Brier on questions resolved before vs after each setup's training cutoff, across all backtest sets. Gap = before − after (negative = better on questions it might remember). Excess gap subtracts the market's own gap on the same questions, so older questions being easier doesn't count as recall.</p>
+    <div class="table-wrap"><table id="contam"></table></div>
+        </div>
+    </details>
+  </section>
+
+  <section aria-labelledby="h-recal" id="sec-recal" hidden>
+    <details class="more">
+      <summary><h2 id="h-recal">Recalibration</h2><span class="hint">Show</span></summary>
+      <div class="body">
+      <p>Extremizing and Platt scaling, each fitted on one half of the questions and tested on the other, so every Brier here is out of sample. A change below 0 means recalibration helps; <i>a</i> above 1 means the setup was underconfident.</p>
+    <div class="table-wrap"><table id="recal"></table></div>
+        </div>
+    </details>
+  </section>
+
+  <section aria-labelledby="h-var" id="sec-var" hidden>
+    <details class="more">
+      <summary><h2 id="h-var">Variance across seeds</h2><span class="hint">Show</span></summary>
+      <div class="body">
+      <p>The comparisons on the fixed 200-question subset: the main temperature-0 run (T=0) and three runs at temperature 0.7. "Same sign" counts the seeds that agree with T=0 on which side is better.</p>
+    <div class="table-wrap"><table id="var"></table></div>
+        </div>
+    </details>
+  </section>
+
+  <section aria-labelledby="h-about" id="sec-about">
     <h2 id="h-about">How it's scored</h2>
     <dl class="about">
       <div><dt>Brier score</dt><dd>Mean of (probability − outcome)². 0 is perfect; always saying 50% scores 0.25.</dd></div>
@@ -269,6 +311,7 @@ code { font: 13px var(--mono); background: var(--sunken); padding: 1px 5px; bord
     </dl>
   </section>
 </div>
+<button class="totop" id="totop" type="button" hidden>Back to top</button>
 
 <script>
 /*METRICS_JS*/
@@ -285,9 +328,11 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 const monthLabel = (m) => `${MONTHS[+m.slice(5, 7) - 1]} ${m.slice(0, 4)}`;
 
 const state = {
-  // A remembered choice wins; otherwise open the set with the most resolved questions.
-  ds: DATA.datasets.find((d) => d.key === store.get("ds"))?.key
+  // A set named in the URL (#set=…) wins, then a remembered choice, then the pre-registered sample.
+  ds: [new URLSearchParams(location.hash.slice(1)).get("set"), store.get("ds"), "settled-all"]
+    .map((k) => DATA.datasets.find((d) => d.key === k)?.key).find(Boolean)
     || [...DATA.datasets].sort((a, b) => b.questions.filter((q) => q.y != null).length - a.questions.filter((q) => q.y != null).length)[0].key,
+  against: "baseline:mean",
   source: "all", topic: "all", month: "all", mode: "answered",
   sort: { key: "brier", dir: 1 }, picked: null, cut: null, page: 0, search: "", outcome: "all", open: null,
 };
@@ -462,13 +507,27 @@ function comparisonRows(list, extra = []) {
 }
 const COMP_HEAD = [["Council"], ["Against"], ["Questions", 1], ["Brier difference", 1], ["95% interval", 1], ["Verdict"]];
 
+const AGAINST_ORDER = ["baseline:mean", "baseline:logit_pool", "baseline:best_single", "market", "baseline:always_no"];
+function renderAgainst(rows) {
+  const present = AGAINST_ORDER.filter((v) => rows.some((r) => r.versus === v));
+  if (state.against !== "all" && !present.includes(state.against)) state.against = present[0] || "all";
+  const html = present.map((v) => `<option value="${v}">${esc(nameOf(v))}</option>`).join("") + `<option value="all">All baselines</option>`;
+  document.querySelectorAll("select.against").forEach((el) => { el.innerHTML = html; el.value = state.against; });
+}
+const pick = (rows) => (state.against === "all" ? rows : rows.filter((r) => r.versus === state.against));
+function renderNav() {
+  $("nav-set").textContent = current().label;
+  document.querySelectorAll("#secnav a").forEach((a) => { const sec = $(a.hash.slice(1)); a.hidden = !sec || sec.hidden; });
+}
+
 function renderAnalyses() {
   const A = current().analyses || {};
+  renderAgainst([...(A.comparisons || []), ...(A.robustness || [])]);
   $("sec-vs").hidden = !A.comparisons;
   if (A.comparisons) {
-    table("vs", COMP_HEAD, comparisonRows(A.comparisons));
+    table("vs", COMP_HEAD, comparisonRows(pick(A.comparisons)));
     $("vs-source-wrap").hidden = !A.by_source;
-    if (A.by_source) table("vs-source", [["Source"], ...COMP_HEAD], comparisonRows(A.by_source, ["source"]));
+    if (A.by_source) table("vs-source", [["Source"], ...COMP_HEAD], comparisonRows(pick(A.by_source), ["source"]));
   }
   $("sec-contam").hidden = !A.contamination;
   if (A.contamination) table("contam", [["Setup"], ["Cutoff"], ["Before", 1], ["After", 1], ["Brier before", 1], ["Brier after", 1],
@@ -481,7 +540,7 @@ function renderAnalyses() {
     const cuts = [...new Set(A.robustness.map((r) => r.cut))];
     if (!cuts.includes(state.cut)) state.cut = cuts[0];
     $("robust-cut").innerHTML = cuts.map((c) => `<option value="${esc(c)}"${c === state.cut ? " selected" : ""}>${esc(c)}</option>`).join("");
-    table("robust", [["Group"], ...COMP_HEAD], comparisonRows(A.robustness.filter((r) => r.cut === state.cut), ["group"]));
+    table("robust", [["Group"], ...COMP_HEAD], comparisonRows(pick(A.robustness.filter((r) => r.cut === state.cut)), ["group"]));
   }
   $("sec-recal").hidden = !A.recalibration;
   if (A.recalibration) table("recal", [["Setup"], ["Questions", 1], ["Brier, raw", 1], ["Extremized", 1], ["Platt", 1],
@@ -606,17 +665,34 @@ function render({ controls = false } = {}) {
   renderAnalyses();
   renderCalibration(rows);
   renderQuestions(rows);
+  renderNav();
 }
 
 function selectDataset(key) {
   Object.assign(state, { ds: key, source: "all", topic: "all", month: "all", picked: null, slots: {}, page: 0, open: null });
   store.set("ds", key);
+  history.replaceState(null, "", `#set=${encodeURIComponent(key)}`);
   M = model(current());
   render({ controls: true });
 }
 
 // ── Events ──
 $("robust-cut").addEventListener("change", (e) => { state.cut = e.target.value; renderAnalyses(); });
+document.addEventListener("change", (e) => { if (e.target.matches("select.against")) { state.against = e.target.value; renderAnalyses(); } });
+// Nav: a link to a collapsed section opens it; the link for the section on screen is highlighted.
+$("secnav").addEventListener("click", (e) => {
+  const a = e.target.closest("a[href^='#sec-']"); if (!a) return;
+  const d = $(a.hash.slice(1))?.querySelector("details"); if (d) d.open = true;
+});
+const seen = new Map();
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((en) => seen.set(en.target.id, en.isIntersecting ? en.boundingClientRect.top : null));
+  const top = [...seen].filter(([, t]) => t != null).sort((a, b) => a[1] - b[1])[0]?.[0];
+  document.querySelectorAll("#secnav a").forEach((a) => a.setAttribute("aria-current", String(a.hash === `#${top}`)));
+}, { rootMargin: "-70px 0px -55% 0px" });
+document.querySelectorAll("section[id^='sec-']").forEach((sec) => io.observe(sec));
+addEventListener("scroll", () => { $("totop").hidden = scrollY < 900; }, { passive: true });
+$("totop").addEventListener("click", () => scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
 $("ds").addEventListener("click", (e) => { const b = e.target.closest("button[data-ds]"); if (b) selectDataset(b.dataset.ds); });
 $("mode").addEventListener("click", (e) => { const b = e.target.closest("button[data-mode]"); if (!b) return; state.mode = b.dataset.mode; render({ controls: true }); });
 for (const [id, key] of [["f-source", "source"], ["f-topic", "topic"], ["f-month", "month"]])
