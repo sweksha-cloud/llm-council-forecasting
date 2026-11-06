@@ -29,7 +29,7 @@ sys.path.insert(0, str(REPO))
 from dashboard.build import DATASETS, MODEL_NAMES, build_dataset  # noqa: E402
 
 # Parameters, in billions, of the models behind each tag (the 8B/7B/9B in MODEL_NAMES; Phi-3 Medium is 14B).
-PARAMS_B = {"llama3.1": 8, "mistral": 7, "qwen3": 8, "gemma2": 9, "phi3": 14, "deepseek-r1": 8}
+PARAMS_B = {"llama3.1": 8, "mistral": 7, "qwen3": 8, "gemma2": 9, "phi3": 14, "deepseek-r1": 8, "llama3.3": 70}
 PAUSE_SECONDS = 600  # a longer gap between two forecasts is a pause in the run, not time spent on a question
 
 
@@ -92,13 +92,17 @@ def has_forecasts(ds: Dict) -> bool:
 
 def site_dataset(spec: Dict) -> Dict:
     ds = build_dataset(spec)
+    # Speed comes from the main GPU run only: the 70B scale check ran on spark's CPU, so its times
+    # aren't comparable and its setups show no speed.
     ds["seconds"] = seconds_per_question(spec["forecasts"], {q["id"] for q in ds["questions"]})
     for s in ds["setups"]:
         s["params"] = params_b(s["id"])
-    for s in ds["setups"]:  # a council runs all its members: its size is theirs added up
+    for s in ds["setups"]:  # a council runs all its members (and its chair, if not one of them): sizes added up
         sizes = [ds["setups"][i]["params"] for i in s["members"]]
         if s["kind"] == "council" and sizes and None not in sizes:
-            s["params"] = sum(sizes)
+            chair = s["id"].split("chair=", 1)[-1]
+            outside = chair not in [ds["setups"][i]["id"].split(":", 1)[1] for i in s["members"]]
+            s["params"] = sum(sizes) + ((PARAMS_B.get(chair.split(":")[0]) or 0) if outside else 0)
     return ds
 
 

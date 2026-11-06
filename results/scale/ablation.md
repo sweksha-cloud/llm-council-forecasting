@@ -18,6 +18,12 @@ Same members' answers on every question; only what the chair sees, or who chairs
 | council:chair=llama3.1:8b | baseline:logit_pool | all | 359 | -0.0055 | -0.0161 | 0.0037 | no clear difference |
 | council:chair=llama3.1:8b | baseline:logit_pool | kalshi | 200 | -0.0092 | -0.0235 | 0.0055 | no clear difference |
 | council:chair=llama3.1:8b | baseline:logit_pool | polymarket | 159 | -0.0008 | -0.015 | 0.0129 | no clear difference |
+| council:chair=llama3.3:70b | baseline:mean | all | 359 | 0.0074 | 0.002 | 0.0135 | first worse |
+| council:chair=llama3.3:70b | baseline:mean | kalshi | 200 | 0.0087 | 0.0005 | 0.0178 | first worse |
+| council:chair=llama3.3:70b | baseline:mean | polymarket | 159 | 0.0057 | -0.0009 | 0.014 | no clear difference |
+| council:chair=llama3.3:70b | baseline:logit_pool | all | 359 | -0.0003 | -0.0074 | 0.0064 | no clear difference |
+| council:chair=llama3.3:70b | baseline:logit_pool | kalshi | 200 | -0.0006 | -0.0105 | 0.0095 | no clear difference |
+| council:chair=llama3.3:70b | baseline:logit_pool | polymarket | 159 | -0.0 | -0.0108 | 0.0082 | no clear difference |
 | council:chair=mistral:latest | baseline:mean | all | 359 | 0.0065 | -0.007 | 0.0196 | no clear difference |
 | council:chair=mistral:latest | baseline:mean | kalshi | 200 | -0.0017 | -0.0221 | 0.021 | no clear difference |
 | council:chair=mistral:latest | baseline:mean | polymarket | 159 | 0.0167 | 0.0041 | 0.0291 | first worse |
@@ -78,11 +84,12 @@ Same members' answers on every question; only what the chair sees, or who chairs
 
 | council | chair | n_common | council_brier | chair_alone_brier | vs_mean_pool | vs_mean_pool_ci_low | vs_mean_pool_ci_high | vs_chair_alone | vs_chair_alone_ci_low | vs_chair_alone_ci_high | spearman_chair_vs_council |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| council:chair=gemma2:9b | gemma2:9b | 359 | 0.2625 | 0.2715 | 0.0091 | 0.0031 | 0.0151 | -0.0089 | -0.0225 | 0.0043 | 0.9 |
-| council:chair=llama3.1:8b | llama3.1:8b | 359 | 0.2556 | 0.2711 | 0.0022 | -0.004 | 0.008 | -0.0155 | -0.0279 | -0.0026 | 0.9 |
-| council:chair=mistral:latest | mistral:latest | 359 | 0.2599 | 0.2737 | 0.0065 | -0.007 | 0.0196 | -0.0138 | -0.0302 | 0.004 | 0.9 |
-| council:chair=phi3:medium | phi3:medium | 359 | 0.2541 | 0.2595 | 0.0006 | -0.0053 | 0.0066 | -0.0055 | -0.0197 | 0.0083 | 0.9 |
-| council:chair=qwen3:8b | qwen3:8b | 359 | 0.2639 | 0.29 | 0.0105 | 0.004 | 0.018 | -0.0261 | -0.0445 | -0.0081 | 0.9 |
+| council:chair=gemma2:9b | gemma2:9b | 359 | 0.2625 | 0.2715 | 0.0091 | 0.0031 | 0.0151 | -0.0089 | -0.0225 | 0.0043 | 0.714 |
+| council:chair=llama3.1:8b | llama3.1:8b | 359 | 0.2556 | 0.2711 | 0.0022 | -0.004 | 0.008 | -0.0155 | -0.0279 | -0.0026 | 0.714 |
+| council:chair=llama3.3:70b | llama3.3:70b | 359 | 0.2608 | 0.2608 | 0.0074 | 0.002 | 0.0135 | -0.0 | -0.0152 | 0.0157 | 0.714 |
+| council:chair=mistral:latest | mistral:latest | 359 | 0.2599 | 0.2737 | 0.0065 | -0.007 | 0.0196 | -0.0138 | -0.0302 | 0.004 | 0.714 |
+| council:chair=phi3:medium | phi3:medium | 359 | 0.2541 | 0.2595 | 0.0006 | -0.0053 | 0.0066 | -0.0055 | -0.0197 | 0.0083 | 0.714 |
+| council:chair=qwen3:8b | qwen3:8b | 359 | 0.2639 | 0.29 | 0.0105 | 0.004 | 0.018 | -0.0261 | -0.0445 | -0.0081 | 0.714 |
 
 
 ## How far each council moves from the mean pool
@@ -91,6 +98,7 @@ Same members' answers on every question; only what the chair sees, or who chairs
 |---|---|---|---|
 | council:chair=gemma2:9b | 359 | 0.0396 | 0.7326 |
 | council:chair=llama3.1:8b | 359 | 0.0419 | 0.7298 |
+| council:chair=llama3.3:70b | 359 | 0.0335 | 0.8022 |
 | council:chair=mistral:latest | 359 | 0.0885 | 0.4513 |
 | council:chair=phi3:medium | 359 | 0.0375 | 0.7716 |
 | council:chair=qwen3:8b | 359 | 0.0472 | 0.6769 |

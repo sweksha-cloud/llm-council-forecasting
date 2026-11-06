@@ -1,0 +1,2 @@
+chair,own_family_member,versus_chairs,n,weight,own_weight_minus_others,ci_low,ci_high,verdict
+llama3.3:70b,llama3.1:8b,"gemma2:9b, llama3.1:8b, mistral:latest, phi3:medium, qwen3:8b",359,0.264,0.049,-0.032,0.138,no clear difference

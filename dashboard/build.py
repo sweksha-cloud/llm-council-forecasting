@@ -36,8 +36,10 @@ DATASETS = [
              "price date, 7 days before the earlier of close and resolution; the market is the price on that date."},
     {"key": "settled", "label": "Settled set (original)", "who": "This project, closing Jul–Oct 2026",
      "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": ["settled"], "prefix": None,
+     "extra_forecasts": ["data/scale/forecasts.csv"],
      "note": "The original settled questions on their own. Asked as of the price date, 7 days before the earlier "
-             "of close and resolution; the market is the price on that date."},
+             "of close and resolution; the market is the price on that date. Also has the Llama 3.3 70B scale "
+             "check (alone, and chairing the same five 8B members): see results/scale/scale.md."},
     {"key": "contamination", "label": "Contamination set", "who": "This project, resolved 2023–2024",
      "questions": "data/questions.csv", "forecasts": "data/forecasts.csv", "set": ["contamination"], "prefix": None,
      "note": "Older questions, some resolved before the models' training cutoffs: better scores here than on "
@@ -54,7 +56,7 @@ DATASETS = [
 
 MODEL_NAMES = {
     "llama3.1": "Llama 3.1 8B", "mistral": "Mistral 7B", "qwen3": "Qwen 3 8B", "gemma2": "Gemma 2 9B",
-    "phi3": "Phi-3 Medium", "deepseek-r1": "DeepSeek R1 8B",
+    "phi3": "Phi-3 Medium", "deepseek-r1": "DeepSeek R1 8B", "llama3.3": "Llama 3.3 70B",
 }
 REASON_CHARS = 400
 
@@ -93,6 +95,12 @@ def reasoning(row: Dict[str, str]) -> str:
     return text if len(text) <= REASON_CHARS else text[:REASON_CHARS - 1] + "…"
 
 
+def forecast_files(ds: Dict) -> List[str]:
+    """The dataset's forecasts file plus any extra runs on the same questions (e.g. the 70B scale check).
+    The main file comes first, so its forecast wins if a setup appears in both, as in scoring/report.py."""
+    return [ds["forecasts"]] + [f for f in ds.get("extra_forecasts", []) if (REPO / f).exists()]
+
+
 def build_dataset(ds: Dict) -> Dict:
     questions = [q for q in _read(ds["questions"])
                  if (ds["set"] is None or q.get("set") in ds["set"])
@@ -103,7 +111,7 @@ def build_dataset(ds: Dict) -> Dict:
     cells: Dict[str, Dict[str, Dict]] = {}
     members: Dict[str, List[str]] = {}
     forecast_price: Dict[str, float] = {}
-    for f in _read(ds["forecasts"]):
+    for f in (row for path in forecast_files(ds) for row in _read(path)):
         qid, setup = f["question_id"], f["setup"]
         if qid not in by_id or made_after_resolution(by_id[qid], f):
             continue  # not in this tab, or a live forecast made after its market ended (as in scoring/report.py)
@@ -166,7 +174,7 @@ def analyses(ds: Dict, n_boot: int = 1000) -> Dict[str, List[Dict]]:
     from scoring.contamination import split_table
     from scoring.report import (add_baselines, add_reference_baselines, by_source_table, comparison_table, load,
                                 load_resolution_dates, load_sources, members_of_setups)
-    qfiles, ffiles = [str(REPO / ds["questions"])], [str(REPO / ds["forecasts"])]
+    qfiles, ffiles = [str(REPO / ds["questions"])], [str(REPO / f) for f in forecast_files(ds)]
     outcomes, probs, members, market = load(qfiles, ffiles, ds["set"] or "all", None, ds["prefix"])
     out: Dict[str, List[Dict]] = {}
     if not any(p is not None for s, ps in probs.items() if s != "market" for q, p in ps.items()):
