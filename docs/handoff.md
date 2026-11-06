@@ -45,7 +45,7 @@ Follow [`spark.md`](spark.md). The short version:
 
 Ideas ranked in [`plan.md`](plan.md) and the README's scope line:
 - **Multi-round debate:** members revise after seeing each other.
-- **A stronger model** (70B) as member and chair.
+- **A stronger model as a council member.** A 70B *chair* was tested (Nov 2026, `results/scale/scale.md`): it didn't beat the members' average either. Larger members are untested.
 - **Retrieval with time-stamped news.**
 - **Kalshi's `/historical` API** (`collect/kalshi_historical.py` is ready) to add 2025–26 Kalshi questions.
 
