@@ -1,0 +1,7 @@
+market,setup,versus,n,mean_diff,ci95_low,ci95_high,ci90_low,ci90_high,p,equivalence_bound,equivalent_within_margin,p_holm,verdict_holm
+uncertain,council:chair=llama3.1:8b,baseline:mean,494,-0.0065,-0.0108,-0.0023,-0.0102,-0.003,0.001,0.0102,yes,0.004,first better
+leaning,council:chair=llama3.1:8b,baseline:mean,226,0.0001,-0.0085,0.0093,-0.0073,0.0077,0.98,0.0077,yes,0.98,no clear difference
+near-certain,council:chair=llama3.1:8b,baseline:mean,319,0.0194,0.0127,0.0264,0.0136,0.0254,0.0,0.0254,no,0.0,first worse
+uncertain,council:chair=qwen3:8b,baseline:mean,494,0.0089,0.0025,0.0157,0.0036,0.0145,0.004,0.0145,no,0.008,first worse
+leaning,council:chair=qwen3:8b,baseline:mean,226,0.0175,0.0068,0.0293,0.0084,0.0272,0.0,0.0272,no,0.0,first worse
+near-certain,council:chair=qwen3:8b,baseline:mean,319,0.0112,0.0033,0.0208,0.0045,0.0189,0.001,0.0189,no,0.004,first worse

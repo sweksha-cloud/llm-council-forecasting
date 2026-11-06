@@ -39,6 +39,7 @@ results:          ## all results tables (results/*/)
 	$(PY) -m analysis.chair_weights --set live --out results/live
 	$(PY) -m analysis.debate --set settled --out results/debate
 	$(PY) -m analysis.ablation --set settled --forecasts data/forecasts.csv data/ablation/forecasts.csv data/scale/forecasts.csv --out results/scale   # 70B chair vs the pools of its members
+	$(PY) -m analysis.inference --out results/inference   # equivalence, Holm, discrimination (2026-11-06)
 	$(PY) -m analysis.scale --out results/scale   # 70B vs the 8B councils, best member, market; own-family weight
 	$(PY) -m analysis.chair_weights --set settled settled-ext --forecasts data/forecasts.csv data/ablation/forecasts.csv --out results/ablation
 	$(PY) -m scoring.report --set contamination --out results/contamination
