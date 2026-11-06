@@ -33,7 +33,7 @@ Supporting checks: calibration, memorisation (contamination split by knowledge c
 | Benchmark | 1,185 leak-checked resolved questions released for reuse ([`benchmark/`](benchmark/README.md)) |
 | Engineering | One-command reproduction (`make reproduce`), tests in CI, results dashboard and leaderboard |
 
-**Live results:** https://sweksha-cloud.github.io/llm-council-forecasting/ · **Reproduce in your browser:** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sweksha-cloud/llm-council-forecasting/blob/main/notebooks/reproduce.ipynb)
+**Report:** [`docs/report/report.pdf`](docs/report/report.pdf) (research report, Nov 2026). **Live results:** https://sweksha-cloud.github.io/llm-council-forecasting/ · **Reproduce in your browser:** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sweksha-cloud/llm-council-forecasting/blob/main/notebooks/reproduce.ipynb)
 
 **Results dashboard:** `make dashboard` builds `dashboard/index.html` from the committed data. **Reproducing everything:** `make setup && make reproduce`; see [`docs/reproduce.md`](docs/reproduce.md).
 
