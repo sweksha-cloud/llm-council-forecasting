@@ -6,6 +6,7 @@ single model's answer and the council's.
 Bump PROMPT_ID whenever a prompt changes; it's saved with every forecast.
 """
 
+import random
 import re
 
 PROMPT_ID = "v2"  # v2: reasoning before probability (v1 put the number first; Llama answered 0.55 on almost everything)
@@ -77,6 +78,25 @@ Weigh their arguments and give the panel's final probability that this question 
 Respond with JSON only, in exactly this format:
 {{"reasoning": "<2-4 sentences>", "probability": <number between 0 and 1>}}"""
 
+# Prompt-sensitivity check (docs/decisions.md 2026-11-06): a differently worded chair that is told the
+# panel's average and asked to depart from it only for a specific argument; panelists in a shuffled order.
+CHAIRMAN_ANCHORED_SYSTEM = (
+    "You are an experienced forecasting editor. Several analysts have each given an independent "
+    "probability and a short rationale. The average of independent forecasts is usually hard to beat, "
+    "so start from it and move away only if an analyst gives a specific, verifiable reason the others "
+    "missed. You cannot look anything up. Always give a probability; never refuse."
+)
+
+CHAIRMAN_ANCHORED_USER = """{question_block}
+
+Independent analyst forecasts (in random order):
+{member_answers}
+
+Start from the average and adjust only for a specific reason. What is the probability that this question resolves YES?
+Respond with JSON only, in exactly this format:
+{{"reasoning": "<2-4 sentences>", "probability": <number between 0 and 1>}}"""
+
+
 # Debate, round 2 (forecast/debate.py, docs/decisions.md 2026-10-20): each member sees its own
 # first answer and the other members' answers (anonymised), and may revise.
 REVISE_USER = """{question_block}
@@ -138,3 +158,14 @@ def member_reasoning_text(answers: list) -> str:
     """Reasoning-only view: each panelist's reasoning with probability-like numbers withheld."""
     return "\n".join(f"Panelist {chr(65 + i)}: {redact_numbers(reasoning.strip()) or '(no reasoning given)'}"
                      for i, (_, reasoning) in enumerate(answers))
+
+
+def member_anchored_text(answers: list) -> str:
+    """Anchored view: every panelist's probability and reasoning in a shuffled order (fixed per question,
+    seeded by the answers themselves), plus their average."""
+    order = list(range(len(answers)))
+    random.Random(repr(answers)).shuffle(order)
+    lines = [f"Analyst {chr(65 + k)}: probability {answers[i][0]:.2f}. {answers[i][1].strip()}"
+             for k, i in enumerate(order)]
+    avg = sum(p for p, _ in answers) / len(answers)
+    return "\n".join(lines + [f"Average of the {len(answers)} analysts: {avg:.2f}"])
