@@ -1,6 +1,6 @@
 # Results: live
 
-Resolved questions scored: **176** (set: live). Lower Brier/log score is better.
+Resolved questions scored: **496** (set: live). Lower Brier/log score is better.
 
 ## Scores
 
@@ -8,50 +8,50 @@ Resolved questions scored: **176** (set: live). Lower Brier/log score is better.
 
 | setup | questions | answered | coverage | brier | log_score | accuracy | ece | sharpness | auroc | balanced_accuracy | mcc | brier_abstain_0.5 | common_n | brier_common | log_common | accuracy_common | auroc_common | skill_vs_market | n_vs_market | skill_vs_market_paired | skill_ci_low | skill_ci_high |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| council:chair=llama3.1:8b | 176 | 37 | 0.21 | 0.2947 | 0.7922 | 0.4324 | 0.2507 | 0.1647 | 0.4631 | 0.4744 | -0.0513 | 0.2594 | 37 | 0.2947 | 0.7922 | 0.4324 | 0.4631 | -2.6569 | 37 | -2.6567 | -5.3938 | -1.3256 |
-| council:chair=qwen3:8b | 176 | 37 | 0.21 | 0.2956 | 0.7936 | 0.5 | 0.2589 | 0.187 | 0.4776 | 0.5251 | 0.0489 | 0.2596 | 37 | 0.2956 | 0.7936 | 0.5 | 0.4776 | -2.6681 | 37 | -2.6678 | -5.6182 | -1.295 |
-| single:gemma2:9b | 176 | 37 | 0.21 | 0.3001 | 0.8167 | 0.4595 | 0.2727 | 0.1646 | 0.4054 | 0.3965 | -0.2172 | 0.2605 | 37 | 0.3001 | 0.8167 | 0.4595 | 0.4054 | -2.7239 | 37 | -2.7234 | -5.2195 | -1.4806 |
-| single:llama3.1:8b | 176 | 37 | 0.21 | 0.2976 | 0.9215 | 0.473 | 0.24 | 0.1535 | 0.484 | 0.4835 | -0.0323 | 0.26 | 37 | 0.2976 | 0.9215 | 0.473 | 0.484 | -2.6929 | 37 | -2.6925 | -5.3479 | -1.3724 |
-| single:mistral:latest | 176 | 37 | 0.21 | 0.3411 | 0.9153 | 0.4459 | 0.3181 | 0.2235 | 0.3942 | 0.4816 | -0.0368 | 0.2691 | 37 | 0.3411 | 0.9153 | 0.4459 | 0.3942 | -3.2327 | 37 | -3.2324 | -6.4492 | -1.6354 |
-| single:phi3:medium | 176 | 37 | 0.21 | 0.2637 | 0.751 | 0.6081 | 0.25 | 0.1743 | 0.5978 | 0.6746 | 0.3208 | 0.2529 | 37 | 0.2637 | 0.751 | 0.6081 | 0.5978 | -2.2722 | 37 | -2.2724 | -5.0486 | -0.9055 |
-| single:qwen3:8b | 176 | 37 | 0.21 | 0.3216 | 0.9703 | 0.5811 | 0.2884 | 0.2749 | 0.5513 | 0.5871 | 0.1668 | 0.2651 | 37 | 0.3216 | 0.9703 | 0.5811 | 0.5513 | -2.9907 | 37 | -2.9911 | -6.012 | -1.295 |
-| baseline:always_no | 176 | 176 | 1.0 | 0.4659 | 6.4368 | 0.5341 | 0.4659 | 0.5 | 0.5 | 0.5 | 0.0 | 0.4659 | 37 | 0.3514 | 4.8541 | 0.6486 | 0.5 | -3.3605 | 176 | -1.7764 | -2.3651 | -1.2878 |
-| baseline:base_rate | 176 | 176 | 1.0 | 0.2488 | 0.6908 | 0.5341 | 0.0 | 0.0341 | 0.5 | 0.5 | 0.0 | 0.2488 | 37 | 0.241 | 0.6752 | 0.6486 | 0.5 | -1.9905 | 176 | -0.4828 | -0.7976 | -0.2714 |
-| baseline:best_single | 176 | 37 | 0.21 | 0.2637 | 0.751 | 0.6081 | 0.25 | 0.1743 | 0.5978 | 0.6746 | 0.3208 | 0.2529 | 37 | 0.2637 | 0.751 | 0.6081 | 0.5978 | -2.2722 | 37 | -2.2724 | -5.0486 | -0.9055 |
-| baseline:extremized(a=2) | 176 | 37 | 0.21 | 0.3557 | 1.0787 | 0.5135 | 0.3771 | 0.2785 | 0.4872 | 0.5192 | 0.0367 | 0.2722 | 37 | 0.3557 | 1.0787 | 0.5135 | 0.4872 | -3.4138 | 37 | -3.4139 | -6.9636 | -1.6516 |
-| baseline:logit_pool | 176 | 37 | 0.21 | 0.2958 | 0.7995 | 0.5135 | 0.2833 | 0.186 | 0.4872 | 0.5192 | 0.0367 | 0.2596 | 37 | 0.2958 | 0.7995 | 0.5135 | 0.4872 | -2.6705 | 37 | -2.6706 | -5.4004 | -1.3218 |
-| baseline:mean | 176 | 37 | 0.21 | 0.282 | 0.7612 | 0.4865 | 0.2175 | 0.1604 | 0.4728 | 0.4984 | -0.0031 | 0.2567 | 37 | 0.282 | 0.7612 | 0.4865 | 0.4728 | -2.4993 | 37 | -2.4992 | -5.0565 | -1.2365 |
-| baseline:median | 176 | 37 | 0.21 | 0.2836 | 0.7742 | 0.5135 | 0.2343 | 0.1803 | 0.4872 | 0.5192 | 0.0372 | 0.2571 | 37 | 0.2836 | 0.7742 | 0.5135 | 0.4872 | -2.5191 | 37 | -2.5187 | -5.1335 | -1.2137 |
-| market | 176 | 176 | 1.0 | 0.1678 | 0.4766 | 0.7159 | 0.0905 | 0.2675 | 0.8291 | 0.7115 | 0.4274 | 0.1678 | 37 | 0.0806 | 0.2578 | 0.9189 | 0.9728 |  |  |  |  |  |
+| council:chair=llama3.1:8b | 496 | 260 | 0.524 | 0.2254 | 0.6395 | 0.6135 | 0.15 | 0.1434 | 0.7008 | 0.6496 | 0.2879 | 0.2371 | 260 | 0.2254 | 0.6395 | 0.6135 | 0.7008 | -2.2113 | 260 | -2.2115 | -3.216 | -1.5315 |
+| council:chair=qwen3:8b | 496 | 260 | 0.524 | 0.2188 | 0.6245 | 0.6423 | 0.1338 | 0.1601 | 0.7112 | 0.6729 | 0.331 | 0.2337 | 260 | 0.2188 | 0.6245 | 0.6423 | 0.7112 | -2.1173 | 260 | -2.1179 | -3.1327 | -1.4785 |
+| single:gemma2:9b | 496 | 260 | 0.524 | 0.2195 | 0.624 | 0.6308 | 0.1014 | 0.1823 | 0.6783 | 0.6324 | 0.2545 | 0.234 | 260 | 0.2195 | 0.624 | 0.6308 | 0.6783 | -2.1273 | 260 | -2.1267 | -3.1627 | -1.4527 |
+| single:llama3.1:8b | 496 | 260 | 0.524 | 0.233 | 0.679 | 0.6212 | 0.1282 | 0.146 | 0.6476 | 0.6508 | 0.2877 | 0.2411 | 260 | 0.233 | 0.679 | 0.6212 | 0.6476 | -2.3196 | 260 | -2.3198 | -3.3708 | -1.6197 |
+| single:mistral:latest | 496 | 260 | 0.524 | 0.2449 | 0.6864 | 0.5808 | 0.1548 | 0.1729 | 0.6344 | 0.6398 | 0.274 | 0.2473 | 260 | 0.2449 | 0.6864 | 0.5808 | 0.6344 | -2.4892 | 260 | -2.4898 | -3.6514 | -1.7533 |
+| single:phi3:medium | 496 | 260 | 0.524 | 0.2223 | 0.6396 | 0.6596 | 0.1401 | 0.1502 | 0.7111 | 0.7166 | 0.4047 | 0.2355 | 260 | 0.2223 | 0.6396 | 0.6596 | 0.7111 | -2.1672 | 260 | -2.1666 | -3.2268 | -1.4683 |
+| single:qwen3:8b | 496 | 260 | 0.524 | 0.2336 | 0.7259 | 0.6308 | 0.12 | 0.2469 | 0.6568 | 0.6024 | 0.2023 | 0.2414 | 260 | 0.2336 | 0.7259 | 0.6308 | 0.6568 | -2.3282 | 260 | -2.3275 | -3.3604 | -1.6263 |
+| baseline:always_no | 496 | 496 | 1.0 | 0.4133 | 5.71 | 0.5867 | 0.4133 | 0.5 | 0.5 | 0.5 | 0.0 | 0.4133 | 260 | 0.3462 | 4.7823 | 0.6538 | 0.5 | -3.9324 | 496 | -2.5124 | -3.1083 | -2.0395 |
+| baseline:base_rate | 496 | 496 | 1.0 | 0.2425 | 0.678 | 0.5867 | 0.0 | 0.0867 | 0.5 | 0.5 | 0.0 | 0.2425 | 260 | 0.2308 | 0.6545 | 0.6538 | 0.5 | -2.2883 | 496 | -1.0607 | -1.3873 | -0.8188 |
+| baseline:best_single | 496 | 260 | 0.524 | 0.2195 | 0.624 | 0.6308 | 0.1014 | 0.1823 | 0.6783 | 0.6324 | 0.2545 | 0.234 | 260 | 0.2195 | 0.624 | 0.6308 | 0.6783 | -2.1273 | 260 | -2.1267 | -3.1627 | -1.4527 |
+| baseline:extremized(a=2) | 496 | 260 | 0.524 | 0.2171 | 0.6647 | 0.675 | 0.1246 | 0.2423 | 0.7212 | 0.6807 | 0.3443 | 0.2328 | 260 | 0.2171 | 0.6647 | 0.675 | 0.7212 | -2.0931 | 260 | -2.093 | -3.0654 | -1.4293 |
+| baseline:logit_pool | 496 | 260 | 0.524 | 0.2114 | 0.6138 | 0.675 | 0.1038 | 0.1539 | 0.7212 | 0.6807 | 0.3443 | 0.2298 | 260 | 0.2114 | 0.6138 | 0.675 | 0.7212 | -2.0119 | 260 | -2.0126 | -2.9742 | -1.3985 |
+| baseline:mean | 496 | 260 | 0.524 | 0.2105 | 0.6064 | 0.6731 | 0.114 | 0.1377 | 0.7212 | 0.6847 | 0.3507 | 0.2293 | 260 | 0.2105 | 0.6064 | 0.6731 | 0.7212 | -1.9991 | 260 | -1.9991 | -2.9582 | -1.3972 |
+| baseline:median | 496 | 260 | 0.524 | 0.2143 | 0.6177 | 0.6596 | 0.1112 | 0.155 | 0.7054 | 0.6891 | 0.3574 | 0.2313 | 260 | 0.2143 | 0.6177 | 0.6596 | 0.7054 | -2.0532 | 260 | -2.0533 | -3.0314 | -1.4184 |
+| market | 496 | 496 | 1.0 | 0.1177 | 0.3514 | 0.8165 | 0.0502 | 0.3263 | 0.9175 | 0.807 | 0.6215 | 0.1177 | 260 | 0.0702 | 0.2308 | 0.9038 | 0.9687 |  |  |  |  |  |
 
-- `baseline:best_single` = single:phi3:medium (lowest Brier on these same questions, so it's chosen in-sample and slightly optimistic)
+- `baseline:best_single` = single:gemma2:9b (lowest Brier on these same questions, so it's chosen in-sample and slightly optimistic)
 
 - `baseline:always_no` = 0% on every question; the accuracy any setup gets just by saying No
 
-- `baseline:base_rate` = 0.466 (share resolved Yes) on every question; uses the outcomes, so it's slightly optimistic
+- `baseline:base_rate` = 0.413 (share resolved Yes) on every question; uses the outcomes, so it's slightly optimistic
 
 
-## Ground truth (each forecast as a Yes/No call; 46.6% of questions resolved Yes)
+## Ground truth (each forecast as a Yes/No call; 41.3% of questions resolved Yes)
 
 Above 0.5 is a Yes call, below a No call, exactly 0.5 no call. `precision`: share of Yes calls that happened. `recall`: share of events that happened called Yes. `balanced_accuracy`: mean of Yes and No recall, 0.5 for always saying No. `mcc`: correlation between calls and outcomes, 0 = chance.
 
 | setup | answered | yes_calls | no_calls | no_call_0.5 | tp | fp | tn | fn | precision | recall | f1 | balanced_accuracy | mcc |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| council:chair=llama3.1:8b | 37 | 24 | 13 | 0 | 8 | 16 | 8 | 5 | 0.3333 | 0.6154 | 0.4324 | 0.4744 | -0.0513 |
-| council:chair=qwen3:8b | 37 | 21 | 15 | 1 | 8 | 13 | 10 | 5 | 0.381 | 0.6154 | 0.4706 | 0.5251 | 0.0489 |
-| single:gemma2:9b | 37 | 9 | 20 | 8 | 2 | 7 | 11 | 9 | 0.2222 | 0.1818 | 0.2 | 0.3965 | -0.2172 |
-| single:llama3.1:8b | 37 | 19 | 15 | 3 | 7 | 12 | 9 | 6 | 0.3684 | 0.5385 | 0.4375 | 0.4835 | -0.0323 |
-| single:mistral:latest | 37 | 23 | 13 | 1 | 8 | 15 | 8 | 5 | 0.3478 | 0.6154 | 0.4444 | 0.4816 | -0.0368 |
-| single:phi3:medium | 37 | 16 | 14 | 7 | 7 | 9 | 12 | 2 | 0.4375 | 0.7778 | 0.56 | 0.6746 | 0.3208 |
-| single:qwen3:8b | 37 | 16 | 18 | 3 | 7 | 9 | 13 | 5 | 0.4375 | 0.5833 | 0.5 | 0.5871 | 0.1668 |
-| baseline:always_no | 176 | 0 | 176 | 0 | 0 | 0 | 94 | 82 |  | 0.0 | 0.0 | 0.5 | 0.0 |
-| baseline:base_rate | 176 | 0 | 176 | 0 | 0 | 0 | 94 | 82 |  | 0.0 | 0.0 | 0.5 | 0.0 |
-| baseline:best_single | 37 | 16 | 14 | 7 | 7 | 9 | 12 | 2 | 0.4375 | 0.7778 | 0.56 | 0.6746 | 0.3208 |
-| baseline:extremized(a=2) | 37 | 19 | 18 | 0 | 7 | 12 | 12 | 6 | 0.3684 | 0.5385 | 0.4375 | 0.5192 | 0.0367 |
-| baseline:logit_pool | 37 | 19 | 18 | 0 | 7 | 12 | 12 | 6 | 0.3684 | 0.5385 | 0.4375 | 0.5192 | 0.0367 |
-| baseline:mean | 37 | 20 | 17 | 0 | 7 | 13 | 11 | 6 | 0.35 | 0.5385 | 0.4242 | 0.4984 | -0.0031 |
-| baseline:median | 37 | 18 | 17 | 2 | 7 | 11 | 11 | 6 | 0.3889 | 0.5385 | 0.4516 | 0.5192 | 0.0372 |
-| market | 176 | 74 | 102 | 0 | 53 | 21 | 73 | 29 | 0.7162 | 0.6463 | 0.6795 | 0.7115 | 0.4274 |
+| council:chair=llama3.1:8b | 260 | 148 | 111 | 1 | 69 | 79 | 90 | 21 | 0.4662 | 0.7667 | 0.5798 | 0.6496 | 0.2879 |
+| council:chair=qwen3:8b | 260 | 137 | 117 | 6 | 68 | 69 | 96 | 21 | 0.4964 | 0.764 | 0.6018 | 0.6729 | 0.331 |
+| single:gemma2:9b | 260 | 103 | 137 | 20 | 50 | 53 | 104 | 33 | 0.4854 | 0.6024 | 0.5376 | 0.6324 | 0.2545 |
+| single:llama3.1:8b | 260 | 138 | 117 | 5 | 65 | 73 | 94 | 23 | 0.471 | 0.7386 | 0.5752 | 0.6508 | 0.2877 |
+| single:mistral:latest | 260 | 145 | 89 | 26 | 65 | 80 | 73 | 16 | 0.4483 | 0.8025 | 0.5752 | 0.6398 | 0.274 |
+| single:phi3:medium | 260 | 105 | 110 | 45 | 54 | 51 | 95 | 15 | 0.5143 | 0.7826 | 0.6207 | 0.7166 | 0.4047 |
+| single:qwen3:8b | 260 | 93 | 161 | 6 | 44 | 49 | 117 | 44 | 0.4731 | 0.5 | 0.4862 | 0.6024 | 0.2023 |
+| baseline:always_no | 496 | 0 | 496 | 0 | 0 | 0 | 291 | 205 |  | 0.0 | 0.0 | 0.5 | 0.0 |
+| baseline:base_rate | 496 | 0 | 496 | 0 | 0 | 0 | 291 | 205 |  | 0.0 | 0.0 | 0.5 | 0.0 |
+| baseline:best_single | 260 | 103 | 137 | 20 | 50 | 53 | 104 | 33 | 0.4854 | 0.6024 | 0.5376 | 0.6324 | 0.2545 |
+| baseline:extremized(a=2) | 260 | 119 | 140 | 1 | 62 | 57 | 113 | 27 | 0.521 | 0.6966 | 0.5962 | 0.6807 | 0.3443 |
+| baseline:logit_pool | 260 | 119 | 140 | 1 | 62 | 57 | 113 | 27 | 0.521 | 0.6966 | 0.5962 | 0.6807 | 0.3443 |
+| baseline:mean | 260 | 120 | 136 | 4 | 62 | 58 | 111 | 25 | 0.5167 | 0.7126 | 0.599 | 0.6847 | 0.3507 |
+| baseline:median | 260 | 118 | 123 | 19 | 60 | 58 | 102 | 21 | 0.5085 | 0.7407 | 0.603 | 0.6891 | 0.3574 |
+| market | 496 | 190 | 304 | 2 | 152 | 38 | 252 | 52 | 0.8 | 0.7451 | 0.7716 | 0.807 | 0.6215 |
 
 
 ## Council vs baselines (paired Brier difference, negative = council better)
@@ -60,38 +60,42 @@ Bootstrap resamples within each source, so the source mix is fixed. Per-source r
 
 | council | versus | n | mean_diff | ci_low | ci_high | verdict |
 |---|---|---|---|---|---|---|
-| council:chair=llama3.1:8b | market | 37 | 0.2141 | 0.1395 | 0.2881 | council worse |
-| council:chair=llama3.1:8b | baseline:best_single | 37 | 0.031 | -0.0105 | 0.0817 | no clear difference |
-| council:chair=llama3.1:8b | baseline:mean | 37 | 0.0127 | -0.0123 | 0.0391 | no clear difference |
-| council:chair=llama3.1:8b | baseline:logit_pool | 37 | -0.0011 | -0.0377 | 0.0353 | no clear difference |
-| council:chair=llama3.1:8b | baseline:always_no | 37 | -0.0567 | -0.2404 | 0.1073 | no clear difference |
-| council:chair=qwen3:8b | market | 37 | 0.215 | 0.1374 | 0.2931 | council worse |
-| council:chair=qwen3:8b | baseline:best_single | 37 | 0.0319 | -0.0115 | 0.0812 | no clear difference |
-| council:chair=qwen3:8b | baseline:mean | 37 | 0.0136 | -0.0093 | 0.0382 | no clear difference |
-| council:chair=qwen3:8b | baseline:logit_pool | 37 | -0.0002 | -0.033 | 0.0316 | no clear difference |
-| council:chair=qwen3:8b | baseline:always_no | 37 | -0.0558 | -0.2365 | 0.1134 | no clear difference |
+| council:chair=llama3.1:8b | market | 260 | 0.1552 | 0.1327 | 0.1776 | council worse |
+| council:chair=llama3.1:8b | baseline:best_single | 260 | 0.006 | -0.012 | 0.0241 | no clear difference |
+| council:chair=llama3.1:8b | baseline:mean | 260 | 0.0149 | 0.0075 | 0.0224 | council worse |
+| council:chair=llama3.1:8b | baseline:logit_pool | 260 | 0.014 | 0.0053 | 0.0227 | council worse |
+| council:chair=llama3.1:8b | baseline:always_no | 260 | -0.1207 | -0.1791 | -0.0598 | council better |
+| council:chair=qwen3:8b | market | 260 | 0.1487 | 0.124 | 0.1739 | council worse |
+| council:chair=qwen3:8b | baseline:best_single | 260 | -0.0006 | -0.0185 | 0.0173 | no clear difference |
+| council:chair=qwen3:8b | baseline:mean | 260 | 0.0083 | 0.0007 | 0.0158 | council worse |
+| council:chair=qwen3:8b | baseline:logit_pool | 260 | 0.0074 | -0.001 | 0.015 | no clear difference |
+| council:chair=qwen3:8b | baseline:always_no | 260 | -0.1273 | -0.1874 | -0.0664 | council better |
 
 
 ## Council vs baselines, by source
 
-| source | council | versus | n | mean_diff | verdict |
-|---|---|---|---|---|---|
-| kalshi | council:chair=llama3.1:8b | market | 25 | 0.1965 | too few (< 30) |
-| kalshi | council:chair=llama3.1:8b | baseline:mean | 25 | 0.0126 | too few (< 30) |
-| kalshi | council:chair=llama3.1:8b | baseline:logit_pool | 25 | -0.0019 | too few (< 30) |
-| kalshi | council:chair=llama3.1:8b | baseline:always_no | 25 | -0.1441 | too few (< 30) |
-| kalshi | council:chair=qwen3:8b | market | 25 | 0.2025 | too few (< 30) |
-| kalshi | council:chair=qwen3:8b | baseline:mean | 25 | 0.0186 | too few (< 30) |
-| kalshi | council:chair=qwen3:8b | baseline:logit_pool | 25 | 0.0041 | too few (< 30) |
-| kalshi | council:chair=qwen3:8b | baseline:always_no | 25 | -0.1381 | too few (< 30) |
-| polymarket | council:chair=llama3.1:8b | market | 12 | 0.2507 | too few (< 30) |
-| polymarket | council:chair=llama3.1:8b | baseline:mean | 12 | 0.0129 | too few (< 30) |
-| polymarket | council:chair=llama3.1:8b | baseline:logit_pool | 12 | 0.0004 | too few (< 30) |
-| polymarket | council:chair=llama3.1:8b | baseline:always_no | 12 | 0.1254 | too few (< 30) |
-| polymarket | council:chair=qwen3:8b | market | 12 | 0.241 | too few (< 30) |
-| polymarket | council:chair=qwen3:8b | baseline:mean | 12 | 0.0032 | too few (< 30) |
-| polymarket | council:chair=qwen3:8b | baseline:logit_pool | 12 | -0.0092 | too few (< 30) |
-| polymarket | council:chair=qwen3:8b | baseline:always_no | 12 | 0.1158 | too few (< 30) |
+| source | council | versus | n | mean_diff | ci_low | ci_high | verdict |
+|---|---|---|---|---|---|---|---|
+| kalshi | council:chair=llama3.1:8b | market | 101 | 0.151 | 0.1119 | 0.1908 | council worse |
+| kalshi | council:chair=llama3.1:8b | baseline:best_single | 101 | 0.0391 | 0.004 | 0.0725 | council worse |
+| kalshi | council:chair=llama3.1:8b | baseline:mean | 101 | 0.0229 | 0.0095 | 0.0375 | council worse |
+| kalshi | council:chair=llama3.1:8b | baseline:logit_pool | 101 | 0.0197 | 0.0035 | 0.0357 | council worse |
+| kalshi | council:chair=llama3.1:8b | baseline:always_no | 101 | -0.0566 | -0.1512 | 0.034 | no clear difference |
+| kalshi | council:chair=qwen3:8b | market | 101 | 0.1429 | 0.101 | 0.1852 | council worse |
+| kalshi | council:chair=qwen3:8b | baseline:best_single | 101 | 0.031 | -0.0025 | 0.0682 | no clear difference |
+| kalshi | council:chair=qwen3:8b | baseline:mean | 101 | 0.0148 | 0.0004 | 0.031 | council worse |
+| kalshi | council:chair=qwen3:8b | baseline:logit_pool | 101 | 0.0116 | -0.0022 | 0.0246 | no clear difference |
+| kalshi | council:chair=qwen3:8b | baseline:always_no | 101 | -0.0647 | -0.1578 | 0.0266 | no clear difference |
+| polymarket | council:chair=llama3.1:8b | market | 159 | 0.1579 | 0.1304 | 0.1822 | council worse |
+| polymarket | council:chair=llama3.1:8b | baseline:best_single | 159 | 0.0028 | -0.016 | 0.0216 | no clear difference |
+| polymarket | council:chair=llama3.1:8b | baseline:mean | 159 | 0.0099 | 0.0026 | 0.0177 | council worse |
+| polymarket | council:chair=llama3.1:8b | baseline:logit_pool | 159 | 0.0103 | 0.0002 | 0.0201 | council worse |
+| polymarket | council:chair=llama3.1:8b | baseline:always_no | 159 | -0.1615 | -0.2444 | -0.0849 | council better |
+| polymarket | council:chair=qwen3:8b | market | 159 | 0.1523 | 0.1244 | 0.1781 | council worse |
+| polymarket | council:chair=qwen3:8b | baseline:best_single | 159 | -0.0028 | -0.0222 | 0.015 | no clear difference |
+| polymarket | council:chair=qwen3:8b | baseline:mean | 159 | 0.0042 | -0.0039 | 0.0122 | no clear difference |
+| polymarket | council:chair=qwen3:8b | baseline:logit_pool | 159 | 0.0047 | -0.0059 | 0.0137 | no clear difference |
+| polymarket | council:chair=qwen3:8b | baseline:always_no | 159 | -0.1671 | -0.2506 | -0.0899 | council better |
 
 
 ## Murphy decomposition (Brier = reliability − resolution + uncertainty)
@@ -100,21 +104,21 @@ Each row uses the questions that setup answered (see `n`), so rows with differen
 
 | setup | n | reliability | resolution | uncertainty | brier |
 |---|---|---|---|---|---|
-| council:chair=llama3.1:8b | 37 | 0.1077 | 0.0371 | 0.2279 | 0.2947 |
-| council:chair=qwen3:8b | 37 | 0.112 | 0.0408 | 0.2279 | 0.2956 |
-| single:gemma2:9b | 37 | 0.1245 | 0.048 | 0.2279 | 0.3001 |
-| single:llama3.1:8b | 37 | 0.1017 | 0.0284 | 0.2279 | 0.2976 |
-| single:mistral:latest | 37 | 0.1742 | 0.0619 | 0.2279 | 0.3411 |
-| single:phi3:medium | 37 | 0.1171 | 0.0809 | 0.2279 | 0.2637 |
-| single:qwen3:8b | 37 | 0.1446 | 0.0482 | 0.2279 | 0.3216 |
-| baseline:always_no | 176 | 0.2171 | 0.0 | 0.2488 | 0.4659 |
-| baseline:base_rate | 176 | 0.0 | 0.0 | 0.2488 | 0.2488 |
-| baseline:best_single | 37 | 0.1171 | 0.0809 | 0.2279 | 0.2637 |
-| baseline:extremized(a=2) | 37 | 0.1898 | 0.0578 | 0.2279 | 0.3557 |
-| baseline:logit_pool | 37 | 0.1459 | 0.0768 | 0.2279 | 0.2958 |
-| baseline:mean | 37 | 0.0829 | 0.0252 | 0.2279 | 0.282 |
-| baseline:median | 37 | 0.0952 | 0.042 | 0.2279 | 0.2836 |
-| market | 176 | 0.0151 | 0.0979 | 0.2488 | 0.1678 |
+| council:chair=llama3.1:8b | 260 | 0.0256 | 0.0237 | 0.2263 | 0.2254 |
+| council:chair=qwen3:8b | 260 | 0.022 | 0.0301 | 0.2263 | 0.2188 |
+| single:gemma2:9b | 260 | 0.0216 | 0.0272 | 0.2263 | 0.2195 |
+| single:llama3.1:8b | 260 | 0.0277 | 0.0215 | 0.2263 | 0.233 |
+| single:mistral:latest | 260 | 0.0399 | 0.0173 | 0.2263 | 0.2449 |
+| single:phi3:medium | 260 | 0.0314 | 0.0356 | 0.2263 | 0.2223 |
+| single:qwen3:8b | 260 | 0.028 | 0.0204 | 0.2263 | 0.2336 |
+| baseline:always_no | 496 | 0.1708 | 0.0 | 0.2425 | 0.4133 |
+| baseline:base_rate | 496 | 0.0 | 0.0 | 0.2425 | 0.2425 |
+| baseline:best_single | 260 | 0.0216 | 0.0272 | 0.2263 | 0.2195 |
+| baseline:extremized(a=2) | 260 | 0.0252 | 0.0337 | 0.2263 | 0.2171 |
+| baseline:logit_pool | 260 | 0.018 | 0.0317 | 0.2263 | 0.2114 |
+| baseline:mean | 260 | 0.0183 | 0.0328 | 0.2263 | 0.2105 |
+| baseline:median | 260 | 0.0206 | 0.0324 | 0.2263 | 0.2143 |
+| market | 496 | 0.0038 | 0.1283 | 0.2425 | 0.1177 |
 
 
 ## Does member disagreement predict council error?
@@ -123,5 +127,5 @@ Positive Spearman = the council does worse when members disagree more.
 
 | council | n | spearman_spread_vs_brier | brier_low_spread | brier_mid_spread | brier_high_spread |
 |---|---|---|---|---|---|
-| council:chair=llama3.1:8b | 37 | 0.2675 | 0.254 | 0.2805 | 0.3453 |
-| council:chair=qwen3:8b | 37 | 0.1945 | 0.261 | 0.3014 | 0.3221 |
+| council:chair=llama3.1:8b | 260 | 0.1548 | 0.1894 | 0.2384 | 0.248 |
+| council:chair=qwen3:8b | 260 | 0.1179 | 0.1858 | 0.2307 | 0.2396 |
